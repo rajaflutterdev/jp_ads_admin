@@ -48,6 +48,7 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
       Padding(
         padding:  EdgeInsets.only(left:8.0),
         child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +92,7 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
 
               isviewcollection==0?
               SizedBox(
-                height: 500,
+                height: 600,
                 child: SingleChildScrollView(
                   physics: ScrollPhysics(),
                   child: Column(
@@ -411,10 +412,9 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
               ):
               isviewcollection==1?
               SizedBox(
-                  height: 500,
+                  height: 600,
                   child:
-                  Expanded(
-                    child: Column(
+                 Column(
                       children: [
 
                         Container(
@@ -639,30 +639,29 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
                           ),
                         ),
 
-                        Expanded(
+                        Container(
+                          height: 430,
                           child: TabBarView(
                             controller: tabController,
                             children: [
-
-
                               SizedBox(
-                                  height:500,
-                                child: Column(
-                                  children: [
-                                    Material(
-                                      color: const Color(0xffd8e6ff),
-                                      elevation: 20,
-                                      shadowColor: Colors.black12,
-                                      child: Container(
-                                          width:1100,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(4),
-                                          color:  const Color(0xffd8e6ff),
-                                        ),
-                                        child:
-                                        SingleChildScrollView(
-                                          physics: const ScrollPhysics(),
-                                          child: Column(
+                                height: 580,
+                                child: SingleChildScrollView(
+                                  physics: const ScrollPhysics(),
+                                  child: Column(
+                                    children: [
+                                      Material(
+                                        color: const Color(0xffd8e6ff),
+                                        elevation: 20,
+                                        shadowColor: Colors.black12,
+                                        child: Container(
+                                            width:1100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(4),
+                                            color:  const Color(0xffd8e6ff),
+                                          ),
+                                          child:
+                                          Column(
                                             children: [
                                               Row(
 
@@ -906,7 +905,6 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
                                                     },);
                                                 },
                                               ),
-
                                               FutureBuilder(
                                                 future: FirebaseFirestore.instance.collection("Users").
                                                 doc(Userdocuid).collection("Histroy").where("Type",isEqualTo:"Applied").where("updatestatus",isEqualTo:"Approved").get(),
@@ -1047,30 +1045,30 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
                                           ),
                                         ),
                                       ),
-                                    ),
 
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
 
                               SizedBox(
-                                  height:500,
-                                child: Column(
-                                  children: [
-                                    Material( color: const Color(0xffd8e6ff),
-                                      elevation: 20,
-                                      shadowColor: Colors.black12,
-                                      child: Container(
-                                          width:1100,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(4),
-                                          color:  const Color(0xffd8e6ff),
-                                        ),
-                                        child:
-                                        SingleChildScrollView(
-                                          physics: const ScrollPhysics(),
-                                          child: Column(
+                                height: 580,
+                                child: SingleChildScrollView(
+                                    physics: const ScrollPhysics(),
+                                  child: Column(
+                                    children: [
+                                      Material( color: const Color(0xffd8e6ff),
+                                        elevation: 20,
+                                        shadowColor: Colors.black12,
+                                        child: Container(
+                                            width:1100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(4),
+                                            color:  const Color(0xffd8e6ff),
+                                          ),
+                                          child:
+                                          Column(
                                             children: [
                                               Row(
 
@@ -1453,30 +1451,30 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
                                           ),
                                         ),
                                       ),
-                                    ),
 
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
 
                               SizedBox(
-                                height:500,
-                                child: Column(
-                                  children: [
-                                    Material( color: const Color(0xffd8e6ff),
-                                      elevation: 20,
-                                      shadowColor: Colors.black12,
-                                      child: Container(
-                                        width:1100,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(4),
-                                          color:  const Color(0xffd8e6ff),
-                                        ),
-                                        child:
-                                        SingleChildScrollView(
-                                          physics: const ScrollPhysics(),
-                                          child: Column(
+                                height: 580,
+                                child: SingleChildScrollView(
+                                  physics: const ScrollPhysics(),
+                                  child: Column(
+                                    children: [
+                                      Material( color: const Color(0xffd8e6ff),
+                                        elevation: 20,
+                                        shadowColor: Colors.black12,
+                                        child: Container(
+                                          width:1100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(4),
+                                            color:  const Color(0xffd8e6ff),
+                                          ),
+                                          child:
+                                          Column(
                                             children: [
                                               Row(
 
@@ -1720,7 +1718,6 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
                                                     },);
                                                 },
                                               ),
-
                                               FutureBuilder(
                                                 future: FirebaseFirestore.instance.collection("Users").
                                                 doc(Userdocuid).collection("Histroy").where("Type",isEqualTo:"Applied").where("updatestatus",isEqualTo:"Rejected").get(),
@@ -1861,10 +1858,10 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
                                           ),
                                         ),
                                       ),
-                                    ),
 
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
 
@@ -1872,22 +1869,22 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
                               ///wallet
 
                               SizedBox(
-                                height:500,
-                                child: Column(
-                                  children: [
-                                    Material( color: const Color(0xffd8e6ff),
-                                      elevation: 20,
-                                      shadowColor: Colors.black12,
-                                      child: Container(
-                                        width:1100,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(4),
-                                          color:  const Color(0xffd8e6ff),
-                                        ),
-                                        child:
-                                        SingleChildScrollView(
-                                          physics: ScrollPhysics(),
-                                          child: Column(
+                                height: 580,
+                                child: SingleChildScrollView(
+                                  physics: ScrollPhysics(),
+                                  child: Column(
+                                    children: [
+                                      Material( color: const Color(0xffd8e6ff),
+                                        elevation: 20,
+                                        shadowColor: Colors.black12,
+                                        child: Container(
+                                          width:1100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(4),
+                                            color:  const Color(0xffd8e6ff),
+                                          ),
+                                          child:
+                                          Column(
                                             children: [
                                               Row(
 
@@ -2010,6 +2007,7 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
 
                                                   return ListView.builder(
                                                     shrinkWrap: true,
+                                                    physics: const NeverScrollableScrollPhysics(),
                                                     itemCount: snapshot.data!.docs.length,
                                                     itemBuilder: (context, index) {
 
@@ -2131,10 +2129,10 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
                                           ),
                                         ),
                                       ),
-                                    ),
 
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
 
@@ -2147,7 +2145,7 @@ class _Individual_Hostroy_PageState extends State<Individual_Hostroy_Page> with 
 
                       ],
                     ),
-                  )
+
               ):
               const SizedBox(),
 

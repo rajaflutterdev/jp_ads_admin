@@ -10,14 +10,15 @@ import 'package:lottie/lottie.dart';
 import 'package:http/http.dart'as http;
 import 'package:universal_html/html.dart' as html;
 
-class New_Applied_Distributor_Page extends StatefulWidget {
-  const New_Applied_Distributor_Page({super.key});
+
+class Lost_Pandcard_distributor extends StatefulWidget {
+  const Lost_Pandcard_distributor({super.key});
 
   @override
-  State<New_Applied_Distributor_Page> createState() => _New_Applied_Distributor_PageState();
+  State<Lost_Pandcard_distributor> createState() => _Lost_Pandcard_distributorState();
 }
 
-class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_Page> {
+class _Lost_Pandcard_distributorState extends State<Lost_Pandcard_distributor> {
   @override
   Widget build(BuildContext context) {
 
@@ -72,7 +73,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black,)
+                              border: Border.all(color: Colors.black,)
                           ),
                           child: Center(
                             child: Text(
@@ -88,8 +89,8 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                           width: 240,
                           height: 40,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black,)
-                        ),
+                              border: Border.all(color: Colors.black,)
+                          ),
 
                           child: Center(
                             child: Text(
@@ -138,7 +139,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                           ),
                           child: Center(
                             child: Text(
-                              "Pan Card Type",
+                              "Phone No",
                               style:
                               GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
                             ),
@@ -198,7 +199,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                       ],
                     ),
                     StreamBuilder(
-                      stream: FirebaseFirestore.instance.collection("New_applied").where("usertype",isEqualTo: "Distributor").snapshots(),
+                      stream: FirebaseFirestore.instance.collection("Reprint_document").where("usertype",isEqualTo: "Distributor").snapshots(),
                       builder: (context, snapshot) {
                         if(snapshot.hasData==null){
                           return const Center(child: CircularProgressIndicator(),);
@@ -259,7 +260,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                                     ),
                                     child: Center(
                                       child: Text(
-                                        data["father name"].toString(),
+                                        data["fathername"].toString(),
                                         style:
                                         GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                       ),
@@ -289,7 +290,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                                     ),
                                     child: Center(
                                       child: Text(
-                                        data["pantype"].toString(),
+                                        data["phoneno"].toString(),
                                         style:
                                         GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                       ),
@@ -340,12 +341,18 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                                             //name,fathername,gender,dob,pantype,date,time
                                             _ViewPop(
                                               data['name'].toString(),
-                                              data['father name'].toString(),
+                                              data['fathername'].toString(),
                                               data['gender'].toString(),
                                               data['dob'].toString(),
-                                              data['pantype'].toString(),
                                               data['date'].toString(),
                                               data['time'].toString(),
+                                              data['district'].toString(),
+                                              data['panno'].toString(),
+                                              data['phoneno'].toString(),
+                                              data['pincode'].toString(),
+                                              data['postoffice'].toString(),
+                                              data['state'].toString(),
+                                              data['village/town'].toString(),
                                               data['aadharpicture'].toString(),
                                               data['aadharpicture2'].toString(),
                                               data['photo'].toString(),
@@ -464,7 +471,10 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
   }
 
 
-  _ViewPop(name,fathername,gender,dob,pantype,date,time,picture1,picture2,picture3,picture4,picture5){
+
+  _ViewPop(
+      name,fathername,gender,dob,date,time,district,panno,phoneno,pincode,
+      postoffice, state, villageandtown, picture1,picture2,picture3,picture4,picture5){
 
     final key = new GlobalKey<ScaffoldState>();
     showDialog(context: context, builder:(context) {
@@ -580,7 +590,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                       SizedBox(
                         width: 250,
                         height: 30,
-                        child: Text("Pan Type :",style: GoogleFonts.poppins(
+                        child: Text("Phone No :",style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w700,
                             fontSize:18
                         ),),
@@ -588,9 +598,141 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                       SizedBox(
                         width: 250,
                         height: 30,
-                        child: CustomToolTip(text:"${pantype}",),
+                        child: CustomToolTip(text:"${phoneno}",),
                       ),
-                      CustomToolTip2(text:"${pantype}",),
+                      CustomToolTip2(text:"${phoneno}",),
+
+
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: Text("Pan No :",style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize:18
+                        ),),
+                      ),
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: CustomToolTip(text:"${panno}",),
+                      ),
+                      CustomToolTip2(text:"${panno}",),
+
+
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: Text("Village/Town :",style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize:18
+                        ),),
+                      ),
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: CustomToolTip(text:"$villageandtown",),
+                      ),
+                      CustomToolTip2(text:"${villageandtown}",),
+
+
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: Text("Post Office :",style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize:18
+                        ),),
+                      ),
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: CustomToolTip(text:"$postoffice",),
+                      ),
+                      CustomToolTip2(text:"${postoffice}",),
+
+
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: Text("Pincode :",style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize:18
+                        ),),
+                      ),
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: CustomToolTip(text:"$pincode",),
+                      ),
+                      CustomToolTip2(text:"${pincode}",),
+
+
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: Text("District :",style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize:18
+                        ),),
+                      ),
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: CustomToolTip(text:"$district",),
+                      ),
+                      CustomToolTip2(text:"${district}",),
+
+
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: Text("State :",style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize:18
+                        ),),
+                      ),
+                      SizedBox(
+                        width: 250,
+                        height: 30,
+                        child: CustomToolTip(text:"$state",),
+                      ),
+                      CustomToolTip2(text:"${state}",),
 
 
                     ],
@@ -642,6 +784,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
 
 
                   SizedBox(height: 30,),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -803,7 +946,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                   InkWell(
                     onTap: (){
 
-                      for(int i=0;i<3;i++){
+                      for(int i=0;i<5;i++){
                         if(i==0){
                           downloadImage(picture1,"Aadhaar_Image");
                         }
@@ -811,6 +954,12 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                           downloadImage(picture1,"Photo");
                         }
                         if(i==2){
+                          downloadImage(picture1,"Sign_picture");
+                        }
+                        if(i==3){
+                          downloadImage(picture1,"Sign_picture");
+                        }
+                        if(i==4){
                           downloadImage(picture1,"Sign_picture");
                         }
 
@@ -941,10 +1090,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
       print(e);
     }
   }
-
 }
-
-
 
 class CustomToolTip extends StatelessWidget {
 

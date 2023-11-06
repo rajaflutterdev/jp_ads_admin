@@ -9,17 +9,21 @@ import 'Pages/Correction_DistributorList_Page.dart';
 import 'Pages/Dash_board_Page.dart';
 import 'Pages/Distributor_Histroy_page.dart';
 import 'Pages/Distributor_User-Page.dart';
+import 'Pages/Forms_Page.dart';
 import 'Pages/Individivual_Page.dart';
 import 'Pages/Individual_Histroy_Page.dart';
+import 'Pages/Lost_Pandcard(Distributor).dart';
+import 'Pages/Minor_Pancard.dart';
 import 'Pages/New_applied_Page.dart';
 import 'Pages/New_applied_Page2(Indivivual).dart';
 import 'Pages/Notification_Page.dart';
 import 'Pages/Permission_Page.dart';
 import 'Pages/Slider_Page.dart';
+import 'Pages/Support_Page.dart';
 
 class HomeView extends StatefulWidget {
   String?Authusertype;
-    HomeView({super.key, required this.Authusertype});
+    HomeView({this.Authusertype});
 
 
 
@@ -63,9 +67,14 @@ class _HomeViewState extends State<HomeView> {
             name: "Distributor Correction",
             icon:Icons.circle ),
         DrawerChildren(
+            page: Lost_Pandcard_distributor(),
+            name: "Lost Pan card",
+            icon:Icons.circle ),
+        DrawerChildren(
             page: Distrobutor_Histroe_Page(),
             name: "Distributor History",
             icon:Icons.circle ),
+
       ],
     ),
 
@@ -117,7 +126,39 @@ class _HomeViewState extends State<HomeView> {
       name: "Permissions",
       icon: Icons.person_pin_outlined,
       isExpanded: false,
-      page:  Permissions_Page(),
+      page:  Permissions_Page(Usertype:"admin@gmail.com"),
+      children: [],
+    ),
+
+    DrawerModel(
+      name: "Minor Pancard",
+      icon: Icons.person_pin_outlined,
+      isExpanded: false,
+      page:  Minor_Pancard(),
+      children: [],
+    ),
+
+    DrawerModel(
+      name: "Forms",
+      icon: Icons.person_pin_outlined,
+      isExpanded: false,
+      page:  const Form_Page(),
+      children: [],
+    ),
+
+    DrawerModel(
+      name: "Support",
+      icon: Icons.person_pin_outlined,
+      isExpanded: false,
+      page:  Support_Page(),
+      children: [],
+    ),
+
+    DrawerModel(
+      name: "Logout",
+      icon: Icons.logout,
+      isExpanded: false,
+      page:  Support_Page(),
       children: [],
     ),
 
@@ -128,7 +169,7 @@ class _HomeViewState extends State<HomeView> {
     if (drawerItems1.isEmpty) {
       for (int i = 0; i < roles.length; i++) {
 
-        if (widget.Authusertype!.toLowerCase()== 'admin'.toLowerCase()) {
+        if (widget.Authusertype!.toLowerCase()=='admin'.toLowerCase()) {
 
           drawerItems1 = drawerItems;
         }
