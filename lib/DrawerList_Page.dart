@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 import 'Drawer_Model/Drawer.dart';
 import 'Pages/Corection_indiviual_Page.dart';
@@ -107,6 +109,22 @@ class _HomeViewState extends State<HomeView> {
     ),
 
     DrawerModel(
+      name: "Minor Pancard",
+      icon: Icons.person_pin_outlined,
+      isExpanded: false,
+      page:  Minor_Pancard(),
+      children: [],
+    ),
+
+    DrawerModel(
+      name: "Forms",
+      icon: Icons.document_scanner_sharp,
+      isExpanded: false,
+      page:  const Form_Page(),
+      children: [],
+    ),
+
+    DrawerModel(
       name: "Notification",
       icon: Icons.person_pin_outlined,
       isExpanded: false,
@@ -130,21 +148,7 @@ class _HomeViewState extends State<HomeView> {
       children: [],
     ),
 
-    DrawerModel(
-      name: "Minor Pancard",
-      icon: Icons.person_pin_outlined,
-      isExpanded: false,
-      page:  Minor_Pancard(),
-      children: [],
-    ),
 
-    DrawerModel(
-      name: "Forms",
-      icon: Icons.person_pin_outlined,
-      isExpanded: false,
-      page:  const Form_Page(),
-      children: [],
-    ),
 
     DrawerModel(
       name: "Support",
@@ -154,13 +158,13 @@ class _HomeViewState extends State<HomeView> {
       children: [],
     ),
 
-    DrawerModel(
-      name: "Logout",
-      icon: Icons.logout,
-      isExpanded: false,
-      page:  Support_Page(),
-      children: [],
-    ),
+    // DrawerModel(
+    //   name: "Logout",
+    //   icon: Icons.logout,
+    //   isExpanded: false,
+    //   page:  Support_Page(),
+    //   children: [],
+    // ),
 
   ];
 
@@ -295,8 +299,8 @@ class _HomeViewState extends State<HomeView> {
               width: size.width,
               decoration: BoxDecoration(
                 gradient: LinearGradient(colors: [
-                  Color(0xff245BCA).withOpacity(0.7),
-                  Color(0xff245BCA).withOpacity(0.7),
+                  Color(0xff245BCA),
+                  Color(0xff245BCA).withOpacity(0.6)
                 ]),
               ),
               child: Row(
@@ -343,11 +347,12 @@ class _HomeViewState extends State<HomeView> {
                                               setState(() {
                                                 currentIndex = i;
                                                 selectedIndex = 0;
-                                                drawerItems[i]
-                                                    .isExpanded =
-                                                !drawerItems[i]
-                                                    .isExpanded!;
+                                                drawerItems[i].isExpanded =
+                                                !drawerItems[i].isExpanded!;
                                               });
+
+
+
                                             },
                                             child: Column(
                                               children: [
@@ -525,7 +530,36 @@ class _HomeViewState extends State<HomeView> {
                                       )),
                                 ],
                               ),
-                            )
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: InkWell(
+                                onTap: (){
+                                  LogoutPopup();
+                                },
+                                child: Material(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(8),
+                                  shadowColor: Colors.white70,
+                                  child: Container(
+                                    height:50,
+                             decoration: BoxDecoration(
+                                   color: Colors.red,
+                                   borderRadius: BorderRadius.circular(8)
+                             ),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.logout,color: Colors.white,),
+                                        SizedBox(width: 8,),
+                                        Text("Logout",style: GoogleFonts.poppins(color: Colors.white),)
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       )
@@ -547,4 +581,100 @@ class _HomeViewState extends State<HomeView> {
           },
         ));
   }
+
+
+
+  LogoutPopup(){
+
+    showDialog(
+      barrierColor: Colors.transparent,
+      context: context, builder:(context) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 150.0,bottom: 150,left: 350,right:350),
+        child: Material(
+         color: Colors.white,
+          shadowColor: Color(0xff245BCA),
+          borderRadius: BorderRadius.circular(8),
+          elevation: 10,
+          child: Container(
+
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Scaffold(
+              body: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height:30),
+                    Text("Are You Sure Want to LogOut",style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w700,
+                        fontSize:18
+                    ),),
+
+                    const SizedBox(height:20),
+
+                    SizedBox(
+                      height:180,
+                      width:180,
+                      child: Lottie.asset("assets/logout.json"),
+                    ),
+
+                    const SizedBox(height:20),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          hoverColor:Colors.transparent,
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            height:40,
+                            width:180,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(
+                              child: Text("Cancel",style: GoogleFonts.poppins(color: Colors.black,fontWeight: FontWeight.w600),),
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            _signOut();
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            height:40,
+                            width:180,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color:  Colors.red
+                            ),
+                            child: Center(
+                              child: Text("Okay",style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.w600),),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    },);
+  }
+ _signOut()  async{
+    await FirebaseAuth.instance.signOut();
+
+  }
+
 }

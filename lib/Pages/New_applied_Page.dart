@@ -663,7 +663,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                             ),
                           ),
                           InkWell(
-                            onTap: ()=>downloadImage(picture1,"Aadhaar_Image"),
+                            onTap: ()=>downloadImage(picture1,"DownloadFile"),
                             child: Material(
                               elevation: 10,
                               color: Colors.white,
@@ -693,7 +693,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                             ),
                           ),
                           InkWell(
-                            onTap: ()=>downloadImage(picture2,"Aadhaar_Image"),
+                            onTap: ()=>downloadImage(picture2,"DownloadFile"),
                             child: Material(
                               elevation: 10,
                               color: Colors.white,
@@ -722,7 +722,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                             ),
                           ),
                           InkWell(
-                            onTap: ()=>downloadImage(picture3,"Photo"),
+                            onTap: ()=>downloadImage(picture3,"DownloadFile"),
                             child: Material(
                               elevation: 10,
                               color: Colors.white,
@@ -751,7 +751,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                             ),
                           ),
                           InkWell(
-                            onTap: ()=>downloadImage(picture4,"Photo"),
+                            onTap: ()=>downloadImage(picture4,"DownloadFile"),
                             child: Material(
                               elevation: 10,
                               color: Colors.white,
@@ -780,7 +780,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                             ),
                           ),
                           InkWell(
-                            onTap: ()=>downloadImage(picture5,"Sign_picture"),
+                            onTap: ()=>downloadImage(picture5,"DownloadFile"),
                             child: Material(
                               elevation: 10,
                               color: Colors.white,
@@ -803,16 +803,8 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                   InkWell(
                     onTap: (){
 
-                      for(int i=0;i<3;i++){
-                        if(i==0){
-                          downloadImage(picture1,"Aadhaar_Image");
-                        }
-                        if(i==1){
-                          downloadImage(picture1,"Photo");
-                        }
-                        if(i==2){
-                          downloadImage(picture1,"Sign_picture");
-                        }
+                      for(int i=0;i<5;i++){
+                        downloadImage(picture1,"DownloadFile");
 
                       }
 

@@ -1567,7 +1567,8 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
                                                               applieddata['aadharpicture'].toString(),
                                                               applieddata['signpicture'].toString(),
                                                               applieddata['photo'].toString(),
-
+                                                              applieddata['photo2'].toString(),
+                                                              applieddata['aadharpicture2'].toString(),
                                                             );
                                                           },
                                                           child: Container(
@@ -2062,7 +2063,7 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
   }
 
 
-  Applieddetailspopup(name,fathername,gender,dob,pantype,updatestatus,date,time,type,aadharpicture,signpicture,photo){
+  Applieddetailspopup(name,fathername,gender,dob,pantype,updatestatus,date,time,type,aadharpicture,signpicture,photo,photo2,aadharpicture2){
 
     double height = MediaQuery.of(context).size.height;
     double  width = MediaQuery.of(context).size.width;
@@ -2220,6 +2221,39 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
                     ),
                     InkWell(
                       onTap: (){
+                        _ViewImage(aadharpicture2);
+                      },
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Color(0xff263646),
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                    image: NetworkImage(aadharpicture2)
+                                )
+                            ),
+                          ),
+                          InkWell(
+                            onTap: ()=>downloadImage(aadharpicture2),
+                            child: Material(
+                              elevation: 10,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                              child: SizedBox(
+                                  height:30,
+                                  width: 30,
+                                  child: Icon(Icons.download,color: Colors.black,)),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: (){
                         _ViewImage(signpicture);
                       },
                       child: Stack(
@@ -2271,6 +2305,39 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
                           ),
                           InkWell(
                             onTap: ()=>downloadImage(photo),
+                            child: Material(
+                              elevation: 10,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                              child: SizedBox(
+                                  height:30,
+                                  width: 30,
+                                  child: Icon(Icons.download,color: Colors.black,)),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: (){
+                        _ViewImage(photo2);
+                      },
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                color: Color(0xff263646),
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                    image: NetworkImage(photo2)
+                                )
+                            ),
+                          ),
+                          InkWell(
+                            onTap: ()=>downloadImage(photo2),
                             child: Material(
                               elevation: 10,
                               color: Colors.white,

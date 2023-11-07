@@ -347,7 +347,9 @@ class _New_applied_indivivualState extends State<New_applied_indivivual> {
                                               data['date'].toString(),
                                               data['time'].toString(),
                                               data['aadharpicture'].toString(),
+                                              data['aadharpicture2'].toString(),
                                               data['photo'].toString(),
+                                              data['photo2'].toString(),
                                               data['signpicture'].toString(),
                                             );
                                           },
@@ -463,7 +465,7 @@ class _New_applied_indivivualState extends State<New_applied_indivivual> {
   }
 
 
-  _ViewPop(name,fathername,gender,dob,pantype,date,time,picture1,picture2,picture3){
+  _ViewPop(name,fathername,gender,dob,pantype,date,time,picture1,picture2,picture3,picture4,picture5){
 
     final key = new GlobalKey<ScaffoldState>();
     showDialog(context: context, builder:(context) {
@@ -662,7 +664,7 @@ class _New_applied_indivivualState extends State<New_applied_indivivual> {
                             ),
                           ),
                           InkWell(
-                            onTap: ()=>downloadImage(picture1,"Aadhaar_Image"),
+                            onTap: ()=>downloadImage(picture1,"DownloadFile"),
                             child: Material(
                               elevation: 10,
                               color: Colors.white,
@@ -692,7 +694,7 @@ class _New_applied_indivivualState extends State<New_applied_indivivual> {
                             ),
                           ),
                           InkWell(
-                            onTap: ()=>downloadImage(picture2,"Photo"),
+                            onTap: ()=>downloadImage(picture2,"DownloadFile"),
                             child: Material(
                               elevation: 10,
                               color: Colors.white,
@@ -721,7 +723,65 @@ class _New_applied_indivivualState extends State<New_applied_indivivual> {
                             ),
                           ),
                           InkWell(
-                            onTap: ()=>downloadImage(picture3,"Sign_picture"),
+                            onTap: ()=>downloadImage(picture3,"DownloadFile"),
+                            child: Material(
+                              elevation: 10,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                              child: SizedBox(
+                                  height:30,
+                                  width: 30,
+                                  child: Icon(Icons.download,color: Colors.black,)),
+                            ),
+                          )
+                        ],
+                      ),
+                      Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Tooltip(
+                            message: "View Image",
+                            child: InkWell(
+                              onTap:()=>_ViewImage(picture4),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Color(0xff263645),
+                                  ),
+                                  height: 100,width: 100,child:Image.network(picture4)),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: ()=>downloadImage(picture4,"DownloadFile"),
+                            child: Material(
+                              elevation: 10,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                              child: SizedBox(
+                                  height:30,
+                                  width: 30,
+                                  child: Icon(Icons.download,color: Colors.black,)),
+                            ),
+                          )
+                        ],
+                      ),
+                      Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Tooltip(
+                            message: "View Image",
+                            child: InkWell(
+                              onTap:()=>_ViewImage(picture5),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Color(0xff263645),
+                                  ),
+                                  height: 100,width: 100,child:Image.network(picture5)),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: ()=>downloadImage(picture5,"DownloadFile"),
                             child: Material(
                               elevation: 10,
                               color: Colors.white,
@@ -744,16 +804,8 @@ class _New_applied_indivivualState extends State<New_applied_indivivual> {
                   InkWell(
                     onTap: (){
 
-                      for(int i=0;i<3;i++){
-                        if(i==0){
-                          downloadImage(picture1,"Aadhaar_Image");
-                        }
-                        if(i==1){
-                          downloadImage(picture1,"Photo");
-                        }
-                        if(i==2){
-                          downloadImage(picture1,"Sign_picture");
-                        }
+                      for(int i=0;i<5;i++){
+                        downloadImage(picture1,"DownloadFile");
 
                       }
 
