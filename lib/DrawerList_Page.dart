@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jp_ads_admin/Login_Page/Login_Page.dart';
 import 'package:lottie/lottie.dart';
 
 import 'Drawer_Model/Drawer.dart';
@@ -11,9 +12,11 @@ import 'Pages/Correction_DistributorList_Page.dart';
 import 'Pages/Dash_board_Page.dart';
 import 'Pages/Distributor_Histroy_page.dart';
 import 'Pages/Distributor_User-Page.dart';
+import 'Pages/FAQ_Page.dart';
 import 'Pages/Forms_Page.dart';
 import 'Pages/Individivual_Page.dart';
 import 'Pages/Individual_Histroy_Page.dart';
+import 'Pages/Lost-Pancard(individual).dart';
 import 'Pages/Lost_Pandcard(Distributor).dart';
 import 'Pages/Minor_Pancard.dart';
 import 'Pages/New_applied_Page.dart';
@@ -39,6 +42,86 @@ class _HomeViewState extends State<HomeView> {
   int expandedIndex = 100;
   bool isFetched = false;
 
+  String authendicationUser="";
+
+
+
+  ///distributor variables
+  int distrutorCorrectionCount=0;
+  int distrutorappliedCount=0;
+  int distrutorlostCount=0;
+
+  ///individual variables
+  int individualCorrectionCount=0;
+  int individualappliedCount=0;
+  int individuallostCount=0;
+
+  ///minor variables
+  int minorCount=0;
+
+
+  countfunction()async{
+///distributor
+    var documentcorrection=await FirebaseFirestore.instance.collection("Correction_cards").where("usertype",isEqualTo:'Distributor').where("count",isEqualTo:true).get();
+    var documentlost=await FirebaseFirestore.instance.collection("Reprint_document").where("usertype",isEqualTo:'Distributor').where("count",isEqualTo:true).get();
+    var documentappliedt=await FirebaseFirestore.instance.collection("New_applied").where("usertype",isEqualTo:'Distributor').where("count",isEqualTo:true).get();
+    setState(() {
+       distrutorCorrectionCount=documentcorrection.docs.length;
+       distrutorlostCount=documentlost.docs.length;
+       distrutorappliedCount=documentappliedt.docs.length;
+    });
+    ///individual
+    var documentcorrection1=await FirebaseFirestore.instance.collection("Correction_cards").where("usertype",isEqualTo:'Individual').where("count",isEqualTo:true).get();
+    var documentlost1=await FirebaseFirestore.instance.collection("Reprint_document").where("usertype",isEqualTo:'Individual').where("count",isEqualTo:true).get();
+    var documentappliedt1=await FirebaseFirestore.instance.collection("New_applied").where("usertype",isEqualTo:'Individual').where("count",isEqualTo:true).get();
+    var minordocument=await FirebaseFirestore.instance.collection("Minor_New_applied").where("count",isEqualTo:true).get();
+
+    setState(() {
+      individualCorrectionCount=documentcorrection1.docs.length;
+      individualappliedCount=documentlost1.docs.length;
+      individuallostCount=documentappliedt1.docs.length;
+      minorCount=minordocument.docs.length;
+    });
+    print(individualCorrectionCount);
+    print(individualappliedCount);
+    print(individuallostCount);
+    print(minorCount);
+    print(distrutorappliedCount);
+    print(distrutorlostCount);
+    print(distrutorCorrectionCount);
+
+  }
+
+
+  
+  @override
+  void initState() {
+    userTypecheckfunc();
+    countfunction();
+    // TODO: implement initState
+    super.initState();
+  }
+  
+  userTypecheckfunc()async{
+    
+    var data=await FirebaseFirestore.instance.collection("AdminUser").get();
+    for(int i=0;i<data.docs.length;i++){
+
+      if(data.docs[i]['username']==widget.Authusertype){
+
+        setState(() {
+          authendicationUser=data.docs[i]['Type'];
+        });
+
+      }
+
+
+    }
+
+    
+  }
+
+
   List<DrawerModel> drawerItems1 = [];
 
   List<DrawerModel> drawerItems = [
@@ -59,7 +142,7 @@ class _HomeViewState extends State<HomeView> {
         DrawerChildren(
             page: Distributor_data_Page(),
             name: "Distributor Users",
-        icon:Icons.circle ),
+            icon:Icons.circle ),
         DrawerChildren(
             page:     New_Applied_Distributor_Page(),
             name: "Distributor New\nApplied",
@@ -99,6 +182,11 @@ class _HomeViewState extends State<HomeView> {
         DrawerChildren(
             page: Correction_Infivivual_Page(),
             name: "Individual Correction",
+            icon:Icons.circle ),
+
+        DrawerChildren(
+            page: Lost_pancard_individual(),
+            name: "Lost Pan card",
             icon:Icons.circle ),
 
         DrawerChildren(
@@ -148,23 +236,21 @@ class _HomeViewState extends State<HomeView> {
       children: [],
     ),
 
-
-
     DrawerModel(
       name: "Support",
       icon: Icons.person_pin_outlined,
       isExpanded: false,
-      page:  Support_Page(),
+      page:  const Support_Page(),
       children: [],
     ),
 
-    // DrawerModel(
-    //   name: "Logout",
-    //   icon: Icons.logout,
-    //   isExpanded: false,
-    //   page:  Support_Page(),
-    //   children: [],
-    // ),
+    DrawerModel(
+      name: "FAQ",
+      icon: Icons.question_mark_outlined,
+      isExpanded: false,
+      page:  const FAQ_Page(),
+      children: [],
+    ),
 
   ];
 
@@ -173,11 +259,11 @@ class _HomeViewState extends State<HomeView> {
     if (drawerItems1.isEmpty) {
       for (int i = 0; i < roles.length; i++) {
 
-        if (widget.Authusertype!.toLowerCase()=='admin'.toLowerCase()) {
+        if (widget.Authusertype!.toLowerCase()==authendicationUser.toLowerCase()) {
 
           drawerItems1 = drawerItems;
         }
-        else  if (widget.Authusertype.toString().toLowerCase()=="staff".toLowerCase()) {
+        else  if (widget.Authusertype.toString().toLowerCase()==authendicationUser.toLowerCase()) {
           print("Else if");
           print("UserType");
           print("${roles[i]['Type'].toString().toLowerCase()}---${widget.Authusertype}");
@@ -269,6 +355,34 @@ class _HomeViewState extends State<HomeView> {
                   children: [],
                 ));
                 break;
+              case "Permission":
+                drawerItems1.add(DrawerModel(
+                  name: "Permissions",
+                  icon: Icons.person_pin_outlined,
+                  isExpanded: false,
+                  page:  Permissions_Page(Usertype: '"admin@gmail.com"'),
+                  children: [],
+                ));
+                break;
+              case "Support":
+                drawerItems1.add(DrawerModel(
+                  name: "Support",
+                  icon: Icons.person_pin_outlined,
+                  isExpanded: false,
+                  page:  Support_Page(),
+                  children: [],
+                ));
+                break;
+
+              case "FAQ":
+                drawerItems1.add(DrawerModel(
+                  name: "FAQ",
+                  icon: Icons.question_mark_outlined,
+                  isExpanded: false,
+                  page:  FAQ_Page(),
+                  children: [],
+                ));
+                break;
             }
           }
         }
@@ -350,9 +464,6 @@ class _HomeViewState extends State<HomeView> {
                                                 drawerItems[i].isExpanded =
                                                 !drawerItems[i].isExpanded!;
                                               });
-
-
-
                                             },
                                             child: Column(
                                               children: [
@@ -674,6 +785,7 @@ class _HomeViewState extends State<HomeView> {
   }
  _signOut()  async{
     await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Login_Page(),));
 
   }
 
