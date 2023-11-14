@@ -162,7 +162,7 @@ class _Form_PageState extends State<Form_Page> {
                                                         controller: fileNamecon,
                                                         maxLines: null,
                                                         style: GoogleFonts.poppins(
-                                                            fontSize: width / 136.6),
+                                                            fontSize: width /97.571),
                                                         decoration: InputDecoration(
                                                           hintText: "Type a File Name",
                                                           contentPadding: EdgeInsets.only(
@@ -323,7 +323,7 @@ class _Form_PageState extends State<Form_Page> {
                                                         controller: editfileNamecon,
                                                         maxLines: null,
                                                         style: GoogleFonts.poppins(
-                                                            fontSize: width / 136.6),
+                                                            fontSize: width /97.571),
                                                         decoration: InputDecoration(
                                                           hintText: "Type a File Name",
                                                           contentPadding: EdgeInsets.only(
@@ -611,15 +611,12 @@ class _Form_PageState extends State<Form_Page> {
                                                           onTap:(){
                                                             if(viewtab==1){
                                                               editcontrollerclearfun();
-
                                                             }else{
                                                               setState(() {
                                                                 viewtab=1;
                                                               });
+                                                              editdatafun(data.id);
                                                             }
-
-
-                                                            editdatafun(data.id);
                                                           },
                                                           child: Material(
 
@@ -632,7 +629,9 @@ class _Form_PageState extends State<Form_Page> {
                                                                   borderRadius: BorderRadius.circular(100),
                                                                   color: Colors.white
                                                               ),
-                                                              child: Center(child: Icon(Icons.edit)),
+                                                              child: Center(child:
+                                                              data.id==documentId?Icon(Icons.clear):
+                                                              Icon(Icons.edit)),
                                                             ),
                                                             elevation: 10,
                                                           ),

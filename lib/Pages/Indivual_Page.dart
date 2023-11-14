@@ -1288,7 +1288,7 @@ class _Indivual_PageState extends State<Indivual_Page> {
             duration: Duration(seconds: 1),
             curve: Curves.easeIn,
             height: 600,
-            width: 320,
+            width: width/4.2687,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white54.withOpacity(0.9),
@@ -1538,7 +1538,7 @@ class _Indivual_PageState extends State<Indivual_Page> {
             duration: Duration(seconds: 1),
             curve: Curves.easeIn,
             height: 400,
-            width: 320,
+            width: width/4.2687,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white54.withOpacity(0.9),

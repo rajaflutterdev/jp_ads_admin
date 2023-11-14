@@ -1,11 +1,21 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:http/http.dart'as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' as ex;
 import 'package:universal_html/html.dart' as html;
+import 'package:universal_html/html.dart'  show AnchorElement;
+import 'package:flutter/foundation.dart'  show kIsWeb;
+import 'package:open_file/open_file.dart';
+
 
 
 class Lost_pancard_individual extends StatefulWidget {
@@ -17,13 +27,23 @@ class Lost_pancard_individual extends StatefulWidget {
 
 class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
 
-
   List<String> StuatusList=[];
   String filterName='';
+  int totalApliedcount=0;
+  String selectedValue='Select';
+  String selectedValue2='Select';
+
+  TextEditingController Serachcontroller=TextEditingController();
+  TextEditingController Datecontroller=TextEditingController();
+
   statusaddfunc()async{
     setState((){
       StuatusList.clear();
       filterName="All";
+      totalApliedcount=0;
+    });
+    setState(() {
+      StuatusList.add("Select");
     });
 
     var statusdata=await FirebaseFirestore.instance.collection("Status").orderBy('name').get();
@@ -32,13 +52,27 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
         StuatusList.add(statusdata.docs[i]['name']);
       });
     }
+
+
     print(StuatusList);
+
+  }
+
+  countfunction()async{
+    var data2 =await FirebaseFirestore.instance.collection("Correction_cards").
+    where('usertype',isEqualTo:"Individual").where('count',isEqualTo:true).get();
+    setState((){
+      totalApliedcount= data2.docs.length;
+    });
+
+    print(totalApliedcount);
 
   }
 
   @override
   void initState() {
     statusaddfunc();
+    countfunction();
     // TODO: implement initState
     super.initState();
   }
@@ -67,68 +101,250 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
                         fontSize: width / 57.57,
                         color: const Color(0xff000000)),
                   ),
+                  SizedBox(width:10),
+                  totalApliedcount==0?const SizedBox():
+                  Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.green
+                      ),
+                      padding: EdgeInsets.all(2),
+                      child: Text(" New  -${totalApliedcount.toString()} ",
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:Colors.white),)),
 
                 ],
               ),
             ),
             SizedBox(height: height/41.143,),
-            Padding(
-              padding:  EdgeInsets.only(left: width / 100),
-              child: SizedBox(
-                height:35,
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: (){
-                        setState(() {
-                          filterName="All";
-                        });
-                      },
-                      child: Container(
-                        height:height/18.6,
-                        width:width/12.418,
+            Container(
+              width:1100,
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                  color:Colors.blue,
+                  borderRadius: BorderRadius.circular(5)
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: width / 4.902,
+                        height: height / 16.42,
+                        //color: Color(0xff00A99D),
                         decoration: BoxDecoration(
-                            color:filterName=="All"?Colors.indigo:Colors.green,
-                            borderRadius: BorderRadius.circular(8)
+                          borderRadius: BorderRadius.circular(5),
+                          color:  Colors.white,
                         ),
-                        child: Center(child: Text("All",style: GoogleFonts.poppins(
-                          fontWeight: FontWeight.w700,
-                          color:Colors.white,),)),
-                      ),
-                    ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: StuatusList.length,
-                      itemBuilder: (context, index) {
-
-
-                        return Padding(
-                          padding:  EdgeInsets.only(left:width/170.75),
-                          child:
-                          InkWell(
-                            onTap: (){
-                              setState(() {
-                                filterName=StuatusList[index];
-                              });
-                            },
-                            child: Container(
-                              height:height/18.6,
-                              width:width/12.418,
-                              decoration: BoxDecoration(
-                                  color:filterName==StuatusList[index]?Colors.indigo:Colors.green,
-                                  borderRadius: BorderRadius.circular(8)
-                              ),
-                              child: Center(child: Text(StuatusList[index].toString(),style: GoogleFonts.poppins(
-                                fontWeight: FontWeight.w700,
-                                color:Colors.white,),)),
+                        child:
+                        Padding(
+                          padding:  EdgeInsets.only(left:8),
+                          child: TextField(
+                            controller: Serachcontroller,
+                            style: GoogleFonts.poppins(fontSize: width / 88.3,fontWeight: FontWeight.w600,color: Colors.black),
+                            decoration: InputDecoration(
+                                hintText: "Search here",
+                                helperStyle:GoogleFonts.poppins(fontSize: width / 88.3,fontWeight: FontWeight.w600,color: Colors.black),
+                                border: InputBorder.none,
+                                suffixIcon: const Icon(
+                                  Icons.search_outlined,
+                                  color: Colors.black,
+                                )
                             ),
+                            onChanged: (value){
+                              if(value.isNotEmpty){
+                                setState(() {
+                                  filterName=value;
+                                });
+                              }
+                              else{
+                                setState(() {
+                                  filterName="All";
+                                });
+                              }
+                            },
                           ),
-                        );
-                      },),
-                  ],
-                ),
+                        ),
+                      ),
+                      SizedBox(width: 15,),
+
+                      ///Sorts by status container
+                      SizedBox(
+                        height:40,
+                        width:320,
+
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                                height:40,
+                                child: Center(child: Text("Sort By Status : ",style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:Colors.white),))),
+                            SizedBox(width: 5,),
+                            Container(
+                              width:200,
+                              height:40,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5)
+                              ),
+                              child:
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton2<String>(
+
+                                  isDense: true,
+                                  hint: Text(
+                                    'Select',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: width/95.714,
+                                      fontWeight: FontWeight.w600,
+                                      color: Theme.of(context).hintColor,
+                                    ),
+                                  ),
+
+                                  items: StuatusList
+                                      .map((String item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style:  GoogleFonts.poppins(
+                                          fontSize: width/95.714,
+                                          fontWeight: FontWeight.w600
+                                      ),
+                                    ),
+                                  ))
+                                      .toList(),
+                                  value: selectedValue,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      selectedValue= value!;
+                                      filterName=value;
+                                    });
+                                  },
+                                  buttonStyleData:  ButtonStyleData(
+                                    padding: EdgeInsets.symmetric(horizontal: width/22.5),
+                                    height:50,
+                                    width: width/2.571,
+                                  ),
+                                  menuItemStyleData:  MenuItemStyleData(
+                                    height: 50,
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 15,),
+
+                      ///Sorts by Date
+                      SizedBox(
+                        height:40,
+                        width:300,
+
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                                height:40,
+                                child: Center(child: Text("Sort By Date : ",
+                                  style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:Colors.white),))),
+                            SizedBox(width: 5,),
+                            Container(
+                              width:180,
+                              height:40,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5)
+                              ),
+                              child: TextField(
+                                controller: Datecontroller,
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(
+                                      bottom: width / 90.6, left: width / 91.06),
+                                  hintText: "d/mm/yyyy",
+                                  hintStyle:  GoogleFonts.openSans(color: Color(0xff00A99D)),
+                                  border: InputBorder.none,
+                                ),
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
+                                      //DateTime.now() - not to allow to choose before today.
+                                      lastDate: DateTime.now());
+
+                                  if (pickedDate != null) {
+                                    //pickedDate output format => 2021-03-10 00:00:00.000
+                                    String formattedDate =
+                                    DateFormat('d/M/yyyy').format(pickedDate);
+                                    setState(() {
+                                      Datecontroller.text=formattedDate;
+                                      filterName=formattedDate;
+                                    });
+                                    //formatted date output using intl package =>  2021-03-16
+                                  }
+                                },
+                              ),
+
+                            ),
+
+                          ],
+                        ),
+                      ),
+
+
+                      InkWell(
+                        onTap:(){
+                          setState(() {
+                            Serachcontroller.clear();
+                            Datecontroller.clear();
+                            filterName="All";
+                            selectedValue="Select";
+                            selectedValue2="Select";
+                          });},
+                        child: Container(
+                            height: height/16.275,
+                            width: width/9.76,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5)
+                            ),
+                            child:Center(child: Text("Clear",style: GoogleFonts.poppins(fontWeight: FontWeight.w600),))
+                        ),
+                      ),
+
+                    ],
+                  ),
+                  SizedBox(height:10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap:(){
+                          createExcel("Individual");
+                        },
+                        child:
+                        Container(
+                            height: height/16.275,
+                            width: width/9.76,
+                            decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(5)
+                            ),
+                            child:Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.document_scanner_rounded,color:Colors.white,   size:width/55.888,),
+                                SizedBox(width:width/273.2),
+                                Text("Print Excel",style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color:Colors.white),),
+                              ],
+                            )
+                        ),
+                      ),
+                      SizedBox(width:width/1366),
+                    ],
+                  )
+                ],
               ),
             ),
             SizedBox(height: height/41.143,),
@@ -306,7 +522,9 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
 
                                 if(data['usertype']=='Individual'){
 
-                                  if(filterName==data['updatestatus']){
+                                  if(filterName==data['updatestatus'] ||
+                                      data['name'].toString().toLowerCase().contains(filterName.toString().toLowerCase())
+                                      ||filterName==data['date']){
                                     return Row(
 
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -377,7 +595,7 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
 
                                         InkWell(
                                           onTap:(){
-                                            statsupdate(data.id);
+
                                           },
                                           child: Container(
                                             width: 140,
@@ -385,11 +603,12 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
                                             decoration: BoxDecoration(
                                                 border: Border.all(color: Colors.black,)
                                             ),
-                                            child: Center(
+                                            child:
+                                            Center(
                                               child: Text(
-                                                data["updatestatus"].toString(),
+                                                data["updatestatus"].toString()==""?"-":    data["updatestatus"].toString(),
                                                 style:
-                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                GoogleFonts.poppins(fontSize: 14, color:  Color(0xff245BCA),fontWeight: FontWeight.w700),
                                               ),
                                             ),
                                           ),
@@ -457,6 +676,8 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
                                                     data['photo'].toString(),
                                                     data['photo2'].toString(),
                                                     data['signpicture'].toString(),
+                                                    data.id,
+                                                    data['updatestatus'].toString(),
                                                   );
                                                 },
                                                 child: Container(
@@ -565,7 +786,7 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
 
                                         InkWell(
                                           onTap:(){
-                                            statsupdate(data.id);
+
                                           },
                                           child: Container(
                                             width: 140,
@@ -573,11 +794,12 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
                                             decoration: BoxDecoration(
                                                 border: Border.all(color: Colors.black,)
                                             ),
-                                            child: Center(
+                                            child:
+                                            Center(
                                               child: Text(
-                                                data["updatestatus"].toString(),
+                                                data["updatestatus"].toString()==""?"-":    data["updatestatus"].toString(),
                                                 style:
-                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                GoogleFonts.poppins(fontSize: 14, color:  Color(0xff245BCA),fontWeight: FontWeight.w700),
                                               ),
                                             ),
                                           ),
@@ -645,6 +867,8 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
                                                     data['photo'].toString(),
                                                     data['photo2'].toString(),
                                                     data['signpicture'].toString(),
+                                                    data.id,
+                                                    data['updatestatus'].toString(),
                                                   );
                                                 },
                                                 child: Container(
@@ -706,562 +930,654 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
 
 
   Viewdetailspopup(name,fathername,gender,dob,phone,panno,villageandtown,postoffice,pincode,
-      district, state,date,time,picture1,picture2,picture3,picture4,picture5){
-    return showDialog(context: context, builder:
-        (context) {
-      return  Padding(
-        padding: const EdgeInsets.only(top: 10,bottom: 10,left: 350,right:350),
-        child: Scaffold(
-          backgroundColor: Colors.grey.shade200,
-          body: Center(
-              child:
-              SingleChildScrollView(
-                physics: const ScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height:10),
-                    Text("Application Details",style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w700,
-                        fontSize:18
-                    ),),
-                    SizedBox(height: 10,),
+      district, state,date,time,picture1,picture2,picture3,picture4,picture5,docid,updatestatus){
+    double height=MediaQuery.of(context).size.height;
+    double width=MediaQuery.of(context).size.width;
+    if(updatestatus==""){
+      setState(() {
+        selectedValue2="Select";
+      });
+    }
+    else{
+      setState(() {
+        selectedValue2=updatestatus;
+      });
+    }
 
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+    return showDialog(context: context, builder: (context) {
+      return
+        StatefulBuilder(builder:(context, setState) {
+
+          return Padding(
+            padding: const EdgeInsets.only(top: 10,bottom: 10,left: 350,right:350),
+            child: Scaffold(
+              backgroundColor: Colors.grey.shade200,
+              body: Center(
+                  child:
+                  SingleChildScrollView(
+                    physics: const ScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Name :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"${name}",),
-                        ),
-                        CustomToolTip2(text:"${name}",),
+                        const SizedBox(height:10),
+                        Text("Application Details",style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize:18
+                        ),),
+                        SizedBox(height: 10,),
 
 
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Father Name :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"${fathername}",),
-                        ),
-                        CustomToolTip2(text:"${fathername}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Gender :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"${gender}",),
-                        ),
-                        CustomToolTip2(text:"${gender}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Date of Birth :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"${dob}",),
-                        ),
-                        CustomToolTip2(text:"${dob}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Phone No :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"${phone}",),
-                        ),
-                        CustomToolTip2(text:"${phone}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Pan No :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"${panno}",),
-                        ),
-                        CustomToolTip2(text:"${panno}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Village/Town :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"$villageandtown",),
-                        ),
-                        CustomToolTip2(text:"${villageandtown}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Post Office :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"$postoffice",),
-                        ),
-                        CustomToolTip2(text:"${postoffice}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Pin code :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"$pincode",),
-                        ),
-                        CustomToolTip2(text:"${pincode}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("District :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"$district",),
-                        ),
-                        CustomToolTip2(text:"${district}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("State :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"$state",),
-                        ),
-                        CustomToolTip2(text:"${state}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Date :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"$date",),
-                        ),
-                        CustomToolTip2(text:"${date}",),
-
-
-                      ],
-                    ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: Text("Time :",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize:18
-                          ),),
-                        ),
-                        SizedBox(
-                          width: 250,
-                          height: 30,
-                          child: CustomToolTip(text:"${time}",),
-                        ),
-                        CustomToolTip2(text:"${time}",),
-
-
-                      ],
-                    ),
-
-
-                    SizedBox(height: 30,),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-
-                        Stack(
-                          alignment: Alignment.bottomRight,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Tooltip(
-                              message: "View Image",
-                              child: InkWell(
-                                onTap:(){
-                                  _ViewImage(picture1);
-                                },
-                                //message: "View Image",
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Color(0xff263645),
-                                    ),
-                                    height: 100,width: 100,child:Image.network(picture1)),
-                              ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Name :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
                             ),
-                            InkWell(
-                              onTap: (){
-                                downloadImage(picture1,"Aadhaar_Image");
-                              },
-                              child: Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(100),
-                                child: SizedBox(
-                                    height:30,
-                                    width: 30,
-                                    child: Icon(Icons.download,color: Colors.black,)),
-                              ),
-                            )
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"${name}",),
+                            ),
+                            CustomToolTip2(text:"${name}",),
+
+
                           ],
                         ),
-                        Stack(
-                          alignment: Alignment.bottomRight,
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Tooltip(
-                              message: "View Image",
-                              child: InkWell(
-                                onTap:(){
-                                  _ViewImage(picture2);
-                                },
-                                //message: "View Image",
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Color(0xff263645),
-                                    ),
-                                    height: 100,width: 100,child:Image.network(picture2)),
-                              ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Father Name :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
                             ),
-                            InkWell(
-                              onTap: (){
-                                downloadImage(picture2,"Aadhaar_Image");
-                              },
-                              child: Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(100),
-                                child: SizedBox(
-                                    height:30,
-                                    width: 30,
-                                    child: Icon(Icons.download,color: Colors.black,)),
-                              ),
-                            )
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"${fathername}",),
+                            ),
+                            CustomToolTip2(text:"${fathername}",),
+
+
                           ],
                         ),
-                        Stack(
-                          alignment: Alignment.bottomRight,
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Tooltip(
-                              message: "View Image",
-                              child: InkWell(
-                                onTap:(){
-                                  _ViewImage(picture3);
-                                },
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Color(0xff263645),
-                                    ),
-                                    height: 100,width: 100,child:Image.network(picture3)),
-                              ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Gender :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
                             ),
-                            InkWell(
-                              onTap: (){
-                                downloadImage(picture3,"Photo");
-                              },
-                              child: Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(100),
-                                child: SizedBox(
-                                    height:30,
-                                    width: 30,
-                                    child: Icon(Icons.download,color: Colors.black,)),
-                              ),
-                            )
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"${gender}",),
+                            ),
+                            CustomToolTip2(text:"${gender}",),
+
+
                           ],
                         ),
-                        Stack(
-                          alignment: Alignment.bottomRight,
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Tooltip(
-                              message: "View Image",
-                              child: InkWell(
-                                onTap:(){
-                                  _ViewImage(picture4);
-                                },
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Color(0xff263645),
-                                    ),
-                                    height: 100,width: 100,child:Image.network(picture4)),
-                              ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Date of Birth :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
                             ),
-                            InkWell(
-                              onTap: (){
-                                downloadImage(picture4,"Photo");
-                              },
-                              child: Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(100),
-                                child: SizedBox(
-                                    height:30,
-                                    width: 30,
-                                    child: Icon(Icons.download,color: Colors.black,)),
-                              ),
-                            )
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"${dob}",),
+                            ),
+                            CustomToolTip2(text:"${dob}",),
+
+
                           ],
                         ),
-                        Stack(
-                          alignment: Alignment.bottomRight,
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Tooltip(
-                              message: "View Image",
-                              child: InkWell(
-                                onTap:(){
-                                  _ViewImage(picture5);
-                                },
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      color: Color(0xff263645),
-                                    ),
-                                    height: 100,width: 100,child:Image.network(picture5)),
-                              ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Phone No :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
                             ),
-                            InkWell(
-                              onTap: (){
-                                downloadImage(picture5,"Sign_picture");
-                              },
-                              child: Material(
-                                elevation: 10,
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(100),
-                                child: SizedBox(
-                                    height:30,
-                                    width: 30,
-                                    child: Icon(Icons.download,color: Colors.black,)),
-                              ),
-                            )
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"${phone}",),
+                            ),
+                            CustomToolTip2(text:"${phone}",),
+
+
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Pan No :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"${panno}",),
+                            ),
+                            CustomToolTip2(text:"${panno}",),
+
+
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Village/Town :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"$villageandtown",),
+                            ),
+                            CustomToolTip2(text:"${villageandtown}",),
+
+
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Post Office :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"$postoffice",),
+                            ),
+                            CustomToolTip2(text:"${postoffice}",),
+
+
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Pin code :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"$pincode",),
+                            ),
+                            CustomToolTip2(text:"${pincode}",),
+
+
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("District :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"$district",),
+                            ),
+                            CustomToolTip2(text:"${district}",),
+
+
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("State :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"$state",),
+                            ),
+                            CustomToolTip2(text:"${state}",),
+
+
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Date :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"$date",),
+                            ),
+                            CustomToolTip2(text:"${date}",),
+
+
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: Text("Time :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
+                            ),
+                            SizedBox(
+                              width: 250,
+                              height: 30,
+                              child: CustomToolTip(text:"${time}",),
+                            ),
+                            CustomToolTip2(text:"${time}",),
+
+
                           ],
                         ),
 
 
-                      ],
-                    ),
-
-                    SizedBox(height: 15,),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: (){
-
-                            for(int i=0;i<5;i++){
-                              if(i==0){
-                                downloadImage(picture1,"Aadhaar_Image");
-                              }
-                              if(i==1){
-                                downloadImage(picture1,"Photo");
-                              }
-                              if(i==2){
-                                downloadImage(picture1,"Sign_picture");
-                              }
-                              if(i==3){
-                                downloadImage(picture1,"Sign_picture");
-                              }
-                              if(i==4){
-                                downloadImage(picture1,"Sign_picture");
-                              }
-                            }
-
-                          },
-                          child: Container(
-                            height:40,
-                            width:180,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: const Color(0xff263646)
+                        SizedBox(height: 15,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 255,
+                              height: 40,
+                              child: Text("Status :",style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize:18
+                              ),),
                             ),
-                            child: Center(
-                              child: Text("Download All",style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.w600),),
+                            Container(
+                              width: 265,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.shade400,
+                                  borderRadius: BorderRadius.circular(5)
+                              ),
+
+                              child:DropdownButtonHideUnderline(
+                                child: DropdownButton2<String>(
+                                  isExpanded: true,
+                                  iconStyleData: IconStyleData(
+                                    iconEnabledColor: Colors.black,
+                                    iconDisabledColor: Colors.black,
+                                  ),
+                                  isDense: true,
+                                  hint: Text(
+                                    'Select',
+                                    style: GoogleFonts.poppins(
+                                        fontSize: width/95.714,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600
+                                    ),
+                                  ),
+
+                                  items: StuatusList
+                                      .map((String item) => DropdownMenuItem<String>(
+                                    value: item,
+                                    child: Text(
+                                      item,
+                                      style:  GoogleFonts.poppins(
+                                          fontSize: width/95.714,
+                                          color:Colors.black,
+                                          fontWeight: FontWeight.w600
+                                      ),
+                                    ),
+                                  ))
+                                      .toList(),
+                                  value: selectedValue2,
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      selectedValue2= value!;
+
+                                    });
+                                  },
+                                  buttonStyleData:  ButtonStyleData(
+                                    padding: EdgeInsets.symmetric(horizontal: width/22.5),
+                                    height:50,
+                                    width: width/2.571,
+                                  ),
+                                  menuItemStyleData:  MenuItemStyleData(
+                                    height: 50,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
+
+
+
+                          ],
                         ),
-                        SizedBox(width: 15,),
-                        InkWell(
-                          onTap: (){
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height:40,
-                            width:100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: const Color(0xff263646)
+                        SizedBox(height: 30,),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+
+                            Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                Tooltip(
+                                  message: "View Image",
+                                  child: InkWell(
+                                    onTap:(){
+                                      _ViewImage(picture1);
+                                    },
+                                    //message: "View Image",
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          color: Color(0xff263645),
+                                        ),
+                                        height: 100,width: 100,child:Image.network(picture1)),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    downloadImage(picture1,"Aadhaar_Image");
+                                  },
+                                  child: Material(
+                                    elevation: 10,
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: SizedBox(
+                                        height:30,
+                                        width: 30,
+                                        child: Icon(Icons.download,color: Colors.black,)),
+                                  ),
+                                )
+                              ],
                             ),
-                            child: Center(
-                              child: Text("Okay",style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.w600),),
+                            Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                Tooltip(
+                                  message: "View Image",
+                                  child: InkWell(
+                                    onTap:(){
+                                      _ViewImage(picture2);
+                                    },
+                                    //message: "View Image",
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          color: Color(0xff263645),
+                                        ),
+                                        height: 100,width: 100,child:Image.network(picture2)),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    downloadImage(picture2,"Aadhaar_Image");
+                                  },
+                                  child: Material(
+                                    elevation: 10,
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: SizedBox(
+                                        height:30,
+                                        width: 30,
+                                        child: Icon(Icons.download,color: Colors.black,)),
+                                  ),
+                                )
+                              ],
                             ),
-                          ),
-                        )
+                            Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                Tooltip(
+                                  message: "View Image",
+                                  child: InkWell(
+                                    onTap:(){
+                                      _ViewImage(picture3);
+                                    },
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          color: Color(0xff263645),
+                                        ),
+                                        height: 100,width: 100,child:Image.network(picture3)),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    downloadImage(picture3,"Photo");
+                                  },
+                                  child: Material(
+                                    elevation: 10,
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: SizedBox(
+                                        height:30,
+                                        width: 30,
+                                        child: Icon(Icons.download,color: Colors.black,)),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                Tooltip(
+                                  message: "View Image",
+                                  child: InkWell(
+                                    onTap:(){
+                                      _ViewImage(picture4);
+                                    },
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          color: Color(0xff263645),
+                                        ),
+                                        height: 100,width: 100,child:Image.network(picture4)),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    downloadImage(picture4,"Photo");
+                                  },
+                                  child: Material(
+                                    elevation: 10,
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: SizedBox(
+                                        height:30,
+                                        width: 30,
+                                        child: Icon(Icons.download,color: Colors.black,)),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                Tooltip(
+                                  message: "View Image",
+                                  child: InkWell(
+                                    onTap:(){
+                                      _ViewImage(picture5);
+                                    },
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          color: Color(0xff263645),
+                                        ),
+                                        height: 100,width: 100,child:Image.network(picture5)),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    downloadImage(picture5,"Sign_picture");
+                                  },
+                                  child: Material(
+                                    elevation: 10,
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: SizedBox(
+                                        height:30,
+                                        width: 30,
+                                        child: Icon(Icons.download,color: Colors.black,)),
+                                  ),
+                                )
+                              ],
+                            ),
+
+
+                          ],
+                        ),
+
+                        SizedBox(height: 15,),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: (){
+
+                                for(int i=0;i<5;i++){
+                                  if(i==0){
+                                    downloadImage(picture1,"Aadhaar_Image");
+                                  }
+                                  if(i==1){
+                                    downloadImage(picture1,"Photo");
+                                  }
+                                  if(i==2){
+                                    downloadImage(picture1,"Sign_picture");
+                                  }
+                                  if(i==3){
+                                    downloadImage(picture1,"Sign_picture");
+                                  }
+                                  if(i==4){
+                                    downloadImage(picture1,"Sign_picture");
+                                  }
+                                }
+
+                              },
+                              child: Container(
+                                height:40,
+                                width:180,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: const Color(0xff263646)
+                                ),
+                                child: Center(
+                                  child: Text("Download All",style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.w600),),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 15,),
+                            InkWell(
+
+                              onTap: (){
+                                statusUpdatefunctio(docid);
+
+                              },
+                              child: Container(
+                                height:40,
+                                width:100,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4),
+                                    color: const Color(0xff263646)
+                                ),
+                                child: Center(
+                                  child: Text("Okay",style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.w600),),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+
+                        SizedBox(height: 15,),
+
+
+
                       ],
                     ),
-
-                    SizedBox(height: 15,),
-
-
-
-                  ],
-                ),
-              )
-          ),
-        ),
-      );
+                  )
+              ),
+            ),
+          );
+        },);
 
     },);
   }
@@ -1350,65 +1666,144 @@ class _Lost_pancard_individualState extends State<Lost_pancard_individual> {
     }
   }
 
-  statsupdate(docid){
-    return showAdaptiveDialog(
-      barrierDismissible: true,
-      context: context, builder: (context) {
-      return Padding(
-        padding:  EdgeInsets.only(bottom: 150,top:150,left: 500,right:500),
-        child: StatefulBuilder(
-            builder: (context,setState) {
-              return
-                Scaffold(body: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color:Colors. white
-                    ),
-                    child:ListView.builder(
-                      itemCount: StuatusList.length,
-                      itemBuilder: (context, index) {
-                        return
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: (){
-                                statusUpdatefunctio(docid,StuatusList[index]);
-                              },
-                              child: Container(
-                                  height:50,
-                                  width:120,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    color: Colors.indigo,
-                                  ),
-                                  child:Center(child: Text(StuatusList[index].toString(),style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color: Colors.white),))
-                              ),
-                            ),
-                          );
-                      },)
-                ),);
-            }
-        ),
-      );
-    },);
-  }
-  statusUpdatefunctio(docid,statusname) async {
 
-    var userdocument=await FirebaseFirestore.instance.collection("Users").where("usertype", isEqualTo:"Individual").get();
+
+  statusUpdatefunctio(docid) async {
+
+    var userdocument=await FirebaseFirestore.instance.collection("Users")
+        .where("usertype", isEqualTo:"Individual").get();
 
     for(int i=0;i<userdocument.docs.length;i++){
       FirebaseFirestore.instance.collection("Users").doc(userdocument.docs[i].id).
       collection("Reprint_document").doc(docid).update({
-        "updatestatus":statusname
+        "updatestatus":selectedValue2,
+        "count":false
       });
     }
 
     FirebaseFirestore.instance.collection("Reprint_document").doc(docid).update({
-      "updatestatus":statusname,
+      "updatestatus":selectedValue2,
+      "count":false
     });
+
+    print("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+    print(docid);
+    print(selectedValue2);
     Navigator.pop(context);
   }
+
+
+  createExcel(Usertype)async{
+
+    final ex.Workbook workbook = ex.Workbook();
+    final ex.Worksheet sheet   = workbook.worksheets[0];
+
+
+    sheet.getRangeByName("A1").setText("Name");
+    sheet.getRangeByName("B1").setText("Father Name");
+    sheet.getRangeByName("C1").setText("Gender");
+    sheet.getRangeByName("D1").setText("Phone No");
+    sheet.getRangeByName("E1").setText("Status");
+    sheet.getRangeByName("F1").setText("Date");
+    sheet.getRangeByName("G1").setText("Time");
+    // sheet.getRangeByName("H1").setText("Date of Birth");
+    // sheet.getRangeByName("I1").setText("Gender");
+    // sheet.getRangeByName("J1").setText("Address");
+    // sheet.getRangeByName("K1").setText("Community");
+    // sheet.getRangeByName("L1").setText("House");
+    // sheet.getRangeByName("M1").setText("Religion");
+    // sheet.getRangeByName("N1").setText("Mobile");
+    // sheet.getRangeByName("O1").setText("Email");
+    // sheet.getRangeByName("P1").setText("Aadhaar No");
+    // sheet.getRangeByName("Q1").setText("Height (CMS)");
+    // sheet.getRangeByName("R1").setText("Weight (KG)");
+    // sheet.getRangeByName("S1").setText("EMIS");
+    // sheet.getRangeByName("T1").setText("Transport");
+    // sheet.getRangeByName("U1").setText("Father Name");
+    // sheet.getRangeByName("V1").setText("Father Occupation");
+    // sheet.getRangeByName("W1").setText("Father Office");
+    // sheet.getRangeByName("X1").setText("Father Mobile");
+    // sheet.getRangeByName("Y1").setText("Father Email");
+    // sheet.getRangeByName("Z1").setText("Father Aadhaar");
+    //
+    // sheet.getRangeByName("AA1").setText("Mother Name");
+    // sheet.getRangeByName("AB1").setText("Mother Occupation");
+    // sheet.getRangeByName("AC1").setText("Mother Office");
+    // sheet.getRangeByName("AD1").setText("Mother Mobile");
+    // sheet.getRangeByName("AE1").setText("Mother Email");
+    // sheet.getRangeByName("AF1").setText("Mother Aadhaar");
+    //
+    // sheet.getRangeByName("AG1").setText("Guardian Name");
+    // sheet.getRangeByName("AH1").setText("Guardian Occupation");
+    // sheet.getRangeByName("AI1").setText("Guardian Mobile");
+    // sheet.getRangeByName("AJ1").setText("Guardian Email");
+    // sheet.getRangeByName("AK1").setText("Guardian Aadhaar");
+    // sheet.getRangeByName("AL1").setText("Brother Studying Here");
+    // sheet.getRangeByName("AM1").setText("Brother Name");
+
+    var Data=await FirebaseFirestore.instance.collection("Reprint_document").where("usertype",isEqualTo: Usertype).get();
+
+    for(int i=0;i<Data.docs.length;i++){
+      sheet.getRangeByName("A${i + 2}").setText(Data.docs[i]['name'].toString());
+      sheet.getRangeByName("B${i + 2}").setText(Data.docs[i]['fathername'].toString());
+      sheet.getRangeByName("C${i + 2}").setText(Data.docs[i]['gender'].toString());
+      sheet.getRangeByName("D${i + 2}").setText(Data.docs[i]['phoneno'].toString());
+      sheet.getRangeByName("E${i + 2}").setText(Data.docs[i]['updatestatus'].toString());
+      sheet.getRangeByName("F${i + 2}").setText(Data.docs[i]['date'].toString());
+      sheet.getRangeByName("G${i + 2}").setText(Data.docs[i]['time'].toString());
+      // sheet.getRangeByName("H${i + 2}").setText(widget.studentData[i].dob);
+      // sheet.getRangeByName("I${i + 2}").setText(widget.studentData[i].gender);
+      // sheet.getRangeByName("J${i + 2}").setText(widget.studentData[i].address);
+      // sheet.getRangeByName("K${i + 2}").setText(widget.studentData[i].community);
+      // sheet.getRangeByName("L${i + 2}").setText(widget.studentData[i].house);
+      // sheet.getRangeByName("M${i + 2}").setText(widget.studentData[i].religion);
+      // sheet.getRangeByName("N${i + 2}").setText(widget.studentData[i].phone);
+      // sheet.getRangeByName("O${i + 2}").setText(widget.studentData[i].email);
+      // sheet.getRangeByName("P${i + 2}").setText(widget.studentData[i].aadhaarNumber);
+      // sheet.getRangeByName("Q${i + 2}").setText(widget.studentData[i].height);
+      // sheet.getRangeByName("R${i + 2}").setText(widget.studentData[i].weight);
+      // sheet.getRangeByName("S${i + 2}").setText(widget.studentData[i].emiNo);
+      // sheet.getRangeByName("T${i + 2}").setText(widget.studentData[i].modeOfTransport);
+      // sheet.getRangeByName("U${i + 2}").setText(widget.studentData[i].fatherName);
+      // sheet.getRangeByName("V${i + 2}").setText(widget.studentData[i].fatherOccupation);
+      // sheet.getRangeByName("W${i + 2}").setText(widget.studentData[i].fatherOfficeAddress);
+      // sheet.getRangeByName("X${i + 2}").setText(widget.studentData[i].fatherPhone);
+      // sheet.getRangeByName("Y${i + 2}").setText(widget.studentData[i].fatherEmail);
+      // sheet.getRangeByName("Z${i + 2}").setText(widget.studentData[i].fatherAadhaar);
+      //
+      // sheet.getRangeByName("AA${i + 2}").setText(widget.studentData[i].motherName);
+      // sheet.getRangeByName("AB${i + 2}").setText(widget.studentData[i].motherOccupation);
+      // sheet.getRangeByName("AC${i + 2}").setText(widget.studentData[i].motherOffice);
+      // sheet.getRangeByName("AD${i + 2}").setText(widget.studentData[i].motherPhone);
+      // sheet.getRangeByName("AE${i + 2}").setText(widget.studentData[i].motherEmail);
+      // sheet.getRangeByName("AF${i + 2}").setText(widget.studentData[i].motherAadhaar);
+      // sheet.getRangeByName("AG${i + 2}").setText(widget.studentData[i].guardianName);
+      // sheet.getRangeByName("AH${i + 2}").setText(widget.studentData[i].guardianOccupation);
+      // sheet.getRangeByName("AI${i + 2}").setText(widget.studentData[i].guardianPhone);
+      // sheet.getRangeByName("AJ${i + 2}").setText(widget.studentData[i].guardianEmail);
+      // sheet.getRangeByName("AK${i + 2}").setText(widget.studentData[i].guardianAadhaar);
+      // sheet.getRangeByName("AL${i + 2}").setText(widget.studentData[i].brotherStudyingHere);
+      // sheet.getRangeByName("AM${i + 2}").setText(widget.studentData[i].brotherName);
+    }
+
+
+    final List<int>bytes = workbook.saveAsStream();
+    workbook.dispose();
+
+    if(kIsWeb){
+      AnchorElement(href: 'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}')
+        ..setAttribute('download', 'Output.xlsx')
+        ..click();
+    }else {
+      final String path = (await getApplicationSupportDirectory()).path;
+      final String fileName = Platform.isWindows?'$path\\Student Data.xlsx':"$path/Student Data.xlsx";
+      final File file = File(fileName);
+      await file.writeAsBytes(bytes, flush: true);
+      OpenFile.open(fileName);
+    }
+  }
+
+
 
 }
 

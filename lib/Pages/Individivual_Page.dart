@@ -1,13 +1,21 @@
 
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart'as http;
+import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_xlsio/xlsio.dart' as ex;
 import 'package:universal_html/html.dart' as html;
+import 'package:universal_html/html.dart'  show AnchorElement;
+import 'package:flutter/foundation.dart'  show kIsWeb;
+import 'package:open_file/open_file.dart';
+
+
 
 class Infividual_Page extends StatefulWidget {
   const Infividual_Page({super.key});
@@ -29,9 +37,38 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
   @override
   void initState() {
     tabController=TabController(length: 3, vsync: this)  ;
+    usertyprfunc();
     // TODO: implement initState
     super.initState();
   }
+
+
+
+  int totalApliedcount=0;
+  usertyprfunc()async{
+    setState((){
+      totalApliedcount=0;
+    });
+    var data =await FirebaseFirestore.instance.collection("Users").
+    where('usertype',isEqualTo:'Individual').get();
+
+    for(int i=0;i<data.docs.length;i++){
+      var data2 =await FirebaseFirestore.instance.collection("Users").doc(data.docs[i].id).
+      collection("Histroy").where('count',isEqualTo:true).get();
+      setState((){
+        totalApliedcount= data2.docs.length;
+      });
+
+    }
+    print(totalApliedcount);
+
+
+  }
+
+  TextEditingController Serachcontroller=TextEditingController();
+  TextEditingController Datecontroller=TextEditingController();
+  String filterName="All";
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +112,179 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
                           fontSize: width / 57.57,
                           color: const Color(0xff000000)),
                     ),
+                    const SizedBox(width:10),
+
+                    totalApliedcount==0?const SizedBox():
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.green
+                      ),
+                      padding: EdgeInsets.all(2),
+                      child: Text(" New  -${totalApliedcount.toString()} ",
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:Colors.white),)),
 
 
+
+
+
+
+
+                  ],
+                ),
+              ),
+              SizedBox(height: height/41.143,),
+              Container(
+                width:1100,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                    color:Colors.blue,
+                    borderRadius: BorderRadius.circular(5)
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: width / 4.902,
+                      height: height / 16.42,
+                      //color: Color(0xff00A99D),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color:  Colors.white,
+                      ),
+                      child:
+                      Padding(
+                        padding:  EdgeInsets.only(left:8),
+                        child: TextField(
+                          controller: Serachcontroller,
+                          style: GoogleFonts.poppins(fontSize: width / 88.3,fontWeight: FontWeight.w600,color: Colors.black),
+                          decoration: InputDecoration(
+                              hintText: "Search here",
+                              helperStyle:GoogleFonts.poppins(fontSize: width / 88.3,fontWeight: FontWeight.w600,color: Colors.black),
+                              border: InputBorder.none,
+                              suffixIcon: const Icon(
+                                Icons.search_outlined,
+                                color: Colors.black,
+                              )
+                          ),
+                          onChanged: (value){
+                          if(value.isNotEmpty){
+                            setState(() {
+                              filterName=value;
+                            });
+                          }
+                          else{
+                            setState(() {
+                              filterName="All";
+                            });
+                          }
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 15,),
+
+
+
+                    ///Sorts by Date
+                    SizedBox(
+                      height:40,
+                      width:300,
+
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                              height:40,
+                              child: Center(child: Text("Sort By Date : ",
+                                style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:Colors.white),))),
+                          SizedBox(width: 5,),
+                          Container(
+                            width:180,
+                            height:40,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5)
+                            ),
+                            child: TextField(
+                              controller: Datecontroller,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(
+                                    bottom: width / 90.6, left: width / 91.06),
+                                hintText: "d/mm/yyyy",
+                                hintStyle:  GoogleFonts.openSans(color: Color(0xff00A99D)),
+                                border: InputBorder.none,
+                              ),
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    //DateTime.now() - not to allow to choose before today.
+                                    lastDate: DateTime.now());
+
+                                if (pickedDate != null) {
+                                  //pickedDate output format => 2021-03-10 00:00:00.000
+                                  String formattedDate =
+                                  DateFormat('d/M/yyyy').format(pickedDate);
+                                  setState(() {
+                                    Datecontroller.text=formattedDate;
+                                    filterName=formattedDate;
+                                  });
+                                  //formatted date output using intl package =>  2021-03-16
+                                }
+                              },
+                            ),
+
+                          ),
+
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 10,),
+
+                    InkWell(
+                      onTap:(){
+                        setState(() {
+                          Serachcontroller.clear();
+                          Datecontroller.clear();
+                          filterName="All";
+
+                        });},
+                      child: Container(
+                          height: height/16.275,
+                          width: width/9.66,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)
+                          ),
+                          child:Center(child: Text("Clear",style: GoogleFonts.poppins(fontWeight: FontWeight.w600),))
+                      ),
+                    ),
+
+                    SizedBox(width:30),
+
+                    InkWell(
+                      onTap:(){
+                        createExcel("Individual");
+                       },
+                      child:
+                      Container(
+                          height: height/16.275,
+                          width: width/9.66,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(5)
+                          ),
+                          child:Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.document_scanner_rounded,color:Colors.white,   size:width/55.888,),
+                              SizedBox(width:width/273.2),
+                              Text("Print Excel",style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color:Colors.white),),
+                            ],
+                          )
+                      ),
+                    ),
 
 
                   ],
@@ -228,140 +436,281 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
                                         var _Userdata=snapshot.data!.docs[index];
 
                                         if(_Userdata['usertype']=='Individual'){
-                                          return Row(
 
-                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                          if((_Userdata['name'].toString().toLowerCase().contains(filterName.toString().toLowerCase()))||(_Userdata['date']==filterName)){
+                                            return Row(
 
-
-                                            children: [
-
+                                              crossAxisAlignment: CrossAxisAlignment.center,
 
 
-                                              Container(
-                                                width: 300,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.black)
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    _Userdata["name"].toString(),
-                                                    style:
-                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              children: [
+
+
+
+                                                Container(
+                                                  width: 300,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
                                                   ),
-                                                ),
-                                              ),
-
-                                              Container(
-                                                width: 150,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.black)
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    _Userdata["phone"].toString(),
-                                                    style:
-                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              Container(
-                                                width: 150,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.black)
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    _Userdata["walletamount"].toString(),
-                                                    style:
-                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              Container(
-                                                width: 150,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.black)
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    _Userdata["payment"].toString(),
-                                                    style:
-                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              Container(
-                                                width: 150,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.black)
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    _Userdata["usageccount"].toString(),
-                                                    style:
-                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              Container(
-                                                width: 200,
-                                                height: 40,
-                                                decoration: BoxDecoration(
-                                                    border: Border.all(color: Colors.black)
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                  children: [
-                                                    InkWell(
-                                                      onTap: (){
-                                                        setState(() {
-                                                          isviewcollection=1;
-                                                          viewhistroy=1;
-                                                          Userdocuid=_Userdata.id.toString();
-                                                        });
-
-                                                      },
-                                                      child: Container(
-                                                          width: 100,
-                                                          height: 30,
-                                                          decoration: BoxDecoration(
-                                                              color: Colors.green,
-                                                              borderRadius: BorderRadius.circular(8)
-                                                          ),
-                                                          child: Center(child: const Text("View User",style: TextStyle(color: Colors.white),))
-                                                      ),
+                                                  child: Center(
+                                                    child:
+                                                    Text(
+                                                      _Userdata["name"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                                     ),
-                                                    // InkWell(
-                                                    //   onTap: (){
-                                                    //     ///delete popup
-                                                    //     _deletepopup(_Userdata.id);
-                                                    //   },
-                                                    //   child: SizedBox(
-                                                    //       width: 40,
-                                                    //       height: 40,
-                                                    //       child: Center(child: const Icon(Icons.delete))
-                                                    //   ),
-                                                    // ),
-                                                  ],
+                                                  ),
                                                 ),
-                                              ),
+
+                                                Container(
+                                                  width: 150,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      _Userdata["phone"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 150,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      _Userdata["walletamount"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 150,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      _Userdata["payment"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 150,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      _Userdata["usageccount"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 200,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: (){
+                                                          setState(() {
+                                                            isviewcollection=1;
+                                                            viewhistroy=1;
+                                                            Userdocuid=_Userdata.id.toString();
+                                                          });
+
+                                                        },
+                                                        child: Container(
+                                                            width: 100,
+                                                            height: 30,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors.green,
+                                                                borderRadius: BorderRadius.circular(8)
+                                                            ),
+                                                            child: Center(child: const Text("View User",style: TextStyle(color: Colors.white),))
+                                                        ),
+                                                      ),
+                                                      // InkWell(
+                                                      //   onTap: (){
+                                                      //     ///delete popup
+                                                      //     _deletepopup(_Userdata.id);
+                                                      //   },
+                                                      //   child: SizedBox(
+                                                      //       width: 40,
+                                                      //       height: 40,
+                                                      //       child: Center(child: const Icon(Icons.delete))
+                                                      //   ),
+                                                      // ),
+                                                    ],
+                                                  ),
+                                                ),
 
 
 
 
 
 
-                                            ],
-                                          );
+                                              ],
+                                            );
+                                          }
+                                          if(filterName=="All"){
+                                            return Row(
+
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+
+
+                                              children: [
+
+
+
+                                                Container(
+                                                  width: 300,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Center(
+                                                    child:
+                                                    Text(
+                                                      _Userdata["name"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 150,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      _Userdata["phone"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 150,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      _Userdata["walletamount"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 150,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      _Userdata["payment"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 150,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      _Userdata["usageccount"].toString(),
+                                                      style:
+                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                    ),
+                                                  ),
+                                                ),
+
+                                                Container(
+                                                  width: 200,
+                                                  height: 40,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(color: Colors.black)
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: (){
+                                                          setState(() {
+                                                            isviewcollection=1;
+                                                            viewhistroy=1;
+                                                            Userdocuid=_Userdata.id.toString();
+                                                          });
+
+                                                        },
+                                                        child: Container(
+                                                            width: 100,
+                                                            height: 30,
+                                                            decoration: BoxDecoration(
+                                                                color: Colors.green,
+                                                                borderRadius: BorderRadius.circular(8)
+                                                            ),
+                                                            child: Center(child: const Text("View User",style: TextStyle(color: Colors.white),))
+                                                        ),
+                                                      ),
+                                                      // InkWell(
+                                                      //   onTap: (){
+                                                      //     ///delete popup
+                                                      //     _deletepopup(_Userdata.id);
+                                                      //   },
+                                                      //   child: SizedBox(
+                                                      //       width: 40,
+                                                      //       height: 40,
+                                                      //       child: Center(child: const Icon(Icons.delete))
+                                                      //   ),
+                                                      // ),
+                                                    ],
+                                                  ),
+                                                ),
+
+
+
+
+
+
+                                              ],
+                                            );
+                                          }
                                         }
                                         return const SizedBox();
 
@@ -1126,7 +1475,7 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
                                                     ),
                                                     child: Center(
                                                       child: Text(
-                                                        applieddata['updatestatus'].toString(),
+                                              applieddata['updatestatus'].toString()==""?"-":   applieddata['updatestatus'].toString(),
                                                         style:
                                                         GoogleFonts.poppins(fontSize: 14, color: Colors.indigo,fontWeight:FontWeight.w700),
                                                       ),
@@ -1456,7 +1805,7 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
                                                     ),
                                                     child: Center(
                                                       child: Text(
-                                                        applieddata['updatestatus'].toString(),
+                                                        applieddata['updatestatus'].toString()==""?"-":   applieddata['updatestatus'].toString(),
                                                         style:
                                                         GoogleFonts.poppins(fontSize: 14, color:  Colors.green,fontWeight:FontWeight.w700),
                                                       ),
@@ -1796,7 +2145,7 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
             duration: Duration(seconds: 1),
             curve: Curves.easeIn,
             height: 600,
-            width: 320,
+            width: width/4.2687,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white54.withOpacity(0.9),
@@ -1977,7 +2326,7 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
                       Container(
                           height: 30,
                           width: 280,
-                          child: Text("Status: ${status}",style: GoogleFonts.poppins(
+                          child: Text("Status: ${status==""?"-":status}",style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               textStyle: TextStyle(
                                   overflow: TextOverflow.ellipsis
@@ -2046,7 +2395,7 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
             duration: Duration(seconds: 1),
             curve: Curves.easeIn,
             height: 400,
-            width: 320,
+            width: width/4.2687,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white54.withOpacity(0.9),
@@ -2125,7 +2474,7 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
                 Container(
                     height: 30,
                     width: 400,
-                    child: Text("Status: ${updatestatus}",style: GoogleFonts.poppins(
+                    child: Text("Status: ${updatestatus==""?"-":updatestatus}",style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         textStyle: TextStyle(
                             overflow: TextOverflow.ellipsis
@@ -2427,6 +2776,116 @@ class _Infividual_PageState extends State<Infividual_Page> with SingleTickerProv
       a.remove();
     } catch (e) {
       print(e);
+    }
+  }
+
+   createExcel(Usertype)async{
+
+    final ex.Workbook workbook = ex.Workbook();
+    final ex.Worksheet sheet   = workbook.worksheets[0];
+
+
+    sheet.getRangeByName("A1").setText("Name");
+    sheet.getRangeByName("B1").setText("Phone");
+    sheet.getRangeByName("C1").setText("Wallet Amount");
+    sheet.getRangeByName("D1").setText("Payment");
+    sheet.getRangeByName("E1").setText("Applied count");
+    // sheet.getRangeByName("F1").setText("Academic Year");
+    // sheet.getRangeByName("G1").setText("Blood Group");
+    // sheet.getRangeByName("H1").setText("Date of Birth");
+    // sheet.getRangeByName("I1").setText("Gender");
+    // sheet.getRangeByName("J1").setText("Address");
+    // sheet.getRangeByName("K1").setText("Community");
+    // sheet.getRangeByName("L1").setText("House");
+    // sheet.getRangeByName("M1").setText("Religion");
+    // sheet.getRangeByName("N1").setText("Mobile");
+    // sheet.getRangeByName("O1").setText("Email");
+    // sheet.getRangeByName("P1").setText("Aadhaar No");
+    // sheet.getRangeByName("Q1").setText("Height (CMS)");
+    // sheet.getRangeByName("R1").setText("Weight (KG)");
+    // sheet.getRangeByName("S1").setText("EMIS");
+    // sheet.getRangeByName("T1").setText("Transport");
+    // sheet.getRangeByName("U1").setText("Father Name");
+    // sheet.getRangeByName("V1").setText("Father Occupation");
+    // sheet.getRangeByName("W1").setText("Father Office");
+    // sheet.getRangeByName("X1").setText("Father Mobile");
+    // sheet.getRangeByName("Y1").setText("Father Email");
+    // sheet.getRangeByName("Z1").setText("Father Aadhaar");
+    //
+    // sheet.getRangeByName("AA1").setText("Mother Name");
+    // sheet.getRangeByName("AB1").setText("Mother Occupation");
+    // sheet.getRangeByName("AC1").setText("Mother Office");
+    // sheet.getRangeByName("AD1").setText("Mother Mobile");
+    // sheet.getRangeByName("AE1").setText("Mother Email");
+    // sheet.getRangeByName("AF1").setText("Mother Aadhaar");
+    //
+    // sheet.getRangeByName("AG1").setText("Guardian Name");
+    // sheet.getRangeByName("AH1").setText("Guardian Occupation");
+    // sheet.getRangeByName("AI1").setText("Guardian Mobile");
+    // sheet.getRangeByName("AJ1").setText("Guardian Email");
+    // sheet.getRangeByName("AK1").setText("Guardian Aadhaar");
+    // sheet.getRangeByName("AL1").setText("Brother Studying Here");
+    // sheet.getRangeByName("AM1").setText("Brother Name");
+
+    var Data=await FirebaseFirestore.instance.collection("Users").where("usertype",isEqualTo: Usertype).get();
+
+    for(int i=0;i<Data.docs.length;i++){
+      sheet.getRangeByName("A${i + 2}").setText(Data.docs[i]['name'].toString());
+      sheet.getRangeByName("B${i + 2}").setText(Data.docs[i]['phone'].toString());
+      sheet.getRangeByName("C${i + 2}").setText(Data.docs[i]['walletamount'].toString());
+      sheet.getRangeByName("D${i + 2}").setText(Data.docs[i]['payment'].toString());
+      sheet.getRangeByName("E${i + 2}").setText(Data.docs[i]['usageccount'].toString());
+      // sheet.getRangeByName("F${i + 2}").setText(widget.studentData[i].academicYear);
+      // sheet.getRangeByName("G${i + 2}").setText(widget.studentData[i].bloodGroup);
+      // sheet.getRangeByName("H${i + 2}").setText(widget.studentData[i].dob);
+      // sheet.getRangeByName("I${i + 2}").setText(widget.studentData[i].gender);
+      // sheet.getRangeByName("J${i + 2}").setText(widget.studentData[i].address);
+      // sheet.getRangeByName("K${i + 2}").setText(widget.studentData[i].community);
+      // sheet.getRangeByName("L${i + 2}").setText(widget.studentData[i].house);
+      // sheet.getRangeByName("M${i + 2}").setText(widget.studentData[i].religion);
+      // sheet.getRangeByName("N${i + 2}").setText(widget.studentData[i].phone);
+      // sheet.getRangeByName("O${i + 2}").setText(widget.studentData[i].email);
+      // sheet.getRangeByName("P${i + 2}").setText(widget.studentData[i].aadhaarNumber);
+      // sheet.getRangeByName("Q${i + 2}").setText(widget.studentData[i].height);
+      // sheet.getRangeByName("R${i + 2}").setText(widget.studentData[i].weight);
+      // sheet.getRangeByName("S${i + 2}").setText(widget.studentData[i].emiNo);
+      // sheet.getRangeByName("T${i + 2}").setText(widget.studentData[i].modeOfTransport);
+      // sheet.getRangeByName("U${i + 2}").setText(widget.studentData[i].fatherName);
+      // sheet.getRangeByName("V${i + 2}").setText(widget.studentData[i].fatherOccupation);
+      // sheet.getRangeByName("W${i + 2}").setText(widget.studentData[i].fatherOfficeAddress);
+      // sheet.getRangeByName("X${i + 2}").setText(widget.studentData[i].fatherPhone);
+      // sheet.getRangeByName("Y${i + 2}").setText(widget.studentData[i].fatherEmail);
+      // sheet.getRangeByName("Z${i + 2}").setText(widget.studentData[i].fatherAadhaar);
+      //
+      // sheet.getRangeByName("AA${i + 2}").setText(widget.studentData[i].motherName);
+      // sheet.getRangeByName("AB${i + 2}").setText(widget.studentData[i].motherOccupation);
+      // sheet.getRangeByName("AC${i + 2}").setText(widget.studentData[i].motherOffice);
+      // sheet.getRangeByName("AD${i + 2}").setText(widget.studentData[i].motherPhone);
+      // sheet.getRangeByName("AE${i + 2}").setText(widget.studentData[i].motherEmail);
+      // sheet.getRangeByName("AF${i + 2}").setText(widget.studentData[i].motherAadhaar);
+      // sheet.getRangeByName("AG${i + 2}").setText(widget.studentData[i].guardianName);
+      // sheet.getRangeByName("AH${i + 2}").setText(widget.studentData[i].guardianOccupation);
+      // sheet.getRangeByName("AI${i + 2}").setText(widget.studentData[i].guardianPhone);
+      // sheet.getRangeByName("AJ${i + 2}").setText(widget.studentData[i].guardianEmail);
+      // sheet.getRangeByName("AK${i + 2}").setText(widget.studentData[i].guardianAadhaar);
+      // sheet.getRangeByName("AL${i + 2}").setText(widget.studentData[i].brotherStudyingHere);
+      // sheet.getRangeByName("AM${i + 2}").setText(widget.studentData[i].brotherName);
+    }
+
+
+    final List<int>bytes = workbook.saveAsStream();
+    workbook.dispose();
+
+    if(kIsWeb){
+      AnchorElement(href: 'data:application/octet-stream;charset=utf-16le;base64,${base64.encode(bytes)}')
+        ..setAttribute('download', 'Output.xlsx')
+        ..click();
+    }else {
+      final String path = (await getApplicationSupportDirectory()).path;
+      final String fileName = Platform.isWindows?'$path\\Student Data.xlsx':"$path/Student Data.xlsx";
+      final File file = File(fileName);
+      await file.writeAsBytes(bytes, flush: true);
+      OpenFile.open(fileName);
     }
   }
 

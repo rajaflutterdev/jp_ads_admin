@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-class Permissions_Page extends StatefulWidget {
-  String Usertype;
-   Permissions_Page({ required this.Usertype});
+import '../const.dart';
 
+class Permissions_Page extends StatefulWidget {
+String ?Username;
+Permissions_Page({this.Username});
   @override
   State<Permissions_Page> createState() => _Permissions_PageState();
 }
@@ -53,6 +55,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
   }
 
   staffpermision() async {
+
+    print("User Document idddddddddddddddddddddddddddddddddddddddddddddddddddddd");
+    print(FirebaseAuth.instance.currentUser!.uid);
+
     setState(() {
       PermissionLis.clear();
       list.clear();
@@ -66,124 +72,113 @@ class _Permissions_PageState extends State<Permissions_Page> {
         list.add(doc1.docs[i]['username']);
       });
     }
-
-    var document = await FirebaseFirestore.instance.collection("AdminUser").where("username",isEqualTo:widget.Usertype).get();
-    for(int j=0;j<document.docs.length;j++){
-      setState(() {
-        Userdocid=document.docs[j].id;
-      });
-
-      for(int i=0;i<document.docs[j]['permission'].length;i++){
-        if(document.docs[j]['permission'][i]=="Dashboard"){
-          setState(() {
-            dashboard=true;
-            PermissionLis.add("Dashboard");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Distributor user"){
-          setState(() {
-            Distributorisuser=true;
-            PermissionLis.add("Distributor user");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Distributor applied"){
-          setState(() {
-            Distributorappiled=true;
-            PermissionLis.add("Distributor applied");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Distributor correction"){
-          setState(() {
-            Distributorcorrection=true;
-            PermissionLis.add("Distributor correction");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Distributor reports"){
-          setState(() {
-            Distributorreports=true;
-            PermissionLis.add("Distributor reports");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Individual user"){
-          setState(() {
-            Indicidualuser=true;
-            PermissionLis.add("Individual user");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Individual applied"){
-          setState(() {
-            Indicidualapplied=true;
-            PermissionLis.add("Individual applied");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Individual correction"){
-          setState(() {
-            Indicidualcorrection=true;
-            PermissionLis.add("Individual correction");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Individual reports"){
-          setState(() {
-            Indicidualreports=true;
-            PermissionLis.add("Individual reports");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Notification"){
-          setState(() {
-            Notification=true;
-            PermissionLis.add("Notification");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Slider"){
-          setState(() {
-            Slider=true;
-            PermissionLis.add("Slider");
-          });
-        }
-        if(document.docs[j]['permission'][i]=="Minor Pancard"){
-          setState(() {
-            minor_Tab=true;
-            PermissionLis.add("Minor Pancard");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Forms"){
-          setState(() {
-            forms=true;
-            PermissionLis.add("Forms");
-          });
-        }
-
-        if(document.docs[j]['permission'][i]=="Support"){
-          setState(() {
-            supports=true;
-            PermissionLis.add("Support");
-          });
-        }
-        if(document.docs[j]['permission'][i]=="FAQ"){
-          setState(() {
-            faq=true;
-            PermissionLis.add("FAQ");
-          });
-        }
-
-
-
+       print(":list fo dicument");
+       print(list);
+    var document = await FirebaseFirestore.instance.collection("AdminUser").where("username",isEqualTo:widget.Username).get();
+  for(int j=0;j<document.docs.length;j++){
+    for(int i=0;i<document.docs[j]['permission'].length;i++){
+      if(document.docs[j]['permission'][i]=="Dashboard"){
+        setState(() {
+          dashboard=true;
+          PermissionLis.add("Dashboard");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Distributor Users"){
+        setState(() {
+          Distributorisuser=true;
+          PermissionLis.add("Distributor Users");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Distributor New Applied"){
+        setState(() {
+          Distributorappiled=true;
+          PermissionLis.add("Distributor New Applied");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Distributor Correction"){
+        setState(() {
+          Distributorcorrection=true;
+          PermissionLis.add("Distributor Correction");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Distributor Reports"){
+        setState(() {
+          Distributorreports=true;
+          PermissionLis.add("Distributor Reports");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Individual Users"){
+        setState(() {
+          Indicidualuser=true;
+          PermissionLis.add("Individual Users");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Individual New Applied"){
+        setState(() {
+          Indicidualapplied=true;
+          PermissionLis.add("Individual New Applied");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Individual Correction"){
+        setState(() {
+          Indicidualcorrection=true;
+          PermissionLis.add("Individual Correction");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Individual Reports"){
+        setState(() {
+          Indicidualreports=true;
+          PermissionLis.add("Individual Reports");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Notification"){
+        setState(() {
+          Notification=true;
+          PermissionLis.add("Notification");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Sliders"){
+        setState(() {
+          Slider=true;
+          PermissionLis.add("Sliders");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Minor Pancard"){
+        setState(() {
+          minor_Tab=true;
+          PermissionLis.add("Minor Pancard");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Forms"){
+        setState(() {
+          forms=true;
+          PermissionLis.add("Forms");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Support"){
+        setState(() {
+          supports=true;
+          PermissionLis.add("Support");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="FAQ"){
+        setState(() {
+          faq=true;
+          PermissionLis.add("FAQ");
+        });
       }
     }
     setState(() {
-      Uservalue=widget.Usertype!;
+      Uservalue=document.docs[j]['username'];
     });
+  }
+
+
+
+
+    print("End of the fuinctionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+    print("End of the fuinctionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+    print("End of the fuinctionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
 
   }
 
@@ -332,10 +327,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       Distributorisuser =
                                       !Distributorisuser;
                                       if (Distributorisuser == true) {
-                                        PermissionLis.add("Distributor user");
+                                        PermissionLis.add("Distributor Users");
                                       }
                                       else{
-                                        PermissionLis.remove("Distributor user");
+                                        PermissionLis.remove("Distributor Users");
                                       }
                                     });
                                   }),
@@ -356,10 +351,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       !Distributorappiled;
                                     });
                                     if (Distributorappiled == true) {
-                                      PermissionLis.add("Distributor applied");
+                                      PermissionLis.add("Distributor New Applied");
                                     }
                                     else{
-                                      PermissionLis.remove("Distributor applied");
+                                      PermissionLis.remove("Distributor New Applied");
                                     }
                                   }),
                               SizedBox(width: 5,),
@@ -379,10 +374,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       !Distributorcorrection;
                                     });
                                     if (Distributorcorrection == true) {
-                                      PermissionLis.add("Distributor correction");
+                                      PermissionLis.add("Distributor Correction");
                                     }
                                     else{
-                                      PermissionLis.remove("Distributor correction");
+                                      PermissionLis.remove("Distributor Correction");
                                     }
 
                                   }),
@@ -403,10 +398,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       !Distributorreports;
                                     });
                                     if (Distributorreports == true) {
-                                      PermissionLis.add("Distributor reports");
+                                      PermissionLis.add("Distributor Reports");
                                     }
                                     else{
-                                      PermissionLis.remove("Distributor reports");
+                                      PermissionLis.remove("Distributor Reports");
                                     }
                                   }),
                               SizedBox(width: 5,),
@@ -432,10 +427,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       !Indicidualuser;
                                     });
                                     if (Indicidualuser == true) {
-                                      PermissionLis.add("Individual user");
+                                      PermissionLis.add("Individual Users");
                                     }
                                     else{
-                                      PermissionLis.remove("Individual user");
+                                      PermissionLis.remove("Individual Users");
                                     }
                                   }),
                               SizedBox(width: 5,),
@@ -455,10 +450,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       !Indicidualapplied;
                                     });
                                     if (Indicidualapplied == true) {
-                                      PermissionLis.add("Individual applied");
+                                      PermissionLis.add("Individual New Applied");
                                     }
                                     else{
-                                      PermissionLis.remove("Individual applied");
+                                      PermissionLis.remove("Individual New Applied");
                                     }
                                   }),
                               SizedBox(width: 5,),
@@ -478,10 +473,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       !Indicidualcorrection;
                                     });
                                     if (Indicidualcorrection == true) {
-                                      PermissionLis.add("Individual correction");
+                                      PermissionLis.add("Individual Correction");
                                     }
                                     else{
-                                      PermissionLis.remove("Individual correction");
+                                      PermissionLis.remove("Individual Correction");
                                     }
                                   }),
                               SizedBox(width: 5,),
@@ -501,10 +496,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       !Indicidualreports;
                                     });
                                     if (Indicidualreports == true) {
-                                      PermissionLis.add("Individual reports");
+                                      PermissionLis.add("Individual Reports");
                                     }
                                     else{
-                                      PermissionLis.remove("Individual reports");
+                                      PermissionLis.remove("Individual Reports");
                                     }
                                   }),
                               SizedBox(width: 5,),
@@ -523,10 +518,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       Slider = !Slider;
                                     });
                                     if (Slider == true) {
-                                      PermissionLis.add("Slider");
+                                      PermissionLis.add("Sliders");
                                     }
                                     else{
-                                      PermissionLis.remove("Slider");
+                                      PermissionLis.remove("Sliders");
                                     }
                                   }),
                               SizedBox(width: 5,),
@@ -606,7 +601,7 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                     }
                                   }),
                               SizedBox(width: 5,),
-                              Text("Minor Pancard"),
+                              Text("Forms"),
                             ],
                           ),
                         ),
@@ -1020,7 +1015,6 @@ class _Permissions_PageState extends State<Permissions_Page> {
     print("Entereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
     setState(() {
       PermissionLis.clear();
-
        dashboard = false;
        Distributorisuser = false;
        Distributorappiled = false;
@@ -1033,6 +1027,9 @@ class _Permissions_PageState extends State<Permissions_Page> {
        Slider = false;
        minor_Tab = false;
        Indicidualreports = false;
+       forms = false;
+       supports = false;
+       faq = false;
     });
     var document = await FirebaseFirestore.instance.collection("AdminUser").where("username",isEqualTo:value).get();
     for(int j=0;j<document.docs.length;j++){
@@ -1048,83 +1045,90 @@ class _Permissions_PageState extends State<Permissions_Page> {
             PermissionLis.add("Dashboard");
           });
         }
-        if(document.docs[j]['permission'][i]=="Distributor user"){
+        if(document.docs[j]['permission'][i]=="Distributor Users"){
           setState(() {
             Distributorisuser=true;
-            PermissionLis.add("Distributor user");
+            PermissionLis.add("Distributor Users");
           });
         }
-
-        if(document.docs[j]['permission'][i]=="Distributor applied"){
+        if(document.docs[j]['permission'][i]=="Distributor New Applied"){
           setState(() {
             Distributorappiled=true;
-            PermissionLis.add("Distributor applied");
+            PermissionLis.add("Distributor New Applied");
           });
         }
-
-        if(document.docs[j]['permission'][i]=="Distributor correction"){
+        if(document.docs[j]['permission'][i]=="Distributor Correction"){
           setState(() {
             Distributorcorrection=true;
-            PermissionLis.add("Distributor correction");
+            PermissionLis.add("Distributor Correction");
           });
         }
-
-        if(document.docs[j]['permission'][i]=="Distributor reports"){
+        if(document.docs[j]['permission'][i]=="Distributor Reports"){
           setState(() {
             Distributorreports=true;
-            PermissionLis.add("Distributor reports");
+            PermissionLis.add("Distributor Reports");
           });
         }
-
-        if(document.docs[j]['permission'][i]=="Individual user"){
+        if(document.docs[j]['permission'][i]=="Individual Users"){
           setState(() {
             Indicidualuser=true;
-            PermissionLis.add("Individual user");
+            PermissionLis.add("Individual Users");
           });
         }
-
-        if(document.docs[j]['permission'][i]=="Individual applied"){
+        if(document.docs[j]['permission'][i]=="Individual New Applied"){
           setState(() {
             Indicidualapplied=true;
-            PermissionLis.add("Individual applied");
+            PermissionLis.add("Individual New Applied");
           });
         }
-
-        if(document.docs[j]['permission'][i]=="Individual correction"){
+        if(document.docs[j]['permission'][i]=="Individual Correction"){
           setState(() {
             Indicidualcorrection=true;
-            PermissionLis.add("Individual correction");
+            PermissionLis.add("Individual Correction");
           });
         }
-
-        if(document.docs[j]['permission'][i]=="Individual reports"){
+        if(document.docs[j]['permission'][i]=="Individual Reports"){
           setState(() {
             Indicidualreports=true;
-            PermissionLis.add("Individual reports");
+            PermissionLis.add("Individual Reports");
           });
         }
-
         if(document.docs[j]['permission'][i]=="Notification"){
           setState(() {
             Notification=true;
             PermissionLis.add("Notification");
           });
         }
-
-        if(document.docs[j]['permission'][i]=="Silders"){
+        if(document.docs[j]['permission'][i]=="Sliders"){
           setState(() {
             Slider=true;
-            PermissionLis.add("Silders");
+            PermissionLis.add("Sliders");
           });
         }
-
         if(document.docs[j]['permission'][i]=="Minor Pancard"){
           setState(() {
             minor_Tab=true;
             PermissionLis.add("Minor Pancard");
           });
         }
-
+        if(document.docs[j]['permission'][i]=="Forms"){
+          setState(() {
+            forms=true;
+            PermissionLis.add("Forms");
+          });
+        }
+        if(document.docs[j]['permission'][i]=="Support"){
+          setState(() {
+            supports=true;
+            PermissionLis.add("Support");
+          });
+        }
+        if(document.docs[j]['permission'][i]=="FAQ"){
+          setState(() {
+            faq=true;
+            PermissionLis.add("FAQ");
+          });
+        }
       }
     }
   }
@@ -1431,6 +1435,5 @@ class _Permissions_PageState extends State<Permissions_Page> {
         },);
     },);
   }
-
 
 }
