@@ -91,7 +91,7 @@ class _Form_PageState extends State<Form_Page> {
                     //     color: Colors.green,
                     //     child: Container(
                     //       height:40,
-                    //       width:100,
+                    //       width: width/13.66,
                     //       decoration: BoxDecoration(
                     //           borderRadius: BorderRadius.circular(100),
                     //           color: Colors.green
@@ -109,8 +109,8 @@ class _Form_PageState extends State<Form_Page> {
                 ),
               ),
               SizedBox(height: height/41.143,),
-
-                  SizedBox(
+              SizedBox(
+                    height:580,
                     width:1100,
                     child: SingleChildScrollView(
                       physics: NeverScrollableScrollPhysics(),
@@ -421,32 +421,30 @@ class _Form_PageState extends State<Form_Page> {
                               ],
                             ),
                           ),
+
                           SizedBox(height:20),
-                          Material( color: const Color(0xffd8e6ff),
-                            elevation: 20,
-                            shadowColor: Colors.black12,
-                            child: Container(
-                              width:1100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color:  const Color(0xffd8e6ff),
-                              ),
-                              child:
-                              SingleChildScrollView(
-                                physics: const NeverScrollableScrollPhysics(),
-                                child: Column(
-                                  children: [
-                                    Row(
+
+                          SizedBox(
+                            height:436,
+                            width:1100,
+                            child:
+                            SingleChildScrollView(
+                              physics: const ScrollPhysics(),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4),
+                                      color:  const Color(0xffd8e6ff),
+                                    ),
+                                    child: Row(
 
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
 
-                                        Container(
+                                        SizedBox(
                                           width: 50,
                                           height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
                                           child: Center(
                                             child: Text(
                                               "Si.No",
@@ -456,12 +454,9 @@ class _Form_PageState extends State<Form_Page> {
                                           ),
                                         ),
 
-                                        Container(
+                                        SizedBox(
                                           width: 650,
                                           height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
                                           child: Center(
                                             child: Text(
                                               "File Name",
@@ -471,12 +466,9 @@ class _Form_PageState extends State<Form_Page> {
                                           ),
                                         ),
 
-                                        Container(
+                                        SizedBox(
                                           width: 200,
                                           height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
                                           child: Center(
                                             child: Text(
                                               "Date",
@@ -486,12 +478,9 @@ class _Form_PageState extends State<Form_Page> {
                                           ),
                                         ),
 
-                                        Container(
+                                        SizedBox(
                                           width: 200,
                                           height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
                                           child: Center(
                                             child: Text(
                                               "Actions",
@@ -504,161 +493,155 @@ class _Form_PageState extends State<Form_Page> {
 
                                       ],
                                     ),
-                                    StreamBuilder(
-                                      stream: FirebaseFirestore.instance.collection("Forms").orderBy("timestamp").snapshots(),
-                                      builder: (context, snapshot) {
+                                  ),
+                                  SizedBox(height:8),
+                                  StreamBuilder(
+                                    stream: FirebaseFirestore.instance.collection("Forms").orderBy("timestamp").snapshots(),
+                                    builder: (context, snapshot) {
 
-                                        if(snapshot.hasData==null){
-                                          return const Center(child: CircularProgressIndicator(),);
-                                        }
-                                        if(!snapshot.hasData){
-                                          return const Center(child: CircularProgressIndicator(),);
-                                        }
+                                      if(snapshot.hasData==null){
+                                        return const Center(child: CircularProgressIndicator(),);
+                                      }
+                                      if(!snapshot.hasData){
+                                        return const Center(child: CircularProgressIndicator(),);
+                                      }
 
-                                        return ListView.builder(
-                                          shrinkWrap: true,
-                                          physics: const NeverScrollableScrollPhysics(),
-                                          itemCount: snapshot.data!.docs.length,
-                                          itemBuilder: (context, index) {
+                                      return ListView.builder(
+                                        shrinkWrap: true,
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        itemCount: snapshot.data!.docs.length,
+                                        itemBuilder: (context, index) {
 
-                                            var data=snapshot.data!.docs[index];
-                                            return
-                                              Row(
+                                          var data=snapshot.data!.docs[index];
+                                          return
+                                            Padding(
+                                              padding:  EdgeInsets.only(bottom:8),
+                                              child: Material(
+                                                color: Color(0xffFFFFFF),
+                                                elevation: 20,
+                                                borderRadius: BorderRadius.circular(4),
+                                                shadowColor: Colors.black12,
+                                                child: SizedBox(
+                                                  height:50,
+                                                  child: Row(
 
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
 
-                                                children: [
+                                                    children: [
 
 
-                                                  Container(
-                                                    width: 50,
-                                                    height: 45,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        (index+1).toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: 650,
-                                                    height: 45,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        data['filename'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: 200,
-                                                    height: 45,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        data['date'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: 200,
-                                                    height: 45,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child:
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                      children: [
-
-                                                        InkWell(
-                                                          onTap:(){
-                                                            _deletepopup(data.id);
-                                                          },
-                                                          child: Material(
-
-                                                            borderRadius: BorderRadius.circular(100),
-                                                            color: Colors.white,
-                                                            child: Container(
-                                                              height:31,
-                                                              width:80,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(100),
-                                                                  color: Colors.white
-                                                              ),
-                                                              child: Center(child: Icon(Icons.delete)),
-                                                            ),
-                                                            elevation: 10,
+                                                      SizedBox(
+                                                        width: 50,
+                                                        height: 45,
+                                                        child: Center(
+                                                          child: Text(
+                                                            (index+1).toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                                           ),
                                                         ),
+                                                      ),
 
-                                                        InkWell(
-                                                          onTap:(){
-                                                            if(viewtab==1){
-                                                              editcontrollerclearfun();
-                                                            }else{
-                                                              setState(() {
-                                                                viewtab=1;
-                                                              });
-                                                              editdatafun(data.id);
-                                                            }
-                                                          },
-                                                          child: Material(
-
-                                                            borderRadius: BorderRadius.circular(100),
-                                                            color: Colors.white,
-                                                            child: Container(
-                                                              height:31,
-                                                              width:80,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(100),
-                                                                  color: Colors.white
-                                                              ),
-                                                              child: Center(child:
-                                                              data.id==documentId?Icon(Icons.clear):
-                                                              Icon(Icons.edit)),
-                                                            ),
-                                                            elevation: 10,
+                                                      SizedBox(
+                                                        width: 650,
+                                                        height: 45,
+                                                        child: Center(
+                                                          child: Text(
+                                                            data['filename'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                                           ),
                                                         ),
+                                                      ),
 
-                                                      ],
-                                                    ),
+                                                      SizedBox(
+                                                        width: 200,
+                                                        height: 45,
+                                                        child: Center(
+                                                          child: Text(
+                                                            data['date'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: 200,
+                                                        height: 45,
+                                                        child:
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                          children: [
+
+                                                            InkWell(
+                                                              onTap:(){
+                                                                _deletepopup(data.id);
+                                                              },
+                                                              child: Material(
+
+                                                                borderRadius: BorderRadius.circular(100),
+                                                                color: Colors.white,
+                                                                child: Container(
+                                                                  height:31,
+                                                                  width:80,
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius: BorderRadius.circular(100),
+                                                                      color: Colors.white
+                                                                  ),
+                                                                  child: Center(child: Icon(Icons.delete)),
+                                                                ),
+                                                                elevation: 10,
+                                                              ),
+                                                            ),
+
+                                                            InkWell(
+                                                              onTap:(){
+                                                                if(viewtab==1){
+                                                                  editcontrollerclearfun();
+                                                                }else{
+                                                                  setState(() {
+                                                                    viewtab=1;
+                                                                  });
+                                                                  editdatafun(data.id);
+                                                                }
+                                                              },
+                                                              child: Material(
+
+                                                                borderRadius: BorderRadius.circular(100),
+                                                                color: Colors.white,
+                                                                child: Container(
+                                                                  height:31,
+                                                                  width:80,
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius: BorderRadius.circular(100),
+                                                                      color: Colors.white
+                                                                  ),
+                                                                  child: Center(child:
+                                                                  data.id==documentId?Icon(Icons.clear):
+                                                                  Icon(Icons.edit)),
+                                                                ),
+                                                                elevation: 10,
+                                                              ),
+                                                            ),
+
+                                                          ],
+                                                        ),
+                                                      ),
+
+                                                    ],
                                                   ),
-
-
-
-
-
-
-
-
-                                                ],
-                                              );
-                                          },);
-                                      },
-                                    ),
-                                  ],
-                                ),
+                                                ),
+                                              ),
+                                            );
+                                        },);
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                          SizedBox(height:40),
+                          SizedBox(height:20),
                         ],
                       ),
                     ),

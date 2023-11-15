@@ -26,7 +26,6 @@ class Corretion_List_Page extends StatefulWidget {
 class _Corretion_List_PageState extends State<Corretion_List_Page> {
 
 
-
   List<String> StuatusList=[];
   String filterName='';
   int totalApliedcount=0;
@@ -83,7 +82,7 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Padding(
-      padding:  EdgeInsets.only(left:10),
+      padding:  EdgeInsets.only(left:width/170.75,right: width/170.75),
       child: SingleChildScrollView(
         physics: const ScrollPhysics(),
         child: Column(
@@ -325,8 +324,7 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                         onTap:(){
                           createExcel("Distributor");
                         },
-                        child:
-                        Container(
+                        child:  Container(
                             height: height/16.275,
                             width: width/9.76,
                             decoration: BoxDecoration(
@@ -337,15 +335,13 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.document_scanner_rounded,color:Colors.white,   size:width/55.888,),
-                                SizedBox(width:width/283.2),
+                                SizedBox(width:width/273.2),
                                 Text("Print Excel",style: GoogleFonts.poppins(fontWeight: FontWeight.w600,color:Colors.white),),
                               ],
                             )
                         ),
-
                       ),
-                      SizedBox(width:width/1366)
-
+                      SizedBox(width:width/1366),
                     ],
                   )
                 ],
@@ -353,37 +349,31 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
             ),
 
             SizedBox(height: height/41.143,),
-            Material( color: const Color(0xffd8e6ff),
-              elevation: 20,
-              shadowColor: Colors.black12,
-              child: Container(
-                height:532,
-                width: 1102,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color:  const Color(0xffd8e6ff),
-                ),
-                child:
-                SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Row(
+            SizedBox(
+              height: 436,
+              width: 1100,
+              child:
+              SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color:  const Color(0xffd8e6ff),
+                      ),
+                      child: Row(
 
                         crossAxisAlignment: CrossAxisAlignment.center,
 
                         children: [
-                          SizedBox(width:2),
 
 
 
-                          Container(
+
+                          SizedBox(
                             width: 200,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)
-                            ),
-
                             child: Center(
                               child: Text(
                                 "Full Name",
@@ -393,13 +383,9 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 200,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)
-                            ),
-
                             child: Center(
                               child: Text(
                                 "Father Name",
@@ -409,13 +395,9 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 80,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)
-                            ),
-
                             child: Center(
                               child: Text(
                                 "Gender",
@@ -425,13 +407,9 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 150,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)
-                            ),
-
                             child: Center(
                               child: Text(
                                 "Pan Card No",
@@ -441,13 +419,9 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 150,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)
-                            ),
-
                             child: Center(
                               child: Text(
                                 "Status",
@@ -457,13 +431,9 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 90,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)
-                            ),
-
                             child: Center(
                               child: Text(
                                 "Date",
@@ -473,13 +443,9 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 90,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)
-                            ),
-
                             child: Center(
                               child: Text(
                                 "Time",
@@ -489,13 +455,9 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 140,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black)
-                            ),
-
                             child: Center(
                               child: Text(
                                 "Actions",
@@ -512,376 +474,348 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
 
                         ],
                       ),
-                      StreamBuilder(
-                        stream: FirebaseFirestore.instance.collection("Correction_cards").
-                        orderBy("timestamp").snapshots(),
-                        builder: (context, snapshot) {
-                          if(snapshot.hasData==null){
-                            return const Center(child: CircularProgressIndicator(),);
-                          }
-                          if(!snapshot.hasData){
-                            return const Center(child: CircularProgressIndicator(),);
-                          }
-                          return
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const ScrollPhysics(),
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
+                    ),
 
-                                var data=snapshot.data!.docs[index];
+                    SizedBox(height:8),
 
-                                if(data['usertype']=='Distributor'){
+                    StreamBuilder(
+                      stream: FirebaseFirestore.instance.collection("Correction_cards").
+                      orderBy("timestamp").snapshots(),
+                      builder: (context, snapshot) {
+                        if(snapshot.hasData==null){
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
+                        if(!snapshot.hasData){
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
+                        return
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
 
-                                  if(filterName==data['updatestatus'] ||
-                                      data['Crtname'].toString().toLowerCase().contains(filterName.toString().toLowerCase())
-                                      ||filterName==data['date']){
-                                    return Row(
+                              var data=snapshot.data!.docs[index];
 
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                              if(data['usertype']=='Distributor'){
 
-                                      children: [
-                                        SizedBox(width: 2,),
+                                if(filterName==data['updatestatus'] ||
+                                    data['Crtname'].toString().toLowerCase().contains(filterName.toString().toLowerCase())
+                                    ||filterName==data['date']){
+                                  return Padding(
+                                    padding:  EdgeInsets.only(bottom:8),
+                                    child: Material(
+                                      color: Color(0xffFFFFFF),
+                                      elevation: 20,
+                                      borderRadius: BorderRadius.circular(4),
+                                      shadowColor: Colors.black12,
+                                      child: SizedBox(
+                                        height:50,
+                                        child: Row(
 
+                                          crossAxisAlignment: CrossAxisAlignment.center,
 
+                                          children: [
 
-                                        Container(
-                                          width: 200,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["Crtname"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
+                                            SizedBox(
+                                              width: 200,
+                                              height: 40,
 
-                                        Container(
-                                          width: 200,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["crtfathername"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 80,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["crgender"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 150,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["pancardno"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        InkWell(
-                                          onTap:(){
-
-                                          },
-                                          child: Container(
-                                            width: 150,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                data["updatestatus"].toString()==""?"-":    data["updatestatus"].toString(),
-                                                style:
-                                                GoogleFonts.poppins(fontSize: 14, color:  Color(0xff245BCA),fontWeight: FontWeight.w700),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 90,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["date"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 90,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["time"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 140,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              InkWell(
-                                                onTap: (){
-                                                  _ViewPop(data.id,data['updatestatus']);
-                                                },
-                                                child: Container(
-                                                    width: 100,
-                                                    height: 30,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.green,
-                                                        borderRadius: BorderRadius.circular(8)
-                                                    ),
-                                                    child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                              child: Center(
+                                                child: Text(
+                                                  data["Crtname"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                                 ),
                                               ),
-                                              // SizedBox(
-                                              //     width: 60,
-                                              //     height: 40,
-                                              //     child: InkWell(
-                                              //         onTap: (){
-                                              //           ///delete popup
-                                              //           _deletepopup(data.id);
-                                              //         },
-                                              //
-                                              //         child: const Icon(Icons.delete))
-                                              // ),
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          ),
-                                        ),
-
-
-
-
-
-
-
-
-                                      ],
-                                    );
-                                  }
-
-                                  if(filterName=="All"){
-                                    return Row(
-
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-
-                                      children: [
-                                        SizedBox(width: 2,),
-
-
-
-                                        Container(
-                                          width: 200,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["Crtname"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                             ),
-                                          ),
-                                        ),
 
-                                        Container(
-                                          width: 200,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["crtfathername"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 80,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["crgender"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 150,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["pancardno"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        InkWell(
-                                          onTap:(){
-                                          },
-                                          child: Container(
-                                            width: 150,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                data["updatestatus"].toString()==""?"-":    data["updatestatus"].toString(),
-                                                style:
-                                                GoogleFonts.poppins(fontSize: 14, color:  Color(0xff245BCA),fontWeight: FontWeight.w700),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 90,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["date"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 90,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              data["time"].toString(),
-                                              style:
-                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                            ),
-                                          ),
-                                        ),
-
-                                        Container(
-                                          width: 140,
-                                          height: 40,
-                                          decoration: BoxDecoration(
-                                              border: Border.all(color: Colors.black)
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              InkWell(
-                                                onTap: (){
-                                                  _ViewPop(data.id,data['updatestatus']);
-                                                },
-                                                child: Container(
-                                                    width: 100,
-                                                    height: 30,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.green,
-                                                        borderRadius: BorderRadius.circular(8)
-                                                    ),
-                                                    child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                            SizedBox(
+                                              width: 200,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  data["crtfathername"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                                 ),
                                               ),
-                                              // SizedBox(
-                                              //     width: 60,
-                                              //     height: 40,
-                                              //     child: InkWell(
-                                              //         onTap: (){
-                                              //           ///delete popup
-                                              //           _deletepopup(data.id);
-                                              //         },
-                                              //
-                                              //         child: const Icon(Icons.delete))
-                                              // ),
-                                            ],
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 80,
+                                              height: 40,
+
+                                              child: Center(
+                                                child: Text(
+                                                  data["crgender"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 150,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  data["pancardno"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 150,
+                                              height: 40,
+
+                                              child: Center(
+                                                child: Text(
+                                                  data["updatestatus"].toString()==""?"-":    data["updatestatus"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color:  Color(0xff245BCA),fontWeight: FontWeight.w700),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 90,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  data["date"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 90,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  data["time"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 140,
+                                              height: 40,
+                                              child: Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: (){
+                                                      _ViewPop(data.id,data['updatestatus']);
+                                                    },
+                                                    child: Container(
+                                                        width: 100,
+                                                        height: 30,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.green,
+                                                            borderRadius: BorderRadius.circular(8)
+                                                        ),
+                                                        child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                                    ),
+                                                  ),
+                                                  // SizedBox(
+                                                  //     width: 60,
+                                                  //     height: 40,
+                                                  //     child: InkWell(
+                                                  //         onTap: (){
+                                                  //           ///delete popup
+                                                  //           _deletepopup(data.id);
+                                                  //         },
+                                                  //
+                                                  //         child: const Icon(Icons.delete))
+                                                  // ),
+                                                ],
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              ),
+                                            ),
+
+
+
+
+
+
+
+
+                                          ],
                                         ),
-
-
-
-
-
-
-
-
-                                      ],
-                                    );
-                                  }
+                                      ),
+                                    ),
+                                  );
                                 }
-                                return const SizedBox();
-                              },);
-                        },
-                      ),
-                    ],
-                  ),
+
+                                if(filterName=="All"){
+                                  return Padding(
+                                    padding:  EdgeInsets.only(bottom:8),
+                                    child: Material(
+                                      color: Color(0xffFFFFFF),
+                                      elevation: 20,
+                                      borderRadius: BorderRadius.circular(4),
+                                      shadowColor: Colors.black12,
+                                      child: SizedBox(
+                                        height:50,
+                                        child: Row(
+
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+
+                                          children: [
+
+                                            SizedBox(
+                                              width: 200,
+                                              height: 40,
+
+                                              child: Center(
+                                                child: Text(
+                                                  data["Crtname"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 200,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  data["crtfathername"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 80,
+                                              height: 40,
+
+                                              child: Center(
+                                                child: Text(
+                                                  data["crgender"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 150,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  data["pancardno"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 150,
+                                              height: 40,
+
+                                              child: Center(
+                                                child: Text(
+                                                  data["updatestatus"].toString()==""?"-":    data["updatestatus"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color:  Color(0xff245BCA),fontWeight: FontWeight.w700),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 90,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  data["date"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 90,
+                                              height: 40,
+                                              child: Center(
+                                                child: Text(
+                                                  data["time"].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 140,
+                                              height: 40,
+                                              child: Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: (){
+                                                      _ViewPop(data.id,data['updatestatus']);
+                                                    },
+                                                    child: Container(
+                                                        width: 100,
+                                                        height: 30,
+                                                        decoration: BoxDecoration(
+                                                            color: Colors.green,
+                                                            borderRadius: BorderRadius.circular(8)
+                                                        ),
+                                                        child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                                    ),
+                                                  ),
+                                                  // SizedBox(
+                                                  //     width: 60,
+                                                  //     height: 40,
+                                                  //     child: InkWell(
+                                                  //         onTap: (){
+                                                  //           ///delete popup
+                                                  //           _deletepopup(data.id);
+                                                  //         },
+                                                  //
+                                                  //         child: const Icon(Icons.delete))
+                                                  // ),
+                                                ],
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              ),
+                                            ),
+
+
+
+
+
+
+
+
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                              return const SizedBox();
+                            },);
+                      },
+                    ),
+
+                  ],
                 ),
               ),
             ),
-            SizedBox(height: height/41.143,),
+
+            SizedBox(height: height/61.143,),
 
 
           ],
@@ -980,7 +914,7 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
           return Padding(
             padding: const EdgeInsets.only(top: 50,bottom: 50,left: 350,right:350),
             child: Scaffold(
-              backgroundColor: Colors.grey.shade200,
+              backgroundColor: Colors.white,
               body: Center(
                   child:
                   FutureBuilder<dynamic>(
@@ -1005,7 +939,7 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                                 fontWeight: FontWeight.w700,
                                 fontSize:18
                             ),),
-                            SizedBox(height: 10,),
+                            SizedBox(height: height/65.1,),
 
 
                             Row(
@@ -1315,7 +1249,7 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                               ],
                             ),
 
-                            SizedBox(height: 10,),
+                            SizedBox(height: height/65.1,),
 
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -1332,10 +1266,9 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                                   width: 265,
                                   height: 40,
                                   decoration: BoxDecoration(
-                                      color: Colors.grey.shade400,
-                                      borderRadius: BorderRadius.circular(5)
+                                    borderRadius: BorderRadius.circular(4),
+                                    color:  const Color(0xffd8e6ff),
                                   ),
-
                                   child:DropdownButtonHideUnderline(
                                     child: DropdownButton2<String>(
                                       isExpanded: true,
@@ -1372,6 +1305,7 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
                                           selectedValue2= value!;
 
                                         });
+                                        countfunction();
                                       },
                                       buttonStyleData:  ButtonStyleData(
                                         padding: EdgeInsets.symmetric(horizontal: width/22.5),
@@ -1389,7 +1323,7 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
 
                               ],
                             ),
-                            SizedBox(height: 10,),
+                            SizedBox(height: height/65.1,),
 
                             InkWell(
                               onTap: (){

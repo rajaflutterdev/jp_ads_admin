@@ -348,22 +348,20 @@ class _Minor_PancardState extends State<Minor_Pancard> {
             ),
             SizedBox(height: height/41.143,),
 
-            Material( color: const Color(0xffd8e6ff),
-              elevation: 20,
-              shadowColor: Colors.black12,
-              child: Container(
-                height:532,
-                width:1100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color:  const Color(0xffd8e6ff),
-                ),
-                child:
-                SingleChildScrollView(
-                  physics: const ScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Row(
+            SizedBox(
+              height:436,
+              width:1100,
+              child:
+              SingleChildScrollView(
+                physics: const ScrollPhysics(),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color:  const Color(0xffd8e6ff),
+                      ),
+                      child: Row(
 
                         crossAxisAlignment: CrossAxisAlignment.center,
 
@@ -371,13 +369,9 @@ class _Minor_PancardState extends State<Minor_Pancard> {
 
 
 
-                          Container(
+                          SizedBox(
                             width: 240,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black,)
-                            ),
-
                             child: Center(
                               child: Text(
                                 "Full Name",
@@ -387,12 +381,9 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 240,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black,)
-                            ),
                             child: Center(
                               child: Text(
                                 "Father Name",
@@ -402,12 +393,9 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 80,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black,)
-                            ),
                             child: Center(
                               child: Text(
                                 "Gender",
@@ -417,12 +405,9 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 140,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black,)
-                            ),
                             child: Center(
                               child: Text(
                                 "Pan Card Type",
@@ -432,12 +417,10 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 140,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black,)
-                            ),
+
                             child: Center(
                               child: Text(
                                 "Status",
@@ -447,12 +430,9 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 80,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black,)
-                            ),
                             child: Center(
                               child: Text(
                                 "Date",
@@ -462,12 +442,9 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 80,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black,)
-                            ),
                             child: Center(
                               child: Text(
                                 "Time",
@@ -477,12 +454,9 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                             ),
                           ),
 
-                          Container(
+                          SizedBox(
                             width: 100,
                             height: 40,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black,)
-                            ),
                             child: Center(
                               child: Text(
                                 "Actions",
@@ -499,381 +473,348 @@ class _Minor_PancardState extends State<Minor_Pancard> {
 
                         ],
                       ),
-                      StreamBuilder(
-                        stream: FirebaseFirestore.instance.collection("Minor_New_applied").
-                        orderBy("timestamp").snapshots(),
-                        builder: (context, snapshot) {
-                          if(snapshot.hasData==null){
-                            return const Center(child: CircularProgressIndicator(),);
-                          }
-                          if(!snapshot.hasData){
-                            return const Center(child: CircularProgressIndicator(),);
-                          }
-                          return
-                            ListView.builder(
-                              shrinkWrap: true,
-                              physics: const ScrollPhysics(),
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
+                    ),
+                    SizedBox(height:8),
+                    StreamBuilder(
+                      stream: FirebaseFirestore.instance.collection("Minor_New_applied").
+                      orderBy("timestamp").snapshots(),
+                      builder: (context, snapshot) {
+                        if(snapshot.hasData==null){
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
+                        if(!snapshot.hasData){
+                          return const Center(child: CircularProgressIndicator(),);
+                        }
+                        return
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
 
-                                var data=snapshot.data!.docs[index];
-                                if(filterName==data['updatestatus'] ||
-                                    data['name'].toString().toLowerCase().contains(filterName.toString().toLowerCase())
-                                    ||filterName==data['date']){
-                                  return  Row(
+                              var data=snapshot.data!.docs[index];
+                              if(filterName==data['updatestatus'] ||
+                                  data['name'].toString().toLowerCase().contains(filterName.toString().toLowerCase())
+                                  ||filterName==data['date']){
+                                return  Padding(
+                                  padding:  EdgeInsets.only(bottom:8),
+                                  child: Material(
+                                    color: Color(0xffFFFFFF),
+                                    elevation: 20,
+                                    borderRadius: BorderRadius.circular(4),
+                                    shadowColor: Colors.black12,
+                                    child: SizedBox(
+                                      height:50,
+                                      child: Row(
 
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
 
-                                      Container(
-                                        width: 240,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["name"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 240,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["father name"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 80,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["gender"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 140,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["pantype"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 140,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["updatestatus"].toString()==""?"-":   data["updatestatus"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff245BCA)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 80,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["date"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 80,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["time"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 100,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          children: [
-                                            InkWell(
-                                              onTap: (){
-                                                _ViewPop(
-                                                  data['name'].toString(),
-                                                  data['father name'].toString(),
-                                                  data['gender'].toString(),
-                                                  data['dob'].toString(),
-                                                  data['pantype'].toString(),
-                                                  data['date'].toString(),
-                                                  data['time'].toString(),
-                                                  data['aadharpicture'].toString(),
-                                                  data['aadharpicture2'].toString(),
-                                                  data['photo'].toString(),
-                                                  data['photo2'].toString(),
-                                                  data['signpicture'].toString(),
-                                                  data.id,
-                                                  data['updatestatus'].toString(),
-                                                );
-                                              },
-                                              child: Container(
-                                                  width: 60,
-                                                  height: 30,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.green,
-                                                      borderRadius: BorderRadius.circular(8)
-                                                  ),
-                                                  child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                          SizedBox(
+                                            width: 240,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["name"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                               ),
                                             ),
-                                            // SizedBox(
-                                            //     width: 30,
-                                            //     height: 40,
-                                            //     child: InkWell(
-                                            //         onTap: (){
-                                            //           ///delete popup
-                                            //           _deletepopup(data.id);
-                                            //         },
-                                            //
-                                            //         child: const Icon(Icons.delete))
-                                            // ),
-                                          ],
-                                        ),
-                                      ),
-
-
-
-
-
-
-
-
-                                    ],
-                                  );
-                                }
-                                if(filterName=="All"){
-                                  return  Row(
-
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-
-                                      Container(
-                                        width: 240,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["name"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                           ),
-                                        ),
-                                      ),
 
-                                      Container(
-                                        width: 240,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["father name"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 80,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["gender"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 140,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["pantype"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 140,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["updatestatus"].toString()==""?"-":   data["updatestatus"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff245BCA)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 80,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["date"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 80,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data["time"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 100,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black,)
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          children: [
-                                            InkWell(
-                                              onTap: (){
-                                                _ViewPop(
-                                                  data['name'].toString(),
-                                                  data['father name'].toString(),
-                                                  data['gender'].toString(),
-                                                  data['dob'].toString(),
-                                                  data['pantype'].toString(),
-                                                  data['date'].toString(),
-                                                  data['time'].toString(),
-                                                  data['aadharpicture'].toString(),
-                                                  data['aadharpicture2'].toString(),
-                                                  data['photo'].toString(),
-                                                  data['photo2'].toString(),
-                                                  data['signpicture'].toString(),
-                                                  data.id,
-                                                  data['updatestatus'].toString(),
-                                                );
-                                              },
-                                              child: Container(
-                                                  width: 60,
-                                                  height: 30,
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.green,
-                                                      borderRadius: BorderRadius.circular(8)
-                                                  ),
-                                                  child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                          SizedBox(
+                                            width: 240,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["father name"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                               ),
                                             ),
-                                            // SizedBox(
-                                            //     width: 30,
-                                            //     height: 40,
-                                            //     child: InkWell(
-                                            //         onTap: (){
-                                            //           ///delete popup
-                                            //           _deletepopup(data.id);
-                                            //         },
-                                            //
-                                            //         child: const Icon(Icons.delete))
-                                            // ),
-                                          ],
-                                        ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 80,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["gender"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 140,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["pantype"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 140,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["updatestatus"].toString()==""?"-":   data["updatestatus"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff245BCA)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 80,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["date"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 80,
+                                            height: 40,
+
+                                            child: Center(
+                                              child: Text(
+                                                data["time"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 100,
+                                            height: 40,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              children: [
+                                                InkWell(
+                                                  onTap: (){
+                                                    _ViewPop(
+                                                      data['name'].toString(),
+                                                      data['father name'].toString(),
+                                                      data['gender'].toString(),
+                                                      data['dob'].toString(),
+                                                      data['pantype'].toString(),
+                                                      data['date'].toString(),
+                                                      data['time'].toString(),
+                                                      data['aadharpicture'].toString(),
+                                                      data['aadharpicture2'].toString(),
+                                                      data['photo'].toString(),
+                                                      data['photo2'].toString(),
+                                                      data['signpicture'].toString(),
+                                                      data.id,
+                                                      data['updatestatus'].toString(),
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                      width: 60,
+                                                      height: 30,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.green,
+                                                          borderRadius: BorderRadius.circular(8)
+                                                      ),
+                                                      child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                                  ),
+                                                ),
+                                                // SizedBox(
+                                                //     width: 30,
+                                                //     height: 40,
+                                                //     child: InkWell(
+                                                //         onTap: (){
+                                                //           ///delete popup
+                                                //           _deletepopup(data.id);
+                                                //         },
+                                                //
+                                                //         child: const Icon(Icons.delete))
+                                                // ),
+                                              ],
+                                            ),
+                                          ),
+
+
+                                        ],
                                       ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              if(filterName=="All"){
+                                return  Padding(
+                                  padding:  EdgeInsets.only(bottom:8),
+                                  child: Material(
+                                    color: Color(0xffFFFFFF),
+                                    elevation: 20,
+                                    borderRadius: BorderRadius.circular(4),
+                                    shadowColor: Colors.black12,
+                                    child: SizedBox(
+                                      height:50,
+                                      child: Row(
+
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+
+                                          SizedBox(
+                                            width: 240,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["name"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 240,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["father name"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 80,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["gender"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 140,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["pantype"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 140,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["updatestatus"].toString()==""?"-":   data["updatestatus"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff245BCA)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 80,
+                                            height: 40,
+                                            child: Center(
+                                              child: Text(
+                                                data["date"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 80,
+                                            height: 40,
+
+                                            child: Center(
+                                              child: Text(
+                                                data["time"].toString(),
+                                                style:
+                                                GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                              ),
+                                            ),
+                                          ),
+
+                                          SizedBox(
+                                            width: 100,
+                                            height: 40,
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                              children: [
+                                                InkWell(
+                                                  onTap: (){
+                                                    _ViewPop(
+                                                      data['name'].toString(),
+                                                      data['father name'].toString(),
+                                                      data['gender'].toString(),
+                                                      data['dob'].toString(),
+                                                      data['pantype'].toString(),
+                                                      data['date'].toString(),
+                                                      data['time'].toString(),
+                                                      data['aadharpicture'].toString(),
+                                                      data['aadharpicture2'].toString(),
+                                                      data['photo'].toString(),
+                                                      data['photo2'].toString(),
+                                                      data['signpicture'].toString(),
+                                                      data.id,
+                                                      data['updatestatus'].toString(),
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                      width: 60,
+                                                      height: 30,
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.green,
+                                                          borderRadius: BorderRadius.circular(8)
+                                                      ),
+                                                      child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                                  ),
+                                                ),
+                                                // SizedBox(
+                                                //     width: 30,
+                                                //     height: 40,
+                                                //     child: InkWell(
+                                                //         onTap: (){
+                                                //           ///delete popup
+                                                //           _deletepopup(data.id);
+                                                //         },
+                                                //
+                                                //         child: const Icon(Icons.delete))
+                                                // ),
+                                              ],
+                                            ),
+                                          ),
 
 
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
 
 
-
-
-
-
-                                    ],
-                                  );
-                                }
-
-
-                              },);
-                        },
-                      ),
-                    ],
-                  ),
+                            },);
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -971,7 +912,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
            padding: const EdgeInsets.only(top: 40,bottom: 40,left: 350,right:350),
            child: Scaffold(
              key:key ,
-             backgroundColor: Colors.grey.shade200,
+             backgroundColor: Colors.white,
              body: Center(
                  child:
                  Column(
@@ -982,7 +923,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                          fontWeight: FontWeight.w700,
                          fontSize:18
                      ),),
-                     SizedBox(height: 10,),
+                     SizedBox(height: height/65.1,),
 
 
                      Row(
@@ -1156,10 +1097,9 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                            width: 265,
                            height: 40,
                            decoration: BoxDecoration(
-                               color: Colors.grey.shade400,
-                               borderRadius: BorderRadius.circular(5)
+                             borderRadius: BorderRadius.circular(4),
+                             color:  const Color(0xffd8e6ff),
                            ),
-
                            child:DropdownButtonHideUnderline(
                              child: DropdownButton2<String>(
                                isExpanded: true,
@@ -1196,6 +1136,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                                    selectedValue2= value!;
 
                                  });
+                                 countfunction();
                                },
                                buttonStyleData:  ButtonStyleData(
                                  padding: EdgeInsets.symmetric(horizontal: width/22.5),
@@ -1231,7 +1172,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                                        borderRadius: BorderRadius.circular(8),
                                        color: Color(0xff263645),
                                      ),
-                                     height: 100,width: 100,child:Image.network(picture1)),
+                                     height: height/6.51,width: 100,child:Image.network(picture1)),
                                ),
                              ),
                              InkWell(
@@ -1261,7 +1202,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                                        borderRadius: BorderRadius.circular(8),
                                        color: Color(0xff263645),
                                      ),
-                                     height: 100,width: 100,child:Image.network(picture2)),
+                                     height: height/6.51,width: 100,child:Image.network(picture2)),
                                ),
                              ),
                              InkWell(
@@ -1290,7 +1231,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                                        borderRadius: BorderRadius.circular(8),
                                        color: Color(0xff263645),
                                      ),
-                                     height: 100,width: 100,child:Image.network(picture3)),
+                                     height: height/6.51,width: 100,child:Image.network(picture3)),
                                ),
                              ),
                              InkWell(
@@ -1319,7 +1260,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                                        borderRadius: BorderRadius.circular(8),
                                        color: Color(0xff263645),
                                      ),
-                                     height: 100,width: 100,child:Image.network(picture4)),
+                                     height: height/6.51,width: 100,child:Image.network(picture4)),
                                ),
                              ),
                              InkWell(
@@ -1348,7 +1289,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                                        borderRadius: BorderRadius.circular(8),
                                        color: Color(0xff263645),
                                      ),
-                                     height: 100,width: 100,child:Image.network(picture5)),
+                                     height: height/6.51,width: 100,child:Image.network(picture5)),
                                ),
                              ),
                              InkWell(
@@ -1404,7 +1345,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                        },
                        child: Container(
                          height:40,
-                         width:100,
+                         width: width/13.66,
                          decoration: BoxDecoration(
                              borderRadius: BorderRadius.circular(4),
                              color: const Color(0xff263646)

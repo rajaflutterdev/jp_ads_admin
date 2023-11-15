@@ -94,307 +94,59 @@ class _HomeViewState extends State<HomeView> {
 
   }
 
+  
+  List permissionList=[];
+  List Checklist=[
+    "Individual Users",
+    "Dashboard",
+    "Distributor Users",
+    "Individual New Applied",
+    "Distributor New Applied",
+    "Individual Correction",
+    "Distributor Correction",
+    "Individual Reports",
+    "Distributor Reports",
+    "Sliders",
+    "Support",
+    "Minor Pancard",
+    "Forms",
+    "Notification"
+    "FAQ",
+  ];
+  autheuserfunction()async{
+    setState(() {
+      permissionList.clear();
+    });
+    print(widget.Authusertype);
+    var document=await FirebaseFirestore.instance.collection("AdminUser").where("username",isEqualTo:widget.Authusertype).get();
+
+    for(int i=0;i<document.docs.length;i++){
+
+      for(int j=0;j<document.docs[i]['permission'].length;j++){
+        print(document.docs[i]['permission'][j]);
+        setState(() {
+          permissionList.add(document.docs[i]['permission'][j]);
+        });
+      }
+
+    }
+    print(permissionList);
+  }
 
   
   @override
   void initState() {
-
-    print(widget.Authusertype);
-    print("Authendication user email ");
     countfunction();
+    autheuserfunction();
     // TODO: implement initState
     super.initState();
   }
   
-
-
-
-  List<DrawerModel> drawerItems1 = [];
-
-
-
-  setDrawerItems(List roles) {
-    print("Stream insideeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-    print(widget.Authusertype);
-    if (drawerItems1.isEmpty) {
-      for (int i = 0; i < roles.length; i++) {
-        print("printing the rollleeeee forr loppppp----------------");
-        print(roles[i]['username'].toString().toLowerCase());
-        print(widget.Authusertype!.toLowerCase());
-        print("printing the stream function----------------------2");
-        if (widget.Authusertype!.toLowerCase()==adminemilId) {
-          print("Condition ful fillleeeedddddddddddddddddddd");
-          drawerItems1 = drawerItems;
-        }
-        else  if (roles[i]['username'].toString().toLowerCase()==widget.Authusertype!.toLowerCase()) {
-
-          print("Edlse function entereddddddddddddddddddddddddddddddddddddddd");
-
-          print("000000000000000000000000000000000000000000000");
-          print("");
-          print("Else if");
-          print("UserType");
-          print("${roles[i]['Type'].toString().toLowerCase()}---${widget.Authusertype}");
-          for (int j = 0; j < roles[i]['permission'].length; j++) {
-            print("J-value$j");
-            print(roles[i]['permission'][j].toString());
-            switch (roles[i]['permission'][j].toString()) {
-              case "Dashboard":
-                drawerItems1.add( DrawerModel(
-                    name: "Dashboard",
-                    icon: Icons.dashboard,
-                    page: const DashBoard_Page() ,
-                    isExpanded: false,
-                    children: []
-                ),);
-                break;
-              case "Distributor Users":
-                drawerItems1.add(DrawerModel(
-                  name: "Distributors",
-                  page: Distributor_data_Page() ,
-                  icon: Icons.person_pin,
-                  isExpanded: false,
-                  children: [
-                    DrawerChildren(
-                        page: Distributor_data_Page(),
-                        name: "Distributor Users",
-                        icon:Icons.circle ),
-                    DrawerChildren(
-                        page:     New_Applied_Distributor_Page(),
-                        name: "Distributor New Applied",
-                        icon:Icons.circle ),
-                    DrawerChildren(
-                        page: Corretion_List_Page(),
-                        name: "Distributor Correction",
-                        icon:Icons.circle ),
-                    DrawerChildren(
-                        page: Distrobutor_Histroe_Page(),
-                        name: "Distributor History",
-                        icon:Icons.circle ),
-                  ],
-                ));
-                break;
-              case "Individual Users":
-                drawerItems1.add(
-                  DrawerModel(
-                    name: "Individual",
-                    page: Infividual_Page() ,
-                    icon: Icons.person_pin,
-                    isExpanded: false,
-                    children: [
-                      DrawerChildren(
-                          page: Infividual_Page(),
-                          name: "Individual Users",
-                          icon:Icons.circle ),
-
-                      DrawerChildren(
-                          page: New_applied_indivivual(),
-                          name: "Individual New Applied",
-                          icon:Icons.circle ),
-
-                      DrawerChildren(
-                          page: Correction_Infivivual_Page(),
-                          name: "Individual Correction",
-                          icon:Icons.circle ),
-
-                      DrawerChildren(
-                          page: Individual_Hostroy_Page(),
-                          name: "Individual Reports",
-                          icon:Icons.circle ),
-                    ],
-                  ),
-                );
-                break;
-              case "Notification":
-                drawerItems1.add(DrawerModel(
-                  name: "Notification",
-                  icon: Icons.person_pin_outlined,
-                  isExpanded: false,
-                  page:  Notification_Page(),
-                  children: [],
-                ));
-                break;
-              case "Sliders":
-                drawerItems1.add(DrawerModel(
-                  name: "Sliders",
-                  icon: Icons.person_pin_outlined,
-                  isExpanded: false,
-                  page:  Slide_Image(),
-                  children: [],
-                ));
-                break;
-              case "Permission":
-                drawerItems1.add(DrawerModel(
-                  name: "Permissions",
-                  icon: Icons.person_pin_outlined,
-                  isExpanded: false,
-                  page:  Permissions_Page(Username: adminemilId),
-                  children: [],
-                ));
-                break;
-              case "Support":
-                drawerItems1.add(DrawerModel(
-                  name: "Support",
-                  icon: Icons.person_pin_outlined,
-                  isExpanded: false,
-                  page:  Support_Page(),
-                  children: [],
-                ));
-                break;
-              case "FAQ":
-                drawerItems1.add(DrawerModel(
-                  name: "FAQ",
-                  icon: Icons.question_mark_outlined,
-                  isExpanded: false,
-                  page:  FAQ_Page(),
-                  children: [],
-                ));
-                break;
-            }
-          }
-        }
-
-      }
-    }
-    isFetched = true;
-  }
-
-  List<DrawerModel> drawerItems = [
-
-    DrawerModel(
-        name: "Dashboard",
-        icon: Icons.dashboard,
-        page: DashBoard_Page() ,
-        isExpanded: false,
-        children: []
-    ),
-
-    DrawerModel(
-      name: "Distributors",
-      page: Distributor_data_Page() ,
-      icon: Icons.person_pin,
-      isExpanded: false,
-      children: [
-        DrawerChildren(
-            page: Distributor_data_Page(),
-            name: "Distributor Users",
-            icon:Icons.circle ),
-        DrawerChildren(
-            page:     New_Applied_Distributor_Page(),
-            name: "Distributor New\nApplied",
-            icon:Icons.circle ),
-        DrawerChildren(
-            page: Corretion_List_Page(),
-            name: "Distributor Correction",
-            icon:Icons.circle ),
-        DrawerChildren(
-            page: Lost_Pandcard_distributor(),
-            name: "Lost Pan card",
-            icon:Icons.circle ),
-        DrawerChildren(
-            page: Distrobutor_Histroe_Page(),
-            name: "Distributor Reports",
-            icon:Icons.circle ),
-
-      ],
-    ),
-
-    DrawerModel(
-      name: "Individual",
-      page: Infividual_Page() ,
-      icon: Icons.person_pin,
-      isExpanded: false,
-      children: [
-        DrawerChildren(
-            page: Infividual_Page(),
-            name: "Individual Users",
-            icon:Icons.circle ),
-
-        DrawerChildren(
-            page: New_applied_indivivual(),
-            name: "Individual New Applied",
-            icon:Icons.circle ),
-
-        DrawerChildren(
-            page: Correction_Infivivual_Page(),
-            name: "Individual Correction",
-            icon:Icons.circle ),
-
-        DrawerChildren(
-            page: Lost_pancard_individual(),
-            name: "Lost Pan card",
-            icon:Icons.circle ),
-
-        DrawerChildren(
-            page: Individual_Hostroy_Page(),
-            name: "Individual Reports",
-            icon:Icons.circle ),
-      ],
-    ),
-
-    DrawerModel(
-      name: "Minor Pancard",
-      icon: Icons.person_pin_outlined,
-      isExpanded: false,
-      page:  Minor_Pancard(),
-      children: [],
-    ),
-
-    DrawerModel(
-      name: "Forms",
-      icon: Icons.document_scanner_sharp,
-      isExpanded: false,
-      page:  const Form_Page(),
-      children: [],
-    ),
-
-    DrawerModel(
-      name: "Notification",
-      icon: Icons.person_pin_outlined,
-      isExpanded: false,
-      page:  Notification_Page(),
-      children: [],
-    ),
-
-    DrawerModel(
-      name: "Sliders",
-      icon: Icons.person_pin_outlined,
-      isExpanded: false,
-      page:  Slide_Image(),
-      children: [],
-    ),
-
-    DrawerModel(
-      name: "Permissions",
-      icon: Icons.person_pin_outlined,
-      isExpanded: false,
-      page:  Permissions_Page(Username: adminemilId),
-      children: [],
-    ),
-
-    DrawerModel(
-      name: "Support",
-      icon: Icons.person_pin_outlined,
-      isExpanded: false,
-      page:  const Support_Page(),
-      children: [],
-    ),
-
-    DrawerModel(
-      name: "FAQ",
-      icon: Icons.question_mark_outlined,
-      isExpanded: false,
-      page:  const FAQ_Page(),
-      children: [],
-    ),
-
-  ];
-
-
-
+  
   int Selectpage=0;
 
   bool isexpanded=false;
+  
   @override
   Widget build(BuildContext context) {
      double  height = MediaQuery.of(context).size.height;
@@ -411,7 +163,7 @@ class _HomeViewState extends State<HomeView> {
 
                 Container(
                   width: width/5.464,
-                  height: height/1.0015,
+                  height: height/1.000,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                         end: Alignment.bottomCenter,
@@ -445,6 +197,7 @@ class _HomeViewState extends State<HomeView> {
 
 
                         ///DashBoard
+                        permissionList.any((element) =>element=="Dashboard")?
                         InkWell(
                           onTap:(){
                             setState((){
@@ -452,7 +205,7 @@ class _HomeViewState extends State<HomeView> {
                             });
                           },
                           child: AnimatedContainer(
-                            duration: Duration(milliseconds: 500),
+                            duration: Duration(milliseconds: 400),
                             height: height/16.275,
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -473,8 +226,8 @@ class _HomeViewState extends State<HomeView> {
                               ],
                             ),
                           ),
-                        ),
-
+                        ):SizedBox(),
+                        permissionList.any((element) =>element== "Distributor Users")?
                         SizedBox(
                          width:width/5.464,
                           child: ExpansionTile(
@@ -491,10 +244,22 @@ class _HomeViewState extends State<HomeView> {
                                   SizedBox(width:width/273.2),
                                   Text("Distributor",style: GoogleFonts.poppins(color: Colors.white,
                                       fontSize: width/85.88),),
+                                  SizedBox(width:width/273.2),
+                                  (distrutorCorrectionCount+distrutorlostCount+distrutorappliedCount)==0?SizedBox():
+                                  Container(
+                                    height:20,
+                                    width:20,
+                                    decoration: BoxDecoration(
+                                      color:Colors.red,
+                                    borderRadius: BorderRadius.circular(100)
+                                  ),
+                                    child: Center(child: Text((distrutorCorrectionCount+distrutorlostCount+distrutorappliedCount).toString(),style:
+                                    GoogleFonts.poppins(fontWeight:FontWeight.w700,fontSize: 12,color:Colors.white),)),
+                                  )
                                 ],
                               ),
                           children: [
-
+                               permissionList.any((element) =>element== "Distributor Users")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -502,7 +267,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -518,8 +283,8 @@ class _HomeViewState extends State<HomeView> {
                                   ],
                                 ),
                               ),
-                            ),
-
+                            ):SizedBox(),
+                               permissionList.any((element) =>element== "Distributor New Applied")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -527,7 +292,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -540,12 +305,23 @@ class _HomeViewState extends State<HomeView> {
                                     Icon(Icons.circle,color:Selectpage==2?Colors.black:Colors.white,   size:width/75.888,),
                                     SizedBox(width:width/273.2),
                                     Text("Distributor New Applied",style: GoogleFonts.poppins(color: Selectpage==2?Colors.black:Colors.white,fontSize: width/85.88),),
-
+                                    SizedBox(width:width/273.2),
+                                    (distrutorappliedCount)==0?SizedBox():
+                                    Container(
+                                      height:20,
+                                      width:20,
+                                      decoration: BoxDecoration(
+                                          color:Colors.red,
+                                          borderRadius: BorderRadius.circular(100)
+                                      ),
+                                      child: Center(child: Text((distrutorappliedCount).toString(),style:
+                                      GoogleFonts.poppins(fontWeight:FontWeight.w700,fontSize: 12,color:Colors.white),)),
+                                    )
                                   ],
                                 ),
                               ),
-                            ),
-
+                            ):SizedBox(),
+                               permissionList.any((element) =>element== "Distributor Correction")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -553,7 +329,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -566,11 +342,23 @@ class _HomeViewState extends State<HomeView> {
                                     Icon(Icons.circle,color:Selectpage==3?Colors.black:Colors.white,   size:width/75.888,),
                                     SizedBox(width:width/273.2),
                                     Text("Distributor Correction",style: GoogleFonts.poppins(color:Selectpage==3?Colors.black:Colors.white,fontSize: width/85.88),),
+                                    SizedBox(width:width/273.2),
+                                    (distrutorCorrectionCount)==0?SizedBox():
+                                    Container(
+                                      height:20,
+                                      width:20,
+                                      decoration: BoxDecoration(
+                                          color:Colors.red,
+                                          borderRadius: BorderRadius.circular(100)
+                                      ),
+                                      child: Center(child: Text((distrutorCorrectionCount).toString(),style:
+                                      GoogleFonts.poppins(fontWeight:FontWeight.w700,fontSize: 12,color:Colors.white),)),
+                                    )
                                   ],
                                 ),
                               ),
-                            ),
-
+                            ):SizedBox(),
+                            permissionList.any((element) =>element== "Distributor Reports")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -578,7 +366,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -591,11 +379,25 @@ class _HomeViewState extends State<HomeView> {
                                     Icon(Icons.circle,color:Selectpage==4?Colors.black:Colors.white,   size:width/75.888,),
                                     SizedBox(width:width/273.2),
                                     Text("Distributor Lost Pan card",style: GoogleFonts.poppins(color:Selectpage==4?Colors.black:Colors.white,fontSize: width/85.88),),
+                                    SizedBox(width:width/273.2),
+                                    (distrutorlostCount)==0?SizedBox():
+                                    Container(
+                                      height:20,
+                                      width:20,
+                                      decoration: BoxDecoration(
+                                          color:Colors.red,
+                                          borderRadius: BorderRadius.circular(100)
+                                      ),
+                                      child: Center(child: Text((distrutorlostCount).toString(),style:
+                                      GoogleFonts.poppins(fontWeight:FontWeight.w700,fontSize: 12,color:Colors.white),)),
+                                    )
+
                                   ],
                                 ),
                               ),
-                            ),
+                            ):SizedBox(),
 
+                               permissionList.any((element) =>element== "Distributor Reports")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -603,7 +405,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -620,12 +422,12 @@ class _HomeViewState extends State<HomeView> {
                                   ],
                                 ),
                               ),
-                            ),
+                            ):SizedBox(),
 
                           ],
                           ),
-                        ),
-
+                        ):SizedBox(),
+                        permissionList.any((element) =>element== "Individual Users")?
                         SizedBox(
                          width:width/5.464,
                           child: ExpansionTile(
@@ -641,9 +443,22 @@ class _HomeViewState extends State<HomeView> {
                                   Icon(Icons.person,color:Colors.white,   size:width/75.888,),
                                   SizedBox(width:width/273.2),
                                   Text("Individual",style: GoogleFonts.poppins(color: Colors.white),),
+                                  SizedBox(width:width/273.2),
+                                  (individualCorrectionCount+individuallostCount+individualappliedCount)==0?SizedBox():
+                                  Container(
+                                    height:20,
+                                    width:20,
+                                    decoration: BoxDecoration(
+                                        color:Colors.red,
+                                        borderRadius: BorderRadius.circular(100)
+                                    ),
+                                    child: Center(child: Text((individualCorrectionCount+individuallostCount+individualappliedCount).toString(),style:
+                                    GoogleFonts.poppins(fontWeight:FontWeight.w700,fontSize: 12,color:Colors.white),)),
+                                  )
                                 ],
                               ),
                           children: [
+                               permissionList.any((element) =>element== "Individual Users")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -651,7 +466,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -668,8 +483,8 @@ class _HomeViewState extends State<HomeView> {
                                   ],
                                 ),
                               ),
-                            ),
-
+                            ):SizedBox(),
+                               permissionList.any((element) =>element== "Individual New Applied")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -677,7 +492,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -690,13 +505,25 @@ class _HomeViewState extends State<HomeView> {
                                     Icon(Icons.circle,color:Selectpage==7?Colors.black:Colors.white,   size:width/75.888,),
                                     SizedBox(width:width/273.2),
                                     Text("Individual New Applied",style: GoogleFonts.poppins(color: Selectpage==7?Colors.black:Colors.white,fontSize: width/85.88),),
-
+                                    SizedBox(width:width/273.2),
+                                    (individualappliedCount)==0?SizedBox():
+                                    Container(
+                                      height:20,
+                                      width:20,
+                                      decoration: BoxDecoration(
+                                          color:Colors.red,
+                                          borderRadius: BorderRadius.circular(100)
+                                      ),
+                                      child: Center(child: Text((individualappliedCount).toString(),style:
+                                      GoogleFonts.poppins(fontWeight:FontWeight.w700,fontSize: 12,color:Colors.white),)),
+                                    )
 
                                   ],
                                 ),
                               ),
-                            ),
+                            ):SizedBox(),
 
+                               permissionList.any((element) =>element== "Individual Correction")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -704,7 +531,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -717,12 +544,24 @@ class _HomeViewState extends State<HomeView> {
                                     Icon(Icons.circle,color:Selectpage==8?Colors.black:Colors.white,   size:width/75.888,),
                                     SizedBox(width:width/273.2),
                                     Text("Individual Correction",style: GoogleFonts.poppins(color: Selectpage==8?Colors.black:Colors.white,fontSize: width/85.88),),
-
+                                    SizedBox(width:width/273.2),
+                                    (individualCorrectionCount)==0?SizedBox():
+                                    Container(
+                                      height:20,
+                                      width:20,
+                                      decoration: BoxDecoration(
+                                          color:Colors.red,
+                                          borderRadius: BorderRadius.circular(100)
+                                      ),
+                                      child: Center(child: Text((individualCorrectionCount).toString(),style:
+                                      GoogleFonts.poppins(fontWeight:FontWeight.w700,fontSize: 12,color:Colors.white),)),
+                                    )
                                   ],
                                 ),
                               ),
-                            ),
+                            ):SizedBox(),
 
+                            permissionList.any((element) =>element== "Individual Reports")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -730,7 +569,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -743,12 +582,24 @@ class _HomeViewState extends State<HomeView> {
                                     Icon(Icons.circle,color:Selectpage==9?Colors.black:Colors.white,   size:width/75.888,),
                                     SizedBox(width:width/273.2),
                                     Text("Individual Lost Pan card",style: GoogleFonts.poppins(color:Selectpage==9?Colors.black:Colors.white,fontSize: width/85.88),),
-
+                                    SizedBox(width:width/273.2),
+                                    (individuallostCount)==0?SizedBox():
+                                    Container(
+                                      height:20,
+                                      width:20,
+                                      decoration: BoxDecoration(
+                                          color:Colors.red,
+                                          borderRadius: BorderRadius.circular(100)
+                                      ),
+                                      child: Center(child: Text((individuallostCount).toString(),style:
+                                      GoogleFonts.poppins(fontWeight:FontWeight.w700,fontSize: 12,color:Colors.white),)),
+                                    )
                                   ],
                                 ),
                               ),
-                            ),
+                            ):SizedBox(),
 
+                               permissionList.any((element) =>element== "Individual Reports")?
                             InkWell(
                               onTap:(){
                                 setState((){
@@ -756,7 +607,7 @@ class _HomeViewState extends State<HomeView> {
                                 });
                               },
                               child: AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
+                                  duration: Duration(milliseconds: 400),
                                 height: height/16.275,
                                 width: double.infinity,
                                 decoration: BoxDecoration(
@@ -774,14 +625,13 @@ class _HomeViewState extends State<HomeView> {
                                   ],
                                 ),
                               ),
-                            ),
+                            ):SizedBox(),
 
                           ],
                           ),
-                        ),
+                        ):SizedBox(),
 
-
-
+                           permissionList.any((element) =>element== "Minor Pancard")?
                         InkWell(
                           onTap:(){
                             setState((){
@@ -789,7 +639,7 @@ class _HomeViewState extends State<HomeView> {
                             });
                           },
                           child: AnimatedContainer(
-                              duration: Duration(milliseconds: 500),
+                              duration: Duration(milliseconds: 400),
                             height: height/16.275,
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -802,13 +652,24 @@ class _HomeViewState extends State<HomeView> {
                                 Icon(Icons.document_scanner_rounded,color:Selectpage==11?Colors.black:Colors.white,   size:width/75.888,),
                                 SizedBox(width:width/273.2),
                                 Text("Minor Pancard",style: GoogleFonts.poppins(color: Selectpage==11?Colors.black:Colors.white,fontSize: width/85.88),),
-
+                                SizedBox(width:width/273.2),
+                                (minorCount)==0?SizedBox():
+                                Container(
+                                  height:20,
+                                  width:20,
+                                  decoration: BoxDecoration(
+                                      color:Colors.red,
+                                      borderRadius: BorderRadius.circular(100)
+                                  ),
+                                  child: Center(child: Text((minorCount).toString(),style:
+                                  GoogleFonts.poppins(fontWeight:FontWeight.w700,fontSize: 12,color:Colors.white),)),
+                                )
                               ],
                             ),
                           ),
-                        ),
+                        ):SizedBox(),
 
-
+                           permissionList.any((element) =>element=="Forms")?
                         InkWell(
                           onTap:(){
                             setState((){
@@ -816,7 +677,7 @@ class _HomeViewState extends State<HomeView> {
                             });
                           },
                           child: AnimatedContainer(
-                              duration: Duration(milliseconds: 500),
+                              duration: Duration(milliseconds: 400),
                             height: height/16.275,
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -832,8 +693,9 @@ class _HomeViewState extends State<HomeView> {
                               ],
                             ),
                           ),
-                        ),
+                        ):SizedBox(),
 
+                           permissionList.any((element) =>element=="Notification")?
                         InkWell(
                           onTap:(){
                             setState((){
@@ -841,7 +703,7 @@ class _HomeViewState extends State<HomeView> {
                             });
                           },
                           child: AnimatedContainer(
-                              duration: Duration(milliseconds: 500),
+                              duration: Duration(milliseconds: 400),
                             height: height/16.275,
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -858,9 +720,9 @@ class _HomeViewState extends State<HomeView> {
                               ],
                             ),
                           ),
-                        ),
+                        ):SizedBox(),
 
-
+                        widget.Authusertype!=null?
                         InkWell(
                           onTap:(){
                             setState((){
@@ -868,7 +730,7 @@ class _HomeViewState extends State<HomeView> {
                             });
                           },
                           child: AnimatedContainer(
-                              duration: Duration(milliseconds: 500),
+                              duration: Duration(milliseconds: 400),
                             height: height/16.275,
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -885,8 +747,9 @@ class _HomeViewState extends State<HomeView> {
                               ],
                             ),
                           ),
-                        ),
+                        ):SizedBox(),
 
+                           permissionList.any((element) =>element== "Sliders")?
                         InkWell(
                           onTap:(){
                             setState((){
@@ -894,7 +757,7 @@ class _HomeViewState extends State<HomeView> {
                             });
                           },
                           child: AnimatedContainer(
-                              duration: Duration(milliseconds: 500),
+                              duration: Duration(milliseconds: 400),
                             height: height/16.275,
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -906,13 +769,14 @@ class _HomeViewState extends State<HomeView> {
                                 SizedBox(width:width/91.066),
                                 Icon(Icons.support,color:Selectpage==15?Colors.black:Colors.white,  size:width/75.888,),
                                 SizedBox(width:width/273.2),
-                                Text("Support",style: GoogleFonts.poppins(color: Selectpage==15?Colors.black:Colors.white,fontSize: width/85.88),),
+                                Text("Silder",style: GoogleFonts.poppins(color: Selectpage==15?Colors.black:Colors.white,fontSize: width/85.88),),
 
                               ],
                             ),
                           ),
-                        ),
+                        ):SizedBox(),
 
+                           permissionList.any((element) =>element== "Support")?
                         InkWell(
                           onTap:(){
                             setState((){
@@ -920,7 +784,7 @@ class _HomeViewState extends State<HomeView> {
                             });
                           },
                           child: AnimatedContainer(
-                              duration: Duration(milliseconds: 500),
+                              duration: Duration(milliseconds: 400),
                             height: height/16.275,
                             width: double.infinity,
                             decoration: BoxDecoration(
@@ -930,18 +794,46 @@ class _HomeViewState extends State<HomeView> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 SizedBox(width:width/91.066),
-                                Icon(Icons.question_mark_outlined,
+                                Icon(Icons.supervisor_account_sharp,
                                   size:width/75.888,
                                   color:Selectpage==16?Colors.black:Colors.white,),
                                 SizedBox(width:width/273.2),
-                                Text("FAQ",style: GoogleFonts.poppins(color:Selectpage==16?Colors.black:Colors.white,fontSize: width/85.88),),
+                                Text("Supports",style: GoogleFonts.poppins(color:Selectpage==16?Colors.black:Colors.white,fontSize: width/85.88),),
                               ],
                             ),
                           ),
-                        ),
+                        ):SizedBox(),
+
+                           permissionList.any((element) =>element== "FAQ")?
+                        InkWell(
+                          onTap:(){
+                            setState((){
+                              Selectpage=17;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 400),
+                            height: height/16.275,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Selectpage==17?Colors.white:Colors.transparent,
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(width:width/91.066),
+                                Icon(Icons.question_mark_outlined,
+                                  size:width/75.888,
+                                  color:Selectpage==17?Colors.black:Colors.white,),
+                                SizedBox(width:width/273.2),
+                                Text("FAQ",style: GoogleFonts.poppins(color:Selectpage==17?Colors.black:Colors.white,fontSize: width/85.88),),
+                              ],
+                            ),
+                          ),
+                        ):SizedBox(),
 
                         SizedBox(
-                          height:height/8.1375
+                          height:isexpanded?height/9.1375:height/11.1375
                         ),
 
                         Padding(
@@ -982,7 +874,8 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
 
-                Expanded(child:
+                Expanded(
+                  child:
                 Selectpage==0?DashBoard_Page():
                 Selectpage==1?Distributor_data_Page():
                 Selectpage==2?New_Applied_Distributor_Page():
@@ -997,8 +890,8 @@ class _HomeViewState extends State<HomeView> {
                 Selectpage==11?Minor_Pancard():
                 Selectpage==12?Form_Page():
                 Selectpage==13?Notification_Page():
-                Selectpage==14?Slide_Image():
-                Selectpage==15?Permissions_Page():
+                Selectpage==14?Permissions_Page():
+                Selectpage==15?Slide_Image():
                 Selectpage==16?Support_Page():
                 Selectpage==17?FAQ_Page(): SizedBox(),
                 )

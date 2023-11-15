@@ -1646,7 +1646,7 @@ class _Indivual_PageState extends State<Indivual_Page> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
-                      height: 100,
+                      height: height/6.51,
                       width: 100,
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -1655,7 +1655,7 @@ class _Indivual_PageState extends State<Indivual_Page> {
                       ),
                     ),
                     Container(
-                      height: 100,
+                      height: height/6.51,
                       width: 100,
                       decoration: BoxDecoration(
                           image: DecorationImage(
@@ -1664,7 +1664,7 @@ class _Indivual_PageState extends State<Indivual_Page> {
                       ),
                     ),
                     Container(
-                      height: 100,
+                      height: height/6.51,
                       width: 100,
                       decoration: BoxDecoration(
                           image: DecorationImage(

@@ -61,7 +61,7 @@ class _Login_PageState extends State<Login_Page> {
                 //Text 2
                 Text("Dashboard",style: GoogleFonts.mulish(fontSize: 24,fontWeight: FontWeight.w700),),
 
-                const SizedBox(height: 10,),
+                 SizedBox(height: height/65.1,),
                 //text3 email and password
                 //email text and text field
                 Row(

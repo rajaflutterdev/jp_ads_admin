@@ -154,7 +154,8 @@ class _Notification_PageState extends State<Notification_Page> {
               children: [
 
 
-                Material( color: const Color(0xffd8e6ff),
+                Material(
+                  color: const Color(0xffd8e6ff),
                   elevation: 20,
                   shadowColor: Colors.black12,
                   child: Container(
@@ -169,12 +170,10 @@ class _Notification_PageState extends State<Notification_Page> {
 
                       children: [
 
-                        Container(
+                        SizedBox(
                           width: 100,
                           height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                          ),
+
                           child: Center(
                             child: Text(
                               "Si.No",
@@ -184,12 +183,10 @@ class _Notification_PageState extends State<Notification_Page> {
                           ),
                         ),
 
-                        Container(
+                        SizedBox(
                           width: 300,
                           height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                          ),
+
                           child: Center(
                             child: Text(
                               "Title",
@@ -199,12 +196,9 @@ class _Notification_PageState extends State<Notification_Page> {
                           ),
                         ),
 
-                        Container(
+                        SizedBox(
                           width: 500,
                           height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                          ),
                           child: Center(
                             child: Text(
                               "Content",
@@ -214,12 +208,9 @@ class _Notification_PageState extends State<Notification_Page> {
                           ),
                         ),
 
-                        Container(
+                        SizedBox(
                           width: 100,
                           height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                          ),
                           child: Center(
                             child: Text(
                               "date",
@@ -229,12 +220,9 @@ class _Notification_PageState extends State<Notification_Page> {
                           ),
                         ),
 
-                        Container(
+                        SizedBox(
                           width: 100,
                           height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
-                          ),
                           child: Center(
                             child: Text(
                               "Actions",
@@ -244,16 +232,12 @@ class _Notification_PageState extends State<Notification_Page> {
                           ),
                         ),
 
-
-
-
-
-
-
                       ],
                     ),
                   ),
                 ),
+
+                SizedBox(height:8),
                 StreamBuilder(
                   stream: FirebaseFirestore.instance.collection("Notification").orderBy("timestamp").snapshots(),
                   builder: (context, snapshot) {
@@ -274,218 +258,170 @@ class _Notification_PageState extends State<Notification_Page> {
 
                           if(userType=="All"){
                             return
-                              Material( color: const Color(0xffd8e6ff),
-                                elevation: 20,
-                                shadowColor: Colors.black12,
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    color:  const Color(0xffd8e6ff),
-                                  ),
-                                  child: Row(
+                              Padding(
+                                padding:  EdgeInsets.only(bottom: 8),
+                                child: Material(
+                                  color: Color(0xffFFFFFF),
+                                  elevation: 20,
+                                  borderRadius: BorderRadius.circular(4),
+                                  shadowColor: Colors.black12,
+                                  child: SizedBox(
+                                    height: 50,
+                                    child: Row(
 
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
 
-                                    children: [
+                                      children: [
 
-                                      Container(
-                                        width: 100,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.black),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            (index+1).toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 300,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.black),
-                                        ),
-
-                                        child: Center(
-                                          child: Text(
-                                            _Userdata["title"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 500,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.black),
-                                        ),
-
-                                        child: Center(
-                                          child: Text(
-                                            _Userdata["content"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 100,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.black),
-                                        ),
-
-                                        child: Center(
-                                          child: Text(
-                                            _Userdata["date"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-
-
-                                      Container(
+                                        SizedBox(
                                           width: 100,
                                           height: 40,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black),
-                                          ),
                                           child: Center(
-                                            child: InkWell(
-                                                onTap: (){
-                                                  ///delete popup
-                                                  _deletepopup(_Userdata.id);
-                                                },
+                                            child: Text(
+                                              (index+1).toString(),
+                                              style:
+                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                            ),
+                                          ),
+                                        ),
 
-                                                child: const Icon(Icons.delete)),
-                                          )
-                                      ),
+                                        SizedBox(
+                                          width: 300,
+                                          height: 40,
+                                          child: Center(
+                                            child: Text(
+                                              _Userdata["title"].toString(),
+                                              style:
+                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                            ),
+                                          ),
+                                        ),
 
+                                        SizedBox(
+                                          width: 500,
+                                          height: 40,
+                                          child: Center(
+                                            child: Text(
+                                              _Userdata["content"].toString(),
+                                              style:
+                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                            ),
+                                          ),
+                                        ),
 
+                                        SizedBox(
+                                          width: 100,
+                                          height: 40,
+                                          child: Center(
+                                            child: Text(
+                                              _Userdata["date"].toString(),
+                                              style:
+                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                            ),
+                                          ),
+                                        ),
 
+                                        SizedBox(
+                                            width: 100,
+                                            height: 40,
+                                            child: Center(
+                                              child: InkWell(
+                                                  onTap: (){
+                                                    ///delete popup
+                                                    _deletepopup(_Userdata.id);
+                                                  },
 
+                                                  child: const Icon(Icons.delete)),
+                                            )
+                                        ),
 
-
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
                           }
                           if(_Userdata['notifytype']==userType){
                             return
-                              Material( color: const Color(0xffd8e6ff),
-                                elevation: 20,
-                                shadowColor: Colors.black12,
-                                child: Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4),
-                                    color:  const Color(0xffd8e6ff),
-                                  ),
-                                  child: Row(
+                              Padding(
+                                padding:  EdgeInsets.only(bottom: 8),
+                                child: Material(
+                                  color: Color(0xffFFFFFF),
+                                  elevation: 20,
+                                  borderRadius: BorderRadius.circular(4),
+                                  shadowColor: Colors.black12,
+                                  child: SizedBox(
+                                    height: 50,
+                                    child: Row(
 
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
 
-                                    children: [
+                                      children: [
 
-                                      Container(
-                                        width: 100,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.black),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            (index+1).toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 300,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.black),
-                                        ),
-
-                                        child: Center(
-                                          child: Text(
-                                            _Userdata["title"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 500,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.black),
-                                        ),
-
-                                        child: Center(
-                                          child: Text(
-                                            _Userdata["content"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 100,
-                                        height: 40,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: Colors.black),
-                                        ),
-
-                                        child: Center(
-                                          child: Text(
-                                            _Userdata["date"].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-
-
-                                      Container(
+                                        SizedBox(
                                           width: 100,
                                           height: 40,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black),
-                                          ),
                                           child: Center(
-                                            child: InkWell(
-                                                onTap: (){
-                                                  ///delete popup
-                                                  _deletepopup(_Userdata.id);
-                                                },
+                                            child: Text(
+                                              (index+1).toString(),
+                                              style:
+                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                            ),
+                                          ),
+                                        ),
 
-                                                child: const Icon(Icons.delete)),
-                                          )
-                                      ),
+                                        SizedBox(
+                                          width: 300,
+                                          height: 40,
+                                          child: Center(
+                                            child: Text(
+                                              _Userdata["title"].toString(),
+                                              style:
+                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                            ),
+                                          ),
+                                        ),
 
+                                        SizedBox(
+                                          width: 500,
+                                          height: 40,
+                                          child: Center(
+                                            child: Text(
+                                              _Userdata["content"].toString(),
+                                              style:
+                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                            ),
+                                          ),
+                                        ),
 
+                                        SizedBox(
+                                          width: 100,
+                                          height: 40,
+                                          child: Center(
+                                            child: Text(
+                                              _Userdata["date"].toString(),
+                                              style:
+                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                            ),
+                                          ),
+                                        ),
 
+                                        SizedBox(
+                                            width: 100,
+                                            height: 40,
+                                            child: Center(
+                                              child: InkWell(
+                                                  onTap: (){
+                                                    ///delete popup
+                                                    _deletepopup(_Userdata.id);
+                                                  },
 
+                                                  child: const Icon(Icons.delete)),
+                                            )
+                                        ),
 
-
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
@@ -528,7 +464,7 @@ class _Notification_PageState extends State<Notification_Page> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 100,
+                            height: height/6.51,
                             child: Column(
                               crossAxisAlignment:CrossAxisAlignment.start ,
                               children: [
@@ -576,7 +512,7 @@ class _Notification_PageState extends State<Notification_Page> {
                                           color:  Colors.white),
                                     ),
                                     SizedBox(height:height/65.1),
-                                    Container(height: 100,width: 450,
+                                    Container(height: height/6.51,width: 450,
                                       decoration: BoxDecoration(
                                         color: const Color(0xFFF9F9F9),
                                         borderRadius: BorderRadius.circular(10),),

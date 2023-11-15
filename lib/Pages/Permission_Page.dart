@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
+import '../DrawerList_Page.dart';
 import '../const.dart';
 
 class Permissions_Page extends StatefulWidget {
@@ -170,6 +171,7 @@ class _Permissions_PageState extends State<Permissions_Page> {
     }
     setState(() {
       Uservalue=document.docs[j]['username'];
+      Userdocid=document.docs[j].id;
     });
   }
 
@@ -188,599 +190,589 @@ class _Permissions_PageState extends State<Permissions_Page> {
     double height=MediaQuery.of(context).size.height;
       return
         Padding(
-        padding:  EdgeInsets.only(left:10),
-        child: SingleChildScrollView(
-          physics:const  ScrollPhysics(),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding:  EdgeInsets.only(left: width / 75.77,top: height/61.43),
-                    child: Text(
-                      " Permissions",
-                      style: GoogleFonts.poppins(
-                          fontSize: width / 57.57,
-                          color: const Color(0xff000000)),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: height/41.143,),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(width:40),
-                  SizedBox(
-
-                      child: Row(
-                    children: [
-                      Text("Select the Role  : ",style: GoogleFonts.poppins(fontWeight: FontWeight.w700),),
-                      SizedBox(width:10),
-                      Material(
-                        elevation: 5,
-                        borderRadius: BorderRadius.circular(8),
-                        color: Color(0xffFFFFFF),
-                        child: SizedBox(
-                          width:250,
-                          height:50,
-
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButtonFormField2<String>(
-                              isExpanded: true,
-                              hint: Text(
-                                'Select',
-                                style: GoogleFonts.poppins(
-                                  color: Theme.of(context).hintColor,
-                                ),
-                              ),
-                              items: list.map((String item) => DropdownMenuItem<String>(
-                                value: item,
-                                child: Text(
-                                  item,
-                                  style:  GoogleFonts.poppins(
-                                  ),
-                                ),
-                              ))
-                                  .toList(),
-                              value: Uservalue,
-                              onChanged: (String? value) {
-                                setState(() {
-                                  Uservalue = value!;
-                                });
-                                setthevalue(value);
-                              },
-                              buttonStyleData:  ButtonStyleData(
-                              ),decoration: InputDecoration(
-                                border: InputBorder.none
-                            ),
-
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-
-                  SizedBox(width:50),
-
-                  InkWell(
-                    onTap: (){
-                      adduserdialogBox();
-                    },
-                    child: Container(
-                        width: 150,
-                        height: 40,
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(8)
-                        ),
-                        child: const Center(child:  Text("Add User",style: TextStyle(color: Colors.white),))
-                    ),
-                  ),
-                ],
-              ),
-
-              SizedBox(height: height/41.143,),
-
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-
+          padding:  EdgeInsets.only(left:width/170.75,right: width/170.75),
+        child: Container(
+          height:650,
+          child: SingleChildScrollView(
+            physics:const  ScrollPhysics(),
+            child: Column(
+              children: [
+                Row(
                   children: [
-
-                    SizedBox(height: 30,),
-
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: dashboard,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      dashboard = !dashboard;
-                                    });
-                                    if (dashboard == true) {
-                                      PermissionLis.add("Dashboard");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Dashboard");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("DashBoard"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Distributorisuser,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Distributorisuser =
-                                      !Distributorisuser;
-                                      if (Distributorisuser == true) {
-                                        PermissionLis.add("Distributor Users");
-                                      }
-                                      else{
-                                        PermissionLis.remove("Distributor Users");
-                                      }
-                                    });
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Distributor Users"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Distributorappiled,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Distributorappiled =
-                                      !Distributorappiled;
-                                    });
-                                    if (Distributorappiled == true) {
-                                      PermissionLis.add("Distributor New Applied");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Distributor New Applied");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Distributor Applied"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Distributorcorrection,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Distributorcorrection =
-                                      !Distributorcorrection;
-                                    });
-                                    if (Distributorcorrection == true) {
-                                      PermissionLis.add("Distributor Correction");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Distributor Correction");
-                                    }
-
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Distributor Correction"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Distributorreports,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Distributorreports =
-                                      !Distributorreports;
-                                    });
-                                    if (Distributorreports == true) {
-                                      PermissionLis.add("Distributor Reports");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Distributor Reports");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Distributor Reports"),
-                            ],
-                          ),
-                        ),
-                      ],
+                    Padding(
+                      padding:  EdgeInsets.only(left: width / 75.77,top: height/61.43),
+                      child: Text(
+                        " Permissions",
+                        style: GoogleFonts.poppins(
+                            fontSize: width / 57.57,
+                            color: const Color(0xff000000)),
+                      ),
                     ),
-                    SizedBox(height: 30,),
-
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Indicidualuser,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Indicidualuser =
-                                      !Indicidualuser;
-                                    });
-                                    if (Indicidualuser == true) {
-                                      PermissionLis.add("Individual Users");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Individual Users");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Indicidual users"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Indicidualapplied,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Indicidualapplied =
-                                      !Indicidualapplied;
-                                    });
-                                    if (Indicidualapplied == true) {
-                                      PermissionLis.add("Individual New Applied");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Individual New Applied");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Individual Applied"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Indicidualcorrection,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Indicidualcorrection =
-                                      !Indicidualcorrection;
-                                    });
-                                    if (Indicidualcorrection == true) {
-                                      PermissionLis.add("Individual Correction");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Individual Correction");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Individual Correction"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Indicidualreports,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Indicidualreports =
-                                      !Indicidualreports;
-                                    });
-                                    if (Indicidualreports == true) {
-                                      PermissionLis.add("Individual Reports");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Individual Reports");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Individual Reports"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Slider,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Slider = !Slider;
-                                    });
-                                    if (Slider == true) {
-                                      PermissionLis.add("Sliders");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Sliders");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Slider"),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: 30,),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: Notification,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      Notification =
-                                      !Notification;
-                                    });
-                                    if (Notification == true) {
-                                      PermissionLis.add("Notification");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Notification");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Notification"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: minor_Tab,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      minor_Tab =
-                                      !minor_Tab;
-                                    });
-                                    if (minor_Tab == true) {
-                                      PermissionLis.add("Minor Pancard");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Minor Pancard");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Minor Pancard"),
-                            ],
-                          ),
-                        ),
-
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: forms,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      forms =
-                                      !forms;
-                                    });
-                                    if (forms == true) {
-                                      PermissionLis.add("Forms");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Forms");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Forms"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: supports,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      supports =
-                                      !supports;
-                                    });
-                                    if (supports == true) {
-                                      PermissionLis.add("Support");
-                                    }
-                                    else{
-                                      PermissionLis.remove("Support");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("Support"),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 200,
-                          child: Row(
-                            children: [
-                              Checkbox(
-                                  value: faq,
-                                  onChanged: (val) {
-                                    setState(() {
-                                      faq =
-                                      !faq;
-                                    });
-                                    if (faq == true) {
-                                      PermissionLis.add("FAQ");
-                                    }
-                                    else{
-                                      PermissionLis.remove("FAQ");
-                                    }
-                                  }),
-                              SizedBox(width: 5,),
-                              Text("FAQ"),
-                            ],
-                          ),
-                        ),
-
-                      ],
-                    ),
-                    SizedBox(height: 30,),
-
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        InkWell(
-                          onTap: (){
-                            updatefunction();
-                            successpopuop("Permission Add Successfully....");
-                          },
-                          child: Container(
-                              width: 150,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(8)
-                              ),
-                              child: const Center(child:  Text("Add Permission",style: TextStyle(color: Colors.white),))
-                          ),
-                        ),
-                        SizedBox(width: 50,),
-                      ],
-                    )
-
                   ],
                 ),
-              ),
+                SizedBox(height: height/41.143,),
 
-              SizedBox(height: height/41.143,),
-              SizedBox(height:20),
-              Row(
-                children: [
-                  Padding(
-                    padding:  EdgeInsets.only(left: width / 75.77,top: height/61.43),
-                    child: Text(
-                      "Users Lists",
-                      style: GoogleFonts.poppins(
-                          fontSize: width / 57.57,
-                          color: const Color(0xff000000)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(width:40),
+                    SizedBox(
+
+                        child: Row(
+                      children: [
+                        Text("Select the Role  : ",style: GoogleFonts.poppins(fontWeight: FontWeight.w700),),
+                        SizedBox(width:10),
+                        Material(
+                          elevation: 5,
+                          borderRadius: BorderRadius.circular(8),
+                          color: Color(0xffFFFFFF),
+                          child: SizedBox(
+                            width:250,
+                            height:50,
+
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButtonFormField2<String>(
+                                isExpanded: true,
+                                hint: Text(
+                                  'Select',
+                                  style: GoogleFonts.poppins(
+                                    color: Theme.of(context).hintColor,
+                                  ),
+                                ),
+                                items: list.map((String item) => DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(
+                                    item,
+                                    style:  GoogleFonts.poppins(
+                                    ),
+                                  ),
+                                ))
+                                    .toList(),
+                                value: Uservalue,
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    Uservalue = value!;
+                                  });
+                                  setthevalue(value);
+                                },
+                                buttonStyleData:  ButtonStyleData(
+                                ),decoration: InputDecoration(
+                                  border: InputBorder.none
+                              ),
+
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+
+                    SizedBox(width:50),
+
+                    InkWell(
+                      onTap: (){
+                        adduserdialogBox();
+                      },
+                      child: Container(
+                          width: 150,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(8)
+                          ),
+                          child: const Center(child:  Text("Add User",style: TextStyle(color: Colors.white),))
+                      ),
                     ),
+                  ],
+                ),
+
+                SizedBox(height: height/41.143,),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+
+                    children: [
+
+                      SizedBox(height: 20,),
+
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: dashboard,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        dashboard = !dashboard;
+                                      });
+                                      if (dashboard == true) {
+                                        PermissionLis.add("Dashboard");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Dashboard");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("DashBoard"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Distributorisuser,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Distributorisuser =
+                                        !Distributorisuser;
+                                        if (Distributorisuser == true) {
+                                          PermissionLis.add("Distributor Users");
+                                        }
+                                        else{
+                                          PermissionLis.remove("Distributor Users");
+                                        }
+                                      });
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Distributor Users"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Distributorappiled,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Distributorappiled =
+                                        !Distributorappiled;
+                                      });
+                                      if (Distributorappiled == true) {
+                                        PermissionLis.add("Distributor New Applied");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Distributor New Applied");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Distributor Applied"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Distributorcorrection,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Distributorcorrection =
+                                        !Distributorcorrection;
+                                      });
+                                      if (Distributorcorrection == true) {
+                                        PermissionLis.add("Distributor Correction");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Distributor Correction");
+                                      }
+
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Distributor Correction"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Distributorreports,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Distributorreports =
+                                        !Distributorreports;
+                                      });
+                                      if (Distributorreports == true) {
+                                        PermissionLis.add("Distributor Reports");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Distributor Reports");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Distributor Reports"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Indicidualuser,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Indicidualuser =
+                                        !Indicidualuser;
+                                      });
+                                      if (Indicidualuser == true) {
+                                        PermissionLis.add("Individual Users");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Individual Users");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Indicidual users"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Indicidualapplied,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Indicidualapplied =
+                                        !Indicidualapplied;
+                                      });
+                                      if (Indicidualapplied == true) {
+                                        PermissionLis.add("Individual New Applied");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Individual New Applied");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Individual Applied"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Indicidualcorrection,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Indicidualcorrection =
+                                        !Indicidualcorrection;
+                                      });
+                                      if (Indicidualcorrection == true) {
+                                        PermissionLis.add("Individual Correction");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Individual Correction");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Individual Correction"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Indicidualreports,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Indicidualreports =
+                                        !Indicidualreports;
+                                      });
+                                      if (Indicidualreports == true) {
+                                        PermissionLis.add("Individual Reports");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Individual Reports");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Individual Reports"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Slider,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Slider = !Slider;
+                                      });
+                                      if (Slider == true) {
+                                        PermissionLis.add("Sliders");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Sliders");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Slider"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(height: 20,),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: Notification,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        Notification =
+                                        !Notification;
+                                      });
+                                      if (Notification == true) {
+                                        PermissionLis.add("Notification");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Notification");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Notification"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: minor_Tab,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        minor_Tab =
+                                        !minor_Tab;
+                                      });
+                                      if (minor_Tab == true) {
+                                        PermissionLis.add("Minor Pancard");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Minor Pancard");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Minor Pancard"),
+                              ],
+                            ),
+                          ),
+
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: forms,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        forms =
+                                        !forms;
+                                      });
+                                      if (forms == true) {
+                                        PermissionLis.add("Forms");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Forms");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Forms"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: supports,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        supports =
+                                        !supports;
+                                      });
+                                      if (supports == true) {
+                                        PermissionLis.add("Support");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Support");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Support"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: faq,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        faq =
+                                        !faq;
+                                      });
+                                      if (faq == true) {
+                                        PermissionLis.add("FAQ");
+                                      }
+                                      else{
+                                        PermissionLis.remove("FAQ");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("FAQ"),
+                              ],
+                            ),
+                          ),
+
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          InkWell(
+                            onTap: (){
+                              updatefunction();
+                              successpopuop("Permission Add Successfully....");
+                            },
+                            child: Container(
+                                width: 150,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                    color: Colors.green,
+                                    borderRadius: BorderRadius.circular(8)
+                                ),
+                                child: const Center(child:  Text("Add Permission",style: TextStyle(color: Colors.white),))
+                            ),
+                          ),
+                          SizedBox(width: 50,),
+                        ],
+                      )
+
+                    ],
                   ),
-                ],
-              ),
-              SizedBox(height:20),
-              Material( color: const Color(0xffd8e6ff),
-                elevation: 20,
-                shadowColor: Colors.black12,
-                child: Container(
+                ),
+
+                SizedBox(height: 5,),
+                Row(
+                  children: [
+                    Padding(
+                      padding:  EdgeInsets.only(left: width / 75.77,top: height/61.43),
+                      child: Text(
+                        "Users Lists",
+                        style: GoogleFonts.poppins(
+                            fontSize: width / 57.57,
+                            color: const Color(0xff000000)),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height:5),
+                Container(
                   width:1100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    color:  const Color(0xffd8e6ff),
-                  ),
+
                   child:
                   SingleChildScrollView(
-                    physics: const NeverScrollableScrollPhysics(),
+                    physics: const ScrollPhysics(),
                     child: Column(
                       children: [
-                        Row(
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color:  const Color(0xffd8e6ff),
+                          ),
+                          child: Row(
 
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
 
-                            Container(
-                              width: 50,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black)
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Si.No",
-                                  style:
-                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                              SizedBox(
+                                width: 50,
+                                height: 40,
+                                child: Center(
+                                  child: Text(
+                                    "Si.No",
+                                    style:
+                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                  ),
                                 ),
                               ),
-                            ),
 
-                            Container(
-                              width: 650,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black)
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "User Name",
-                                  style:
-                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                              SizedBox(
+                                width: 650,
+                                height: 40,
+                                child: Center(
+                                  child: Text(
+                                    "User Name",
+                                    style:
+                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                  ),
                                 ),
                               ),
-                            ),
 
-                            Container(
-                              width: 200,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black)
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Password",
-                                  style:
-                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                              SizedBox(
+                                width: 200,
+                                height: 40,
+                                child: Center(
+                                  child: Text(
+                                    "Password",
+                                    style:
+                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                  ),
                                 ),
                               ),
-                            ),
 
-                            Container(
-                              width: 200,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black)
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Actions",
-                                  style:
-                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                              SizedBox(
+                                width: 200,
+                                height: 40,
+                                child: Center(
+                                  child: Text(
+                                    "Actions",
+                                    style:
+                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                  ),
                                 ),
                               ),
-                            ),
 
 
-                          ],
+                            ],
+                          ),
                         ),
+                        SizedBox(height:8),
                         StreamBuilder(
                           stream: FirebaseFirestore.instance.collection("AdminUser").orderBy("timestamp").snapshots(),
                           builder: (context, snapshot) {
@@ -800,91 +792,91 @@ class _Permissions_PageState extends State<Permissions_Page> {
 
                                 var data=snapshot.data!.docs[index];
                                 return
-                                  Row(
+                                  Padding(
+                                    padding:  EdgeInsets.only(bottom:8),
+                                    child: Material(
+                                      color: Color(0xffFFFFFF),
+                                      elevation: 20,
+                                      borderRadius: BorderRadius.circular(4),
+                                      shadowColor: Colors.black12,
+                                      child: SizedBox(
+                                        height:50,
+                                        child: Row(
 
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
 
-                                    children: [
+                                          children: [
 
 
-                                      Container(
-                                        width: 50,
-                                        height: 45,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            (index+1).toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 650,
-                                        height: 45,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data['username'].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 200,
-                                        height: 45,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black)
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            data['password'].toString(),
-                                            style:
-                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        width: 200,
-                                        height: 45,
-                                        decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black)
-                                        ),
-                                        child:
-                                        Center(
-                                          child: InkWell(
-                                            onTap:(){
-                                              _deletepopup(data.id);
-                                            },
-                                            child: Material(
-
-                                              borderRadius: BorderRadius.circular(100),
-                                              color: Colors.white,
-                                              child: Container(
-                                                height:31,
-                                                width:80,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(100),
-                                                    color: Colors.white
+                                            SizedBox(
+                                              width: 50,
+                                              height: 45,
+                                              child: Center(
+                                                child: Text(
+                                                  (index+1).toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                                 ),
-                                                child: Center(child: Icon(Icons.delete)),
                                               ),
-                                              elevation: 10,
                                             ),
-                                          ),
+
+                                            SizedBox(
+                                              width: 650,
+                                              height: 45,
+                                              child: Center(
+                                                child: Text(
+                                                  data['username'].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 200,
+                                              height: 45,
+                                              child: Center(
+                                                child: Text(
+                                                  data['password'].toString(),
+                                                  style:
+                                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                ),
+                                              ),
+                                            ),
+
+                                            SizedBox(
+                                              width: 200,
+                                              height: 45,
+                                              child:
+                                              Center(
+                                                child: InkWell(
+                                                  onTap:(){
+                                                    _deletepopup(data.id);
+                                                  },
+                                                  child: Material(
+
+                                                    borderRadius: BorderRadius.circular(100),
+                                                    color: Colors.white,
+                                                    child: Container(
+                                                      height:31,
+                                                      width:80,
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(100),
+                                                          color: Colors.white
+                                                      ),
+                                                      child: Center(child: Icon(Icons.delete)),
+                                                    ),
+                                                    elevation: 10,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+
+
+                                          ],
                                         ),
                                       ),
-
-
-                                    ],
+                                    ),
                                   );
                               },);
                           },
@@ -893,10 +885,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height:40),
+                SizedBox(height:20),
 
-            ],
+              ],
+            ),
           ),
         ),
       );
@@ -904,6 +896,11 @@ class _Permissions_PageState extends State<Permissions_Page> {
 
     ///Permission update function
     updatefunction() async {
+
+    print("Lists -------------------------------- document Id");
+    print(PermissionLis);
+    print(Userdocid);
+
       FirebaseFirestore.instance.collection("AdminUser").doc(Userdocid).update({
         "permission":PermissionLis
       });
@@ -915,6 +912,7 @@ class _Permissions_PageState extends State<Permissions_Page> {
     double height = MediaQuery.of(context).size.height;
 
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return Container(
@@ -956,7 +954,8 @@ class _Permissions_PageState extends State<Permissions_Page> {
                   //cancel button
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomeView(Authusertype: Uservalue) ,));
+
                     },
                     child: Container(
                       height: height / 18.464,
@@ -981,7 +980,8 @@ class _Permissions_PageState extends State<Permissions_Page> {
                   //okay button
                   GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>HomeView(Authusertype: Uservalue) ,));
+
                     },
                     child: Container(
                       height: height / 18.464,
@@ -1266,7 +1266,8 @@ class _Permissions_PageState extends State<Permissions_Page> {
                                       borderRadius: BorderRadius.circular(4)),
                                   child: TextFormField(
                                     inputFormatters: [
-                                      FilteringTextInputFormatter.allow(RegExp("[a-z]")),
+                                      FilteringTextInputFormatter.allow(RegExp(r"[a-z0-9-@ ,.]+|\s")),
+                                     // FilteringTextInputFormatter.allow(RegExp("[a-z]")),
                                     ],
                                     controller: userName,
                                     keyboardType: TextInputType.multiline,

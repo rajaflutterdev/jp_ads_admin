@@ -68,7 +68,7 @@ class _Slide_ImageState extends State<Slide_Image> {
 
             ],
           ),
-          const SizedBox(height: 10,),
+           SizedBox(height: height/65.1,),
           StreamBuilder(
             stream: FirebaseFirestore.instance.collection("slider").snapshots(),
             builder: (context, snapshot) {
@@ -100,7 +100,7 @@ class _Slide_ImageState extends State<Slide_Image> {
                         color: Colors.white54,
                         shadowColor: Colors.black12,
                         child: Container(
-                          height: 100,
+                          height: height/6.51,
                           width: 350,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),

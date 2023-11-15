@@ -75,7 +75,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
     double height = MediaQuery.of(context).size.height;
     return
       Padding(
-        padding:  EdgeInsets.only(left:width/136.6),
+        padding:  EdgeInsets.only(left:width/170.75,right: width/170.75),
         child: SingleChildScrollView(
           physics: ScrollPhysics(),
           child: Column(
@@ -101,10 +101,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                           color: Colors.grey.shade400,
                           child:  SizedBox(
                               height: height/21.7,
-                              width: 30,
+                              width: width/45.533,
                               child: Icon(Icons.arrow_back,color: Colors.white,)),
                         )):SizedBox(),
-                    const SizedBox(width: 10,),
+                    SizedBox(width: width/136.6,),
 
                     Text(
                       "Distributor List ",
@@ -112,7 +112,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                           fontSize: width / 57.57,
                           color: const Color(0xff000000)),
                     ),
-                    const SizedBox(width:10),
+                    SizedBox(width:width/136.6),
 
                     totalApliedcount==0?const SizedBox():
                     Container(
@@ -123,6 +123,9 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                         padding: EdgeInsets.all(2),
                         child: Text(" New  -${totalApliedcount.toString()} ",
                           style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:Colors.white),)),
+
+
+
 
 
 
@@ -184,20 +187,20 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
 
                     ///Sorts by Date
                     SizedBox(
-                      height: height/16.275,
+                      height:40,
                       width:300,
 
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                              height: height/16.275,
+                              height:40,
                               child: Center(child: Text("Sort By Date : ",
                                 style: GoogleFonts.poppins(fontWeight: FontWeight.w700,color:Colors.white),))),
                           SizedBox(width: 5,),
                           Container(
-                            width: width/7.5888,
-                            height: height/16.275,
+                            width:180,
+                            height:40,
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(5)
@@ -237,7 +240,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                         ],
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(width: width/136.6,),
 
                     InkWell(
                       onTap:(){
@@ -283,6 +286,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                       ),
                     ),
 
+
                   ],
                 ),
               ),
@@ -290,433 +294,406 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
 
               isviewcollection==0?
               SizedBox(
-                height: height/1.085,
+
+                height: 500,
                 child: SingleChildScrollView(
                   physics: ScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Material( color: const Color(0xffd8e6ff),
-                        elevation: 20,
-                        shadowColor: Colors.black12,
-                        child: Container(
-                          width:1100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            color:  const Color(0xffd8e6ff),
-                          ),
-                          child:
-                          Column(
-                            children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color:  const Color(0xffd8e6ff),
+                        ),
+                        child: Row(
 
-                              Row(
-
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
 
 
-                                  Container(
-                                    width: 300,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black)
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Name",
-                                        style:
-                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(
-                                    width: 150,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black)
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Phone",
-                                        style:
-                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(
-                                    width: 150,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black)
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Wallet Amt",
-                                        style:
-                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(
-                                    width: 150,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black)
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Payment",
-                                        style:
-                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(
-                                    width: 150,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black)
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Applied count",
-                                        style:
-                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Container(
-                                    width: 200,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black)
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "Actions",
-                                        style:
-                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                      ),
-                                    ),
-                                  ),
-
-
-
-
-
-
-                                ],
+                            SizedBox(
+                              width: width/4.553,
+                              height: 40,
+                              child: Center(
+                                child: Text(
+                                  "Name",
+                                  style:
+                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                ),
                               ),
+                            ),
 
-                              StreamBuilder(
-                                stream: FirebaseFirestore.instance.collection("Users").orderBy('timestamp').snapshots(),
-                                builder: (context, snapshot) {
-                                  if(snapshot.hasData==null){
-                                    return const Center(child: CircularProgressIndicator(),);
-                                  }
-                                  if(!snapshot.hasData){
-                                    return const Center(child: CircularProgressIndicator(),);
-                                  }
-                                  return
-                                    ListView.builder(
-                                      shrinkWrap: true,
-                                      physics: const NeverScrollableScrollPhysics(),
-                                      itemCount: snapshot.data!.docs.length,
-                                      itemBuilder: (context, index) {
+                            SizedBox(
+                              width: 150,
+                              height: 40,
 
-                                        var _Userdata=snapshot.data!.docs[index];
-
-                                        if(_Userdata['usertype']=='Distributor'){
-
-                                          if((_Userdata['name'].toString().toLowerCase().contains(filterName.toString().toLowerCase()))||(_Userdata['date']==filterName)){
-                                            return Row(
-
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-
-
-                                              children: [
-
-
-
-                                                Container(
-                                                  width: 300,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child:
-                                                    Text(
-                                                      _Userdata["name"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 150,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      _Userdata["phone"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 150,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      _Userdata["walletamount"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 150,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      _Userdata["payment"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 150,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      _Userdata["usageccount"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 200,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                    children: [
-                                                      InkWell(
-                                                        onTap: (){
-                                                          setState(() {
-                                                            isviewcollection=1;
-                                                            viewhistroy=1;
-                                                            Userdocuid=_Userdata.id.toString();
-                                                          });
-
-                                                        },
-                                                        child: Container(
-                                                            width: width/13.66,
-                                                            height: height/21.7,
-                                                            decoration: BoxDecoration(
-                                                                color: Colors.green,
-                                                                borderRadius: BorderRadius.circular(8)
-                                                            ),
-                                                            child: Center(child: const Text("View User",style: TextStyle(color: Colors.white),))
-                                                        ),
-                                                      ),
-                                                      // InkWell(
-                                                      //   onTap: (){
-                                                      //     ///delete popup
-                                                      //     _deletepopup(_Userdata.id);
-                                                      //   },
-                                                      //   child: SizedBox(
-                                                      //       width: 40,
-                                                      //       height: 40,
-                                                      //       child: Center(child: const Icon(Icons.delete))
-                                                      //   ),
-                                                      // ),
-                                                    ],
-                                                  ),
-                                                ),
-
-
-
-
-
-
-                                              ],
-                                            );
-                                          }
-                                          if(filterName=="All"){
-                                            return Row(
-
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-
-
-                                              children: [
-
-
-
-                                                Container(
-                                                  width: 300,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child:
-                                                    Text(
-                                                      _Userdata["name"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 150,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      _Userdata["phone"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 150,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      _Userdata["walletamount"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 150,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      _Userdata["payment"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 150,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      _Userdata["usageccount"].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ),
-                                                ),
-
-                                                Container(
-                                                  width: 200,
-                                                  height: 40,
-                                                  decoration: BoxDecoration(
-                                                      border: Border.all(color: Colors.black)
-                                                  ),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                    children: [
-                                                      InkWell(
-                                                        onTap: (){
-                                                          setState(() {
-                                                            isviewcollection=1;
-                                                            viewhistroy=1;
-                                                            Userdocuid=_Userdata.id.toString();
-                                                          });
-
-                                                        },
-                                                        child: Container(
-                                                            width: width/13.66,
-                                                            height: height/21.7,
-                                                            decoration: BoxDecoration(
-                                                                color: Colors.green,
-                                                                borderRadius: BorderRadius.circular(8)
-                                                            ),
-                                                            child: Center(child: const Text("View User",style: TextStyle(color: Colors.white),))
-                                                        ),
-                                                      ),
-                                                      // InkWell(
-                                                      //   onTap: (){
-                                                      //     ///delete popup
-                                                      //     _deletepopup(_Userdata.id);
-                                                      //   },
-                                                      //   child: SizedBox(
-                                                      //       width: 40,
-                                                      //       height: 40,
-                                                      //       child: Center(child: const Icon(Icons.delete))
-                                                      //   ),
-                                                      // ),
-                                                    ],
-                                                  ),
-                                                ),
-
-
-
-
-
-
-                                              ],
-                                            );
-                                          }
-                                        }
-                                        return const SizedBox();
-
-                                      },);
-                                },
+                              child: Center(
+                                child: Text(
+                                  "Phone",
+                                  style:
+                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                ),
                               ),
-                            ],
-                          ),
+                            ),
+
+                            SizedBox(
+                              width: 146,
+                              height: 40,
+
+                              child: Center(
+                                child: Text(
+                                  "Wallet Amt",
+                                  style:
+                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+
+                              child: Center(
+                                child: Text(
+                                  "Payment",
+                                  style:
+                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(
+                              width: 150,
+                              height: 40,
+
+                              child: Center(
+                                child: Text(
+                                  "Applied count",
+                                  style:
+                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(
+                              width: 200,
+                              height: 40,
+
+                              child: Center(
+                                child: Text(
+                                  "Actions",
+                                  style:
+                                  GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            ),
+
+
+
+
+
+
+                          ],
                         ),
                       ),
+                      SizedBox(height:8),
+
+                      StreamBuilder(
+                        stream: FirebaseFirestore.instance.collection("Users").orderBy('timestamp').snapshots(),
+                        builder: (context, snapshot) {
+                          if(snapshot.hasData==null){
+                            return const Center(child: CircularProgressIndicator(),);
+                          }
+                          if(!snapshot.hasData){
+                            return const Center(child: CircularProgressIndicator(),);
+                          }
+                          return
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+
+                                var _Userdata=snapshot.data!.docs[index];
+
+                                if(_Userdata['usertype']=='Distributor'){
+
+                                  if((_Userdata['name'].toString().toLowerCase().contains(filterName.toString().toLowerCase()))||(_Userdata['date']==filterName)){
+                                    return Padding(
+                                      padding:  EdgeInsets.only(bottom: 8),
+                                      child: Material(
+                                        color: Color(0xffFFFFFF),
+                                        elevation: 20,
+                                        borderRadius: BorderRadius.circular(4),
+                                        shadowColor: Colors.black12,
+                                        child: SizedBox(
+                                          height:50,
+                                          child: Row(
+
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+
+
+                                            children: [
+
+                                              SizedBox(
+                                                width: width/4.553,
+                                                height: 40,
+                                                child: Center(
+                                                  child:
+                                                  Text(
+                                                    _Userdata["name"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 150,
+                                                height: 40,
+
+                                                child: Center(
+                                                  child: Text(
+                                                    _Userdata["phone"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 146,
+                                                height: 40,
+
+                                                child: Center(
+                                                  child: Text(
+                                                    _Userdata["walletamount"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 150,
+                                                height: 40,
+
+                                                child: Center(
+                                                  child: Text(
+                                                    _Userdata["payment"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 150,
+                                                height: 40,
+
+                                                child: Center(
+                                                  child: Text(
+                                                    _Userdata["usageccount"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 200,
+                                                height: 40,
+
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: (){
+                                                        setState(() {
+                                                          isviewcollection=1;
+                                                          viewhistroy=1;
+                                                          Userdocuid=_Userdata.id.toString();
+                                                        });
+
+                                                      },
+                                                      child: Container(
+                                                          width: width/13.66,
+                                                          height: height/21.7,
+                                                          decoration: BoxDecoration(
+                                                              color: Colors.green,
+                                                              borderRadius: BorderRadius.circular(8)
+                                                          ),
+                                                          child: Center(child: const Text("View User",style: TextStyle(color: Colors.white),))
+                                                      ),
+                                                    ),
+                                                    // InkWell(
+                                                    //   onTap: (){
+                                                    //     ///delete popup
+                                                    //     _deletepopup(_Userdata.id);
+                                                    //   },
+                                                    //   child: SizedBox(
+                                                    //       width: 40,
+                                                    //       height: 40,
+                                                    //       child: Center(child: const Icon(Icons.delete))
+                                                    //   ),
+                                                    // ),
+                                                  ],
+                                                ),
+                                              ),
+
+
+
+
+
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  if(filterName=="All"){
+                                    return Padding(
+                                      padding:  EdgeInsets.only(bottom: 8),
+                                      child: Material(
+                                        color: Color(0xffFFFFFF),
+                                        elevation: 20,
+                                        borderRadius: BorderRadius.circular(4),
+                                        shadowColor: Colors.black12,
+                                        child: SizedBox(
+                                          height:50,
+                                          child: Row(
+
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+
+
+                                            children: [
+
+                                              SizedBox(
+                                                width: width/4.553,
+                                                height: 40,
+                                                child: Center(
+                                                  child:
+                                                  Text(
+                                                    _Userdata["name"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 150,
+                                                height: 40,
+
+                                                child: Center(
+                                                  child: Text(
+                                                    _Userdata["phone"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 146,
+                                                height: 40,
+
+                                                child: Center(
+                                                  child: Text(
+                                                    _Userdata["walletamount"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 150,
+                                                height: 40,
+
+                                                child: Center(
+                                                  child: Text(
+                                                    _Userdata["payment"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 150,
+                                                height: 40,
+
+                                                child: Center(
+                                                  child: Text(
+                                                    _Userdata["usageccount"].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                width: 200,
+                                                height: 40,
+
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: (){
+                                                        setState(() {
+                                                          isviewcollection=1;
+                                                          viewhistroy=1;
+                                                          Userdocuid=_Userdata.id.toString();
+                                                        });
+
+                                                      },
+                                                      child: Container(
+                                                          width: width/13.66,
+                                                          height: height/21.7,
+                                                          decoration: BoxDecoration(
+                                                              color: Colors.green,
+                                                              borderRadius: BorderRadius.circular(8)
+                                                          ),
+                                                          child: Center(child: const Text("View User",style: TextStyle(color: Colors.white),))
+                                                      ),
+                                                    ),
+                                                    // InkWell(
+                                                    //   onTap: (){
+                                                    //     ///delete popup
+                                                    //     _deletepopup(_Userdata.id);
+                                                    //   },
+                                                    //   child: SizedBox(
+                                                    //       width: 40,
+                                                    //       height: 40,
+                                                    //       child: Center(child: const Icon(Icons.delete))
+                                                    //   ),
+                                                    // ),
+                                                  ],
+                                                ),
+                                              ),
+
+
+
+
+
+
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                }
+                                return const SizedBox();
+
+                              },);
+                        },
+                      ),
+
                       SizedBox(height: height/41.143,),
 
 
@@ -728,257 +705,258 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
               ):
               isviewcollection==1?
               SizedBox(
-                  height: height/1.085,
+                  height: 500,
+
                   child:
-                  SingleChildScrollView(
-                    physics:const  ScrollPhysics(),
-                    child: Column(
-                      children: [
+                  Column(
+                    children: [
 
-                        Container(
-                          height:100,
-                          width:1100,
-                          margin: EdgeInsets.only(left: 8,right: 8),
-                          padding: EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
-                              color:Color(0xffd8e6ff),
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(8),
-                                topRight: Radius.circular(8),
-                              )
-                          ),
-                          child: FutureBuilder(
-                            future: FirebaseFirestore.instance.collection("Users").doc(Userdocuid).get(),
-                            builder: (context, snapshot) {
-                              if(!snapshot.hasData){
-                                return Center(child: CircularProgressIndicator());
-                              }
-                              if(snapshot.hasData==null){
-                                return Center(child: CircularProgressIndicator());
-                              }
-                              var data=snapshot.data;
+                      Container(
+                        height:100,
+                        width:1100,
 
-                              return
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    SizedBox(
-                                      width: 500,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 230,
-                                                height: 40,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      "Name",
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 230,
-                                                height: 40,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      data!['name'].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color:  Colors.black),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 230,
-                                                height: 40,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      "Type",
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 230,
-                                                height: 40,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      data['usertype'].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                    SizedBox(
-                                      width: 500,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 230,
-                                                height: 40,
-
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      "Phone No",
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 230,
-                                                height: 40,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      data['phone'].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 230,
-                                                height: 40,
-
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      "Wallet Amount",
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 230,
-                                                height: 40,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      data['walletamount'].toString(),
-                                                      style:
-                                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                            },
-                          ),
+                        padding: EdgeInsets.only(top: 10),
+                        decoration: BoxDecoration(
+                            color:Color(0xffd8e6ff),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8),
+                            )
                         ),
+                        child: FutureBuilder(
+                          future: FirebaseFirestore.instance.collection("Users").doc(Userdocuid).get(),
+                          builder: (context, snapshot) {
+                            if(!snapshot.hasData){
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            if(snapshot.hasData==null){
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            var data=snapshot.data;
 
-                        Padding(
-                          padding:  EdgeInsets.only(left: 8,right: 8),
-                          child: Center(
-                            child: Container(
-                              height: 50,
-                              width:double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child:
-                              TabBar(
-                                controller: tabController,
-                                labelColor: Colors.indigo,
-                                dividerColor: Colors.transparent,
-                                indicatorSize: TabBarIndicatorSize.label,
-                                indicatorColor: Colors.red,
-                                indicatorPadding: const EdgeInsets.symmetric(
-                                    horizontal: 0, vertical: 0),
-                                labelPadding: const EdgeInsets.all(0),
-                                splashBorderRadius: BorderRadius.zero,
-                                splashFactory: NoSplash.splashFactory,
-                                labelStyle: GoogleFonts.openSans(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w800,
-                                ),
-                                unselectedLabelStyle: GoogleFonts.openSans(
-                                  fontSize: 19,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                                onTap: (index){
-                                  setState(() {
-                                    selectTabIndex = index;
-                                  });
-                                },
-                                tabs: [
-                                  Tab(
-                                    child:  const Text("Wallet"),
+                            return
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  SizedBox(
+                                    width: 500,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 230,
+                                              height: 40,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "Name",
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 230,
+                                              height: 40,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    data!['name'].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color:  Colors.black),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 230,
+                                              height: 40,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "Type",
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 230,
+                                              height: 40,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    data['usertype'].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  Tab(
-                                    child: const Text("Correction"),
-                                  ),
-                                  Tab(
-                                    child: const Text("Applied"),
+
+                                  SizedBox(
+                                    width: 500,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 230,
+                                              height: 40,
+
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "Phone No",
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 230,
+                                              height: 40,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    data['phone'].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 230,
+                                              height: 40,
+
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    "Wallet Amount",
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 230,
+                                              height: 40,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    data['walletamount'].toString(),
+                                                    style:
+                                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
-                              ),
+                              );
+                          },
+                        ),
+                      ),
+
+                      Center(
+                        child: Container(
+                          height: 50,
+                          width:double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child:
+                          TabBar(
+                            controller: tabController,
+                            labelColor: Colors.indigo,
+                            dividerColor: Colors.transparent,
+                            indicatorSize: TabBarIndicatorSize.label,
+                            indicatorColor: Colors.red,
+                            indicatorPadding: const EdgeInsets.symmetric(
+                                horizontal: 0, vertical: 0),
+                            labelPadding: const EdgeInsets.all(0),
+                            splashBorderRadius: BorderRadius.zero,
+                            splashFactory: NoSplash.splashFactory,
+                            labelStyle: GoogleFonts.openSans(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
                             ),
+                            unselectedLabelStyle: GoogleFonts.openSans(
+                              fontSize: 19,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            onTap: (index){
+                              setState(() {
+                                selectTabIndex = index;
+                              });
+                            },
+                            tabs: [
+                              Tab(
+                                child:  const Text("Wallet"),
+                              ),
+                              Tab(
+                                child: const Text("Correction"),
+                              ),
+                              Tab(
+                                child: const Text("Applied"),
+                              ),
+                            ],
                           ),
                         ),
-                        SizedBox(
-                          height: 430,
-                          child: TabBarView(
-                            controller: tabController,
-                            children: [
-                              SizedBox(
-                                height: 580,
-                                width:1100,
-                                child: SingleChildScrollView(
-                                  physics: const ScrollPhysics(),
-                                  child: Column(
-                                    children: [
-                                      Row(
+                      ),
+                      SizedBox(height:10),
+
+                      SizedBox(
+                        height: 340,
+                        child: TabBarView(
+                          controller: tabController,
+                          children: [
+                            SizedBox(
+                              height: 580,
+                              width:1100,
+                              child: SingleChildScrollView(
+                                physics: const ScrollPhysics(),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        color:  const Color(0xffd8e6ff),
+                                      ),
+                                      child: Row(
 
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
 
 
-                                          Container(
+                                          SizedBox(
                                             width: 50,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Si.No",
@@ -991,9 +969,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                           Container(
                                             width: 250,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Name",
@@ -1006,9 +982,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                           Container(
                                             width: 200,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Phone",
@@ -1021,9 +995,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                           Container(
                                             width: 200,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Amount",
@@ -1036,9 +1008,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                           Container(
                                             width: 190,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Date",
@@ -1051,9 +1021,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                           Container(
                                             width: 190,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Time",
@@ -1064,200 +1032,167 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          // Container(
-                                          //   width: 200,
-                                          //   height: 40,
-                                          //   decoration: BoxDecoration(
-                                          //       border: Border.all(color: Colors.black)
-                                          //   ),
-                                          //   child: Center(
-                                          //     child: Text(
-                                          //       "Actions",
-                                          //       style:
-                                          //       GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                                          //     ),
-                                          //   ),
-                                          // ),
-
-
-
-
-
 
                                         ],
                                       ),
-                                      StreamBuilder(
-                                        stream: FirebaseFirestore.instance.collection("Users").
-                                        doc(Userdocuid).collection("Wallet_Histroy").orderBy('timestamp').snapshots(),
-                                        builder: (context, snapshot) {
+                                    ),
+                                    SizedBox(height:8),
+                                    StreamBuilder(
+                                      stream: FirebaseFirestore.instance.collection("Users").
+                                      doc(Userdocuid).collection("Wallet_Histroy").orderBy('timestamp').snapshots(),
+                                      builder: (context, snapshot) {
 
-                                          if(snapshot.hasData==null){
-                                            return const Center(child: CircularProgressIndicator(),);
-                                          }
-                                          if(!snapshot.hasData){
-                                            return const Center(child: CircularProgressIndicator(),);
-                                          }
+                                        if(snapshot.hasData==null){
+                                          return const Center(child: CircularProgressIndicator(),);
+                                        }
+                                        if(!snapshot.hasData){
+                                          return const Center(child: CircularProgressIndicator(),);
+                                        }
 
-                                          return ListView.builder(
-                                            shrinkWrap: true,
-                                            physics: const NeverScrollableScrollPhysics(),
-                                            itemCount: snapshot.data!.docs.length,
-                                            itemBuilder: (context, index) {
+                                        return ListView.builder(
+                                          shrinkWrap: true,
+                                          physics: const NeverScrollableScrollPhysics(),
+                                          itemCount: snapshot.data!.docs.length,
+                                          itemBuilder: (context, index) {
 
-                                              var applieddata=snapshot.data!.docs[index];
-                                              return
-                                                Row(
+                                            var applieddata=snapshot.data!.docs[index];
+                                            return
+                                              Padding(
+                                                padding:  EdgeInsets.only(bottom:8),
+                                                child: Material(
+                                                  color: Color(0xffFFFFFF),
+                                                  elevation: 20,
+                                                  borderRadius: BorderRadius.circular(4),
+                                                  shadowColor: Colors.black12,
+                                                  child: SizedBox(
+                                                    height:50,
+                                                    child: Row(
 
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
 
-                                                  children: [
+                                                      children: [
 
 
-                                                    Container(
-                                                      width: 50,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: Colors.black)
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          (index+1).toString(),
-                                                          style:
-                                                          GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                        SizedBox(
+                                                          width: 50,
+                                                          height: 40,
+                                                          child: Center(
+                                                            child: Text(
+                                                              (index+1).toString(),
+                                                              style:
+                                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
 
-                                                    Container(
-                                                      width: 250,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: Colors.black)
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          applieddata['name'].toString(),
-                                                          style:
-                                                          GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                        SizedBox(
+                                                          width: 250,
+                                                          height: 40,
+
+                                                          child: Center(
+                                                            child: Text(
+                                                              applieddata['name'].toString(),
+                                                              style:
+                                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
 
-                                                    Container(
-                                                      width: 200,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: Colors.black)
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          applieddata['Phoneno'].toString(),
-                                                          style:
-                                                          GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                        SizedBox(
+                                                          width: 200,
+                                                          height: 40,
+
+                                                          child: Center(
+                                                            child: Text(
+                                                              applieddata['Phoneno'].toString(),
+                                                              style:
+                                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
 
-                                                    Container(
-                                                      width: 200,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: Colors.black)
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          applieddata['Amount'].toString(),
-                                                          style:
-                                                          GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                        SizedBox(
+                                                          width: 200,
+                                                          height: 40,
+
+                                                          child: Center(
+                                                            child: Text(
+                                                              applieddata['Amount'].toString(),
+                                                              style:
+                                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
 
-                                                    Container(
-                                                      width: 190,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: Colors.black)
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          applieddata['date'].toString(),
-                                                          style:
-                                                          GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                        SizedBox(
+                                                          width: 190,
+                                                          height: 40,
+
+                                                          child: Center(
+                                                            child: Text(
+                                                              applieddata['date'].toString(),
+                                                              style:
+                                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
 
-                                                    Container(
-                                                      width: 190,
-                                                      height: 40,
-                                                      decoration: BoxDecoration(
-                                                          border: Border.all(color: Colors.black)
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          applieddata['time'].toString(),
-                                                          textAlign: TextAlign.center,
-                                                          style:
-                                                          GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                        SizedBox(
+                                                          width: 190,
+                                                          height: 40,
+
+                                                          child: Center(
+                                                            child: Text(
+                                                              applieddata['time'].toString(),
+                                                              textAlign: TextAlign.center,
+                                                              style:
+                                                              GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
+
+
+
+
+
+
+
+
+                                                      ],
                                                     ),
-
-                                                    // Container(
-                                                    //   width: 200,
-                                                    //   height: 40,
-                                                    //   decoration: BoxDecoration(
-                                                    //       border: Border.all(color: Colors.black)
-                                                    //   ),
-                                                    //   child: InkWell(
-                                                    //     onTap: (){
-                                                    //       ///delete popup
-                                                    //       _deleteWalletpopup(applieddata.id);
-                                                    //     },
-                                                    //     child: SizedBox(
-                                                    //         width: 60,
-                                                    //         height: 40,
-                                                    //         child: Center(child: const Icon(Icons.delete))
-                                                    //     ),
-                                                    //   ),
-                                                    // ),
-
-
-
-
-
-
-                                                  ],
-                                                );
-                                            },);
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                                                  ),
+                                                ),
+                                              );
+                                          },);
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
+                            ),
 
-                              SizedBox(
-                                height: 580,
-                                width:1100,
-                                child: SingleChildScrollView(
-                                  physics: const ScrollPhysics(),
-                                  child: Column(
-                                    children: [
-                                      Row(
+                            SizedBox(
+                              height: 580,
+                              width:1100,
+                              child: SingleChildScrollView(
+                                physics: const ScrollPhysics(),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        color:  const Color(0xffd8e6ff),
+                                      ),
+                                      child: Row(
 
                                         crossAxisAlignment: CrossAxisAlignment.center,
 
                                         children: [
 
 
-                                          Container(
-                                            width: 50,
+                                          SizedBox(
+                                            width: 45,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
                                             child: Center(
                                               child: Text(
                                                 "Si.No",
@@ -1267,12 +1202,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: 250,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Name",
@@ -1282,12 +1215,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: 150,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Phone",
@@ -1297,12 +1228,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: 150,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Gender",
@@ -1312,12 +1241,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: width/13.66,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Status",
@@ -1327,12 +1254,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: width/13.66,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Type",
@@ -1342,12 +1267,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: width/13.66,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Date/Time",
@@ -1358,12 +1281,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: 200,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Actions",
@@ -1380,230 +1301,229 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
 
                                         ],
                                       ),
-                                      FutureBuilder(
-                                        future: FirebaseFirestore.instance.collection("Users").
-                                        doc(Userdocuid).collection("Histroy").where("Type",isEqualTo:"Correction").get(),
-                                        builder: (context, snapshot) {
+                                    ),
+                                    SizedBox(height:8),
+                                    FutureBuilder(
+                                      future: FirebaseFirestore.instance.collection("Users").
+                                      doc(Userdocuid).collection("Histroy").where("Type",isEqualTo:"Correction").get(),
+                                      builder: (context, snapshot) {
 
-                                          if(snapshot.hasData==null){
-                                            return const Center(child: CircularProgressIndicator(),);
-                                          }
-                                          if(!snapshot.hasData){
-                                            return const Center(child: CircularProgressIndicator(),);
-                                          }
+                                        if(snapshot.hasData==null){
+                                          return const Center(child: CircularProgressIndicator(),);
+                                        }
+                                        if(!snapshot.hasData){
+                                          return const Center(child: CircularProgressIndicator(),);
+                                        }
 
-                                          return ListView.builder(
-                                            shrinkWrap: true,
-                                            physics:const  NeverScrollableScrollPhysics(),
-                                            itemCount: snapshot.data!.docs.length,
-                                            itemBuilder: (context, index) {
+                                        return ListView.builder(
+                                          shrinkWrap: true,
+                                          physics:const  NeverScrollableScrollPhysics(),
+                                          itemCount: snapshot.data!.docs.length,
+                                          itemBuilder: (context, index) {
 
-                                              documentcount=snapshot.data!.docs.length;
-                                              var applieddata=snapshot.data!.docs[index];
-                                              return Row(
+                                            documentcount=snapshot.data!.docs.length;
+                                            var applieddata=snapshot.data!.docs[index];
+                                            return Padding(
+                                              padding: EdgeInsets.only(bottom: 8),
+                                              child: Material(
+                                                color: Color(0xffFFFFFF),
+                                                elevation: 20,
+                                                borderRadius: BorderRadius.circular(4),
+                                                shadowColor: Colors.black12,
+                                                child: SizedBox(
+                                                  height:50,
+                                                  child: Row(
 
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: [
 
-                                                  Container(
-                                                    width: 50,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        (index+1).toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                      SizedBox(
+                                                        width: 45,
+                                                        height: 40,
 
-                                                  Container(
-                                                    width: 250,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        applieddata['Crtname'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: 150,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        applieddata['crtphonenumber'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: 150,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        applieddata['crgender'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: width/13.66,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        applieddata['updatestatus'].toString()==""?"-":   applieddata['updatestatus'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: Colors.indigo,fontWeight:FontWeight.w700),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: width/13.66,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        applieddata['Type'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: Colors.indigo,fontWeight:FontWeight.w700),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: width/13.66,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        "${ applieddata['date'].toString()}\n${ applieddata['time'].toString()}",
-                                                        textAlign: TextAlign.center,
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: 200,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: (){
-                                                            detailspopup(
-                                                              applieddata['Crtname'].toString(),
-                                                              applieddata['crtfathername'].toString(),
-                                                              applieddata['crtphonenumber'].toString(),
-                                                              applieddata['crgender'].toString(),
-                                                              applieddata['crtdate_of_birth'].toString(),
-                                                              applieddata['pancardno'].toString(),
-                                                              applieddata['crtnameandbuildsno'].toString(),
-                                                              applieddata['crtnadddress'].toString(),
-                                                              applieddata['crtdistrict'].toString(),
-                                                              applieddata['crtstate'].toString(),
-                                                              applieddata['date'].toString(),
-                                                              applieddata['time'].toString(),
-                                                              applieddata['updatestatus'].toString(),
-                                                              applieddata['correctionupdate'].toString(),
-                                                              applieddata['Type'].toString(),
-                                                              applieddata['crtpincode'].toString(),
-                                                              applieddata.id.toString(),
-                                                            );
-                                                          },
-                                                          child: Container(
-                                                              width: width/13.66,
-                                                              height: height/21.7,
-                                                              decoration: BoxDecoration(
-                                                                  color: Colors.green,
-                                                                  borderRadius: BorderRadius.circular(8)
-                                                              ),
-                                                              child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                                        child: Center(
+                                                          child: Text(
+                                                            (index+1).toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                                           ),
                                                         ),
-                                                        // InkWell(
-                                                        //   onTap: (){
-                                                        //     ///delete popup
-                                                        //     _deleteHistroypopup(applieddata.id);
-                                                        //   },
-                                                        //   child: SizedBox(
-                                                        //       width: 40,
-                                                        //       height: 40,
-                                                        //       child: Center(child: const Icon(Icons.delete))
-                                                        //   ),
-                                                        // ),
-                                                      ],
-                                                    ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: 250,
+                                                        height: 40,
+
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['Crtname'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: 150,
+                                                        height: 40,
+
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['crtphonenumber'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: 150,
+                                                        height: 40,
+
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['crgender'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: width/13.66,
+                                                        height: 40,
+
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['updatestatus'].toString()==""?"-":   applieddata['updatestatus'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: Colors.indigo,fontWeight:FontWeight.w700),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: width/13.66,
+                                                        height: 40,
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['Type'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: Colors.indigo,fontWeight:FontWeight.w700),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: width/13.66,
+                                                        height: 40,
+                                                        child: Center(
+                                                          child: Text(
+                                                            "${ applieddata['date'].toString()}\n${ applieddata['time'].toString()}",
+                                                            textAlign: TextAlign.center,
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: 200,
+                                                        height: 40,
+
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                          children: [
+                                                            InkWell(
+                                                              onTap: (){
+                                                                detailspopup(
+                                                                  applieddata['Crtname'].toString(),
+                                                                  applieddata['crtfathername'].toString(),
+                                                                  applieddata['crtphonenumber'].toString(),
+                                                                  applieddata['crgender'].toString(),
+                                                                  applieddata['crtdate_of_birth'].toString(),
+                                                                  applieddata['pancardno'].toString(),
+                                                                  applieddata['crtnameandbuildsno'].toString(),
+                                                                  applieddata['crtnadddress'].toString(),
+                                                                  applieddata['crtdistrict'].toString(),
+                                                                  applieddata['crtstate'].toString(),
+                                                                  applieddata['date'].toString(),
+                                                                  applieddata['time'].toString(),
+                                                                  applieddata['updatestatus'].toString(),
+                                                                  applieddata['correctionupdate'].toString(),
+                                                                  applieddata['Type'].toString(),
+                                                                  applieddata['crtpincode'].toString(),
+                                                                  applieddata.id.toString(),
+                                                                );
+                                                              },
+                                                              child: Container(
+                                                                  width: width/13.66,
+                                                                  height: height/21.7,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors.green,
+                                                                      borderRadius: BorderRadius.circular(8)
+                                                                  ),
+                                                                  child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                                              ),
+                                                            ),
+                                                            // InkWell(
+                                                            //   onTap: (){
+                                                            //     ///delete popup
+                                                            //     _deleteHistroypopup(applieddata.id);
+                                                            //   },
+                                                            //   child: SizedBox(
+                                                            //       width: 40,
+                                                            //       height: 40,
+                                                            //       child: Center(child: const Icon(Icons.delete))
+                                                            //   ),
+                                                            // ),
+                                                          ],
+                                                        ),
+                                                      ),
+
+
+
+
+
+
+
+
+                                                    ],
                                                   ),
-
-
-
-
-
-
-
-
-                                                ],
-                                              );
-                                            },);
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },);
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
+                            ),
 
-                              SizedBox(
-                                height: 580,
-                                width:1100,
-                                child: SingleChildScrollView(
-                                  physics: const ScrollPhysics(),
-                                  child: Column(
-                                    children: [
-                                      Row(
+                            SizedBox(
+                              height: 580,
+                              width:1100,
+                              child: SingleChildScrollView(
+                                physics: const ScrollPhysics(),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(4),
+                                        color:  const Color(0xffd8e6ff),
+                                      ),
+                                      child: Row(
 
                                         crossAxisAlignment: CrossAxisAlignment.center,
 
                                         children: [
 
 
-                                          Container(
-                                            width: 50,
+                                          SizedBox(
+                                            width: 45,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Si.No",
@@ -1613,12 +1533,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: 250,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Name",
@@ -1628,12 +1546,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: 150,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Phone",
@@ -1643,12 +1559,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: width/13.66,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Status",
@@ -1658,12 +1572,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: width/13.66,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Type",
@@ -1673,12 +1585,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: width/13.66,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Date",
@@ -1688,12 +1598,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: 150,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Time",
@@ -1704,12 +1612,10 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                                             ),
                                           ),
 
-                                          Container(
+                                          SizedBox(
                                             width: 200,
                                             height: 40,
-                                            decoration: BoxDecoration(
-                                                border: Border.all(color: Colors.black)
-                                            ),
+
                                             child: Center(
                                               child: Text(
                                                 "Actions",
@@ -1726,215 +1632,209 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
 
                                         ],
                                       ),
-                                      FutureBuilder(
-                                        future: FirebaseFirestore.instance.collection("Users").doc(Userdocuid).collection("Histroy").where("Type",isEqualTo:"Applied").get(),
-                                        builder: (context, snapshot) {
+                                    ),
+                                    SizedBox(height:8),
+                                    FutureBuilder(
+                                      future: FirebaseFirestore.instance.collection("Users").doc(Userdocuid).collection("Histroy").where("Type",isEqualTo:"Applied").get(),
+                                      builder: (context, snapshot) {
 
-                                          if(snapshot.hasData==null){
-                                            return const Center(child: CircularProgressIndicator(),);
-                                          }
-                                          if(!snapshot.hasData){
-                                            return const Center(child: CircularProgressIndicator(),);
-                                          }
+                                        if(snapshot.hasData==null){
+                                          return const Center(child: CircularProgressIndicator(),);
+                                        }
+                                        if(!snapshot.hasData){
+                                          return const Center(child: CircularProgressIndicator(),);
+                                        }
 
-                                          return ListView.builder(
-                                            shrinkWrap: true,
-                                            physics: const ScrollPhysics(),
-                                            itemCount: snapshot.data!.docs.length,
-                                            itemBuilder: (context, index) {
+                                        return ListView.builder(
+                                          shrinkWrap: true,
+                                          physics: const NeverScrollableScrollPhysics(),
+                                          itemCount: snapshot.data!.docs.length,
+                                          itemBuilder: (context, index) {
 
-                                              var applieddata=snapshot.data!.docs[index];
-                                              return Row(
+                                            var applieddata=snapshot.data!.docs[index];
+                                            return Padding(
+                                              padding:  EdgeInsets.only(bottom:8),
+                                              child: Material(
+                                                color: Color(0xffFFFFFF),
+                                                elevation: 20,
+                                                borderRadius: BorderRadius.circular(4),
+                                                shadowColor: Colors.black12,
+                                                child: SizedBox(
+                                                  height:50,
+                                                  child: Row(
 
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
 
-                                                children: [
+                                                    children: [
 
-                                                  Container(
-                                                    width: 50,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        (index+1).toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
+                                                      SizedBox(
+                                                        width: 45,
+                                                        height: 40,
 
-                                                  Container(
-                                                    width: 250,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        applieddata['name'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: 150,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        applieddata['father name'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: width/13.66,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        applieddata['updatestatus'].toString()==""?"-":   applieddata['updatestatus'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color:  Colors.green,fontWeight:FontWeight.w700),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: width/13.66,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        applieddata['Type'].toString(),
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color:  Colors.green,fontWeight:FontWeight.w700),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: width/13.66,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        "${ applieddata['date'].toString()}",
-                                                        textAlign: TextAlign.center,
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                    width: 150,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        "${ applieddata['time'].toString()}",
-                                                        textAlign: TextAlign.center,
-                                                        style:
-                                                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                                      ),
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    width: 200,
-                                                    height: 40,
-
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(color: Colors.black)
-                                                    ),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: (){
-                                                            Applieddetailspopup(
-                                                              applieddata['name'].toString(),
-                                                              applieddata['father name'].toString(),
-                                                              applieddata['gender'].toString(),
-                                                              applieddata['dob'].toString(),
-                                                              applieddata['pantype'].toString(),
-                                                              applieddata['updatestatus'].toString(),
-                                                              applieddata['date'].toString(),
-                                                              applieddata['time'].toString(),
-                                                              applieddata['Type'].toString(),
-                                                              applieddata['aadharpicture'].toString(),
-                                                              applieddata['signpicture'].toString(),
-                                                              applieddata['photo'].toString(),
-                                                              applieddata['photo2'].toString(),
-                                                              applieddata['aadharpicture2'].toString(),
-                                                            );
-                                                          },
-                                                          child: Container(
-                                                              width: width/13.66,
-                                                              height: height/21.7,
-                                                              decoration: BoxDecoration(
-                                                                  color: Colors.green,
-                                                                  borderRadius: BorderRadius.circular(8)
-                                                              ),
-                                                              child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                                        child: Center(
+                                                          child: Text(
+                                                            (index+1).toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
                                                           ),
                                                         ),
-                                                        // InkWell(
-                                                        //   onTap: (){
-                                                        //     ///delete popup
-                                                        //     _deleteHistroypopup(applieddata.id);
-                                                        //   },
-                                                        //   child: SizedBox(
-                                                        //       width: 60,
-                                                        //       height: 40,
-                                                        //       child: Center(child: const Icon(Icons.delete))
-                                                        //   ),
-                                                        // ),
-                                                      ],
-                                                    ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: 250,
+                                                        height: 40,
+
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['name'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: 150,
+                                                        height: 40,
+
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['father name'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: width/13.66,
+                                                        height: 40,
+
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['updatestatus'].toString()==""?"-":   applieddata['updatestatus'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color:  Colors.green,fontWeight:FontWeight.w700),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: width/13.66,
+                                                        height: 40,
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['Type'].toString(),
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color:  Colors.green,fontWeight:FontWeight.w700),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: width/13.66,
+                                                        height: 40,
+
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['date'].toString(),
+                                                            textAlign: TextAlign.center,
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 150,
+                                                        height: 40,
+
+                                                        child: Center(
+                                                          child: Text(
+                                                            applieddata['time'].toString(),
+                                                            textAlign: TextAlign.center,
+                                                            style:
+                                                            GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                      SizedBox(
+                                                        width: 200,
+                                                        height: 40,
+
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                          children: [
+                                                            InkWell(
+                                                              onTap: (){
+                                                                Applieddetailspopup(
+                                                                  applieddata['name'].toString(),
+                                                                  applieddata['father name'].toString(),
+                                                                  applieddata['gender'].toString(),
+                                                                  applieddata['dob'].toString(),
+                                                                  applieddata['pantype'].toString(),
+                                                                  applieddata['updatestatus'].toString(),
+                                                                  applieddata['date'].toString(),
+                                                                  applieddata['time'].toString(),
+                                                                  applieddata['Type'].toString(),
+                                                                  applieddata['aadharpicture'].toString(),
+                                                                  applieddata['signpicture'].toString(),
+                                                                  applieddata['photo'].toString(),
+                                                                  applieddata['photo2'].toString(),
+                                                                  applieddata['aadharpicture2'].toString(),
+                                                                );
+                                                              },
+                                                              child: Container(
+                                                                  width: width/13.66,
+                                                                  height: height/21.7,
+                                                                  decoration: BoxDecoration(
+                                                                      color: Colors.green,
+                                                                      borderRadius: BorderRadius.circular(8)
+                                                                  ),
+                                                                  child: Center(child: const Text("View",style: TextStyle(color: Colors.white),))
+                                                              ),
+                                                            ),
+                                                            // InkWell(
+                                                            //   onTap: (){
+                                                            //     ///delete popup
+                                                            //     _deleteHistroypopup(applieddata.id);
+                                                            //   },
+                                                            //   child: SizedBox(
+                                                            //       width: 60,
+                                                            //       height: 40,
+                                                            //       child: Center(child: const Icon(Icons.delete))
+                                                            //   ),
+                                                            // ),
+                                                          ],
+                                                        ),
+                                                      ),
+
+
+
+
+
+
+
+
+                                                    ],
                                                   ),
-
-
-
-
-
-
-
-
-                                                ],
-                                              );
-                                            },);
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },);
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ),
+                            ),
 
 
-                            ],
-                          ),
+                          ],
                         ),
+                      ),
 
 
-                      ],
-                    ),
+                    ],
                   )
               ):
               const SizedBox(),
@@ -1952,9 +1852,6 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
   String deletefile="https://assets5.lottiefiles.com/packages/lf20_tqsLQJ3Q73.json";
 
   _deletepopup(docid){
-
-    double height =MediaQuery.of(context).size.height;
-    double width =MediaQuery.of(context).size.width;
 
     showDialog(context: context, builder:(context) {
       return Padding(
@@ -1975,7 +1872,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
 
                 SizedBox(
                   height:180,
-                  width: width/7.5888,
+                  width:180,
                   child: Lottie.network(deletefile),
                 ),
 
@@ -1987,8 +1884,8 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                     Navigator.pop(context);
                   },
                   child: Container(
-                    height: height/16.275,
-                    width: width/7.5888,
+                    height:40,
+                    width:180,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
                         color: const Color(0xff263646)
@@ -2015,8 +1912,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
 
   ///deleter document histroy
   _deleteHistroypopup(docid){
-    double height =MediaQuery.of(context).size.height;
-    double width =MediaQuery.of(context).size.width;
+
     showDialog(context: context, builder:(context) {
       return Padding(
         padding: const EdgeInsets.only(top: 150.0,bottom: 150,left: 350,right:350),
@@ -2036,7 +1932,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
 
                 SizedBox(
                   height:180,
-                  width: width/7.5888,
+                  width:180,
                   child: Lottie.network(deletefile),
                 ),
 
@@ -2048,8 +1944,8 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                     Navigator.pop(context);
                   },
                   child: Container(
-                    height: height/16.275,
-                    width: width/7.5888,
+                    height:40,
+                    width:180,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
                         color: const Color(0xff263646)
@@ -2077,8 +1973,6 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
   ///deleter document histroy
   _deleteWalletpopup(docid){
 
-    double height =MediaQuery.of(context).size.height;
-    double width =MediaQuery.of(context).size.width;
     showDialog(context: context, builder:(context) {
       return Padding(
         padding: const EdgeInsets.only(top: 150.0,bottom: 150,left: 350,right:350),
@@ -2098,7 +1992,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
 
                 SizedBox(
                   height:180,
-                  width: width/7.5888,
+                  width:180,
                   child: Lottie.network(deletefile),
                 ),
 
@@ -2110,8 +2004,8 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                     Navigator.pop(context);
                   },
                   child: Container(
-                    height: height/16.275,
-                    width: width/7.5888,
+                    height:40,
+                    width:180,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4),
                         color: const Color(0xff263646)
@@ -2149,8 +2043,8 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
           child: AnimatedContainer(
             duration: Duration(seconds: 1),
             curve: Curves.easeIn,
-            height: height/1.085,
-            width: width/4.268,
+            height: 600,
+            width: width/4.2687,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white54.withOpacity(0.9),
@@ -2172,21 +2066,21 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
+                          width: 280,
                           child:
-                          Text("Name : ${name}",
+                          Text("Name : $name",
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500,
                                   textStyle: TextStyle(
                                       overflow: TextOverflow.ellipsis
                                   ),
                                   color: Colors.black))),
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
-                          child: Text("Father Name : ${fathermname}",
+                          width: 280,
+                          child: Text("Father Name : $fathermname",
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w500,
                                   textStyle: TextStyle(
@@ -2199,43 +2093,19 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
-                          child: Text("Phone no: ${phonenumber}",style: GoogleFonts.poppins(
+                          width: 280,
+                          child: Text("Phone no: $phonenumber",style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               textStyle: TextStyle(
                                   overflow: TextOverflow.ellipsis
                               ),
                               color: Colors.black))),
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
-                          child: Text("Gender: ${gender}",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              textStyle: TextStyle(
-                                  overflow: TextOverflow.ellipsis
-                              ),
-                              color: Colors.black))),
-                    ],
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          height: height/21.7,
-                          width: width/4.878,
-                          child: Text("DOB: ${dob}",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              textStyle: TextStyle(
-                                  overflow: TextOverflow.ellipsis
-                              ),
-                              color: Colors.black))),
-                      Container(
-                          height: height/21.7,
-                          width: width/4.878,
-                          child: Text("Type: ${type}",style: GoogleFonts.poppins(
+                          width: 280,
+                          child: Text("Gender: $gender",style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               textStyle: TextStyle(
                                   overflow: TextOverflow.ellipsis
@@ -2247,43 +2117,19 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
-                          child: Text("Pan No: ${panno}",style: GoogleFonts.poppins(
+                          width: 280,
+                          child: Text("DOB: $dob",style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               textStyle: TextStyle(
                                   overflow: TextOverflow.ellipsis
                               ),
                               color: Colors.black))),
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
-                          child: Text("Name/Building No: ${namebuildno}",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              textStyle: TextStyle(
-                                  overflow: TextOverflow.ellipsis
-                              ),
-                              color: Colors.black))),
-                    ],
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          height: height/21.7,
-                          width: width/4.878,
-                          child: Text("Address: ${address}",style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
-                              textStyle: TextStyle(
-                                  overflow: TextOverflow.ellipsis
-                              ),
-                              color: Colors.black))),
-                      Container(
-                          height: height/21.7,
-                          width: width/4.878,
-                          child: Text("District: ${district}",style: GoogleFonts.poppins(
+                          width: 280,
+                          child: Text("Type: $type",style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               textStyle: TextStyle(
                                   overflow: TextOverflow.ellipsis
@@ -2295,19 +2141,19 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
-                          child: Text("State: ${state}",style: GoogleFonts.poppins(
+                          width: 280,
+                          child: Text("Pan No: $panno",style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               textStyle: TextStyle(
                                   overflow: TextOverflow.ellipsis
                               ),
                               color: Colors.black))),
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
-                          child: Text("Pin Code: ${pincode}",style: GoogleFonts.poppins(
+                          width: 280,
+                          child: Text("Name/Building No: $namebuildno",style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               textStyle: TextStyle(
                                   overflow: TextOverflow.ellipsis
@@ -2319,18 +2165,66 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
-                          child: Text("Date/Time: ${date}-${time}",style: GoogleFonts.poppins(
+                          width: 280,
+                          child: Text("Address: $address",style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               textStyle: TextStyle(
                                   overflow: TextOverflow.ellipsis
                               ),
                               color: Colors.black))),
-                      Container(
+                      SizedBox(
                           height: height/21.7,
-                          width: width/4.878,
+                          width: 280,
+                          child: Text("District: $district",style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              textStyle: TextStyle(
+                                  overflow: TextOverflow.ellipsis
+                              ),
+                              color: Colors.black))),
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          height: height/21.7,
+                          width: 280,
+                          child: Text("State: $state",style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              textStyle: TextStyle(
+                                  overflow: TextOverflow.ellipsis
+                              ),
+                              color: Colors.black))),
+                      SizedBox(
+                          height: height/21.7,
+                          width: 280,
+                          child: Text("Pin Code: $pincode",style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              textStyle: TextStyle(
+                                  overflow: TextOverflow.ellipsis
+                              ),
+                              color: Colors.black))),
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          height: height/21.7,
+                          width: 280,
+                          child: Text("Date/Time: $date-$time",style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                              textStyle: TextStyle(
+                                  overflow: TextOverflow.ellipsis
+                              ),
+                              color: Colors.black))),
+                      SizedBox(
+                          height: height/21.7,
+                          width: 280,
                           child: Text("Status: ${status==""?"-":status}",style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                               textStyle: TextStyle(
@@ -2343,7 +2237,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                           width: 560,
 
                           child: Text("Correction List:  ${correctionlist.toString()}",
@@ -2400,7 +2294,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
             duration: Duration(seconds: 1),
             curve: Curves.easeIn,
             height: 400,
-            width: width/4.268,
+            width: width/4.2687,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               color: Colors.white54.withOpacity(0.9),
@@ -2418,21 +2312,21 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                         ),
                         color: Colors.black)),
                 SizedBox(height: 5,),
-                Container(
+                SizedBox(
                     height: height/21.7,
                     width: 400,
                     child:
-                    Text("Name : ${name}",
+                    Text("Name : $name",
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             textStyle: TextStyle(
                                 overflow: TextOverflow.ellipsis
                             ),
                             color: Colors.black))),
-                Container(
+                SizedBox(
                     height: height/21.7,
                     width: 400,
-                    child: Text("Father Name : ${fathername}",
+                    child: Text("Father Name : $fathername",
                         style: GoogleFonts.poppins(
                             fontWeight: FontWeight.w500,
                             textStyle: TextStyle(
@@ -2440,43 +2334,43 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                             ),
                             color: Colors.black))),
 
-                Container(
+                SizedBox(
                     height: height/21.7,
                     width: 400,
-                    child: Text("Date/Time: ${date}-${time}",style: GoogleFonts.poppins(
+                    child: Text("Date/Time: $date-$time",style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         textStyle: TextStyle(
                             overflow: TextOverflow.ellipsis
                         ),
                         color: Colors.black))),
-                Container(
+                SizedBox(
                     height: height/21.7,
                     width: 400,
-                    child: Text("Gender: ${gender}",style: GoogleFonts.poppins(
+                    child: Text("Gender: $gender",style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         textStyle: TextStyle(
                             overflow: TextOverflow.ellipsis
                         ),
                         color: Colors.black))),
-                Container(
+                SizedBox(
                     height: height/21.7,
                     width: 400,
-                    child: Text("DOB: ${dob}",style: GoogleFonts.poppins(
+                    child: Text("DOB: $dob",style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         textStyle: TextStyle(
                             overflow: TextOverflow.ellipsis
                         ),
                         color: Colors.black))),
-                Container(
+                SizedBox(
                     height: height/21.7,
                     width: 400,
-                    child: Text("Pantype: ${pantype}",style: GoogleFonts.poppins(
+                    child: Text("Pantype: $pantype",style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         textStyle: TextStyle(
                             overflow: TextOverflow.ellipsis
                         ),
                         color: Colors.black))),
-                Container(
+                SizedBox(
                     height: height/21.7,
                     width: 400,
                     child: Text("Status: ${updatestatus==""?"-":updatestatus}",style: GoogleFonts.poppins(
@@ -2485,19 +2379,19 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                             overflow: TextOverflow.ellipsis
                         ),
                         color: Colors.black))),
-                Container(
+                SizedBox(
                     height: height/21.7,
                     width: 400,
-                    child: Text("Date/Time: ${date}-${time}",style: GoogleFonts.poppins(
+                    child: Text("Date/Time: $date-$time",style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         textStyle: TextStyle(
                             overflow: TextOverflow.ellipsis
                         ),
                         color: Colors.black))),
-                Container(
+                SizedBox(
                     height: height/21.7,
                     width: 400,
-                    child: Text("Type: ${type}",style: GoogleFonts.poppins(
+                    child: Text("Type: $type",style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w500,
                         textStyle: TextStyle(
                             overflow: TextOverflow.ellipsis
@@ -2533,7 +2427,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                               borderRadius: BorderRadius.circular(100),
                               child: SizedBox(
                                   height:30,
-                                  width: 30,
+                                  width: width/45.533,
                                   child: Icon(Icons.download,color: Colors.black,)),
                             ),
                           )
@@ -2566,7 +2460,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                               borderRadius: BorderRadius.circular(100),
                               child: SizedBox(
                                   height:30,
-                                  width: 30,
+                                  width: width/45.533,
                                   child: Icon(Icons.download,color: Colors.black,)),
                             ),
                           )
@@ -2599,7 +2493,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                               borderRadius: BorderRadius.circular(100),
                               child: SizedBox(
                                   height:30,
-                                  width: 30,
+                                  width: width/45.533,
                                   child: Icon(Icons.download,color: Colors.black,)),
                             ),
                           )
@@ -2632,7 +2526,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                               borderRadius: BorderRadius.circular(100),
                               child: SizedBox(
                                   height:30,
-                                  width: 30,
+                                  width: width/45.533,
                                   child: Icon(Icons.download,color: Colors.black,)),
                             ),
                           )
@@ -2665,7 +2559,7 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                               borderRadius: BorderRadius.circular(100),
                               child: SizedBox(
                                   height:30,
-                                  width: 30,
+                                  width: width/45.533,
                                   child: Icon(Icons.download,color: Colors.black,)),
                             ),
                           )
@@ -2704,8 +2598,9 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
 
 
   _ViewImage(ImageLink){
-    double height =MediaQuery.of(context).size.height;
-    double width =MediaQuery.of(context).size.width;
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
 
     showDialog(context: context, builder:(context) {
       return Padding(
@@ -2722,21 +2617,21 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
                       fontWeight: FontWeight.w700,
                       fontSize:18
                   ),),
-                  SizedBox(height: 20,),
+                  SizedBox(height: height/32.55,),
 
                   SizedBox(
                     height:380,
                     width: 400,
                     child: Image.network(ImageLink,fit: BoxFit.contain,),
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(height: height/32.55,),
                   InkWell(
                     onTap: (){
                       Navigator.pop(context);
                     },
                     child: Container(
-                      height: height/16.275,
-                      width: width/7.5888,
+                      height:40,
+                      width:180,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(4),
                           color: const Color(0xff263646)
@@ -2894,7 +2789,6 @@ class _Distributor_data_PageState extends State<Distributor_data_Page> with Sing
       OpenFile.open(fileName);
     }
   }
-
 
 
 }
