@@ -25,6 +25,7 @@ import 'Pages/Notification_Page.dart';
 import 'Pages/Permission_Page.dart';
 import 'Pages/Slider_Page.dart';
 import 'Pages/Support_Page.dart';
+import 'Pages/Wallet_reports.dart';
 import 'const.dart';
 
 class HomeView extends StatefulWidget {
@@ -63,26 +64,64 @@ class _HomeViewState extends State<HomeView> {
 
   countfunction()async{
 ///distributor
-    var documentcorrection=await FirebaseFirestore.instance.collection("Correction_cards").where("usertype",isEqualTo:'Distributor').where("updatestatus",isEqualTo:"").get();
-    var documentlost=await FirebaseFirestore.instance.collection("Reprint_document").where("usertype",isEqualTo:'Distributor').where("updatestatus",isEqualTo:"").get();
-    var documentappliedt=await FirebaseFirestore.instance.collection("New_applied").where("usertype",isEqualTo:'Distributor').where("updatestatus",isEqualTo:"").get();
-    setState(() {
-       distrutorCorrectionCount=documentcorrection.docs.length;
-       distrutorlostCount=documentlost.docs.length;
-       distrutorappliedCount=documentappliedt.docs.length;
-    });
-    ///individual
-    var documentcorrection1=await FirebaseFirestore.instance.collection("Correction_cards").where("usertype",isEqualTo:'Individual').where("updatestatus",isEqualTo:"").get();
-    var documentlost1=await FirebaseFirestore.instance.collection("Reprint_document").where("usertype",isEqualTo:'Individual').where("updatestatus",isEqualTo:"").get();
-    var documentappliedt1=await FirebaseFirestore.instance.collection("New_applied").where("usertype",isEqualTo:'Individual').where("updatestatus",isEqualTo:"").get();
-    var minordocument=await FirebaseFirestore.instance.collection("Minor_New_applied").where("updatestatus",isEqualTo:"").get();
+     FirebaseFirestore.instance.collection("Correction_cards").where("usertype",isEqualTo:'Distributor').where("updatestatus",isEqualTo:"").snapshots().listen((event) {
 
-    setState(() {
-      individualCorrectionCount=documentcorrection1.docs.length;
-      individualappliedCount=documentlost1.docs.length;
-      individuallostCount=documentappliedt1.docs.length;
-      minorCount=minordocument.docs.length;
+       setState(() {
+         distrutorCorrectionCount=event.docs.length;
+       });
+
+     });
+
+     FirebaseFirestore.instance.collection("Reprint_document").where("usertype",isEqualTo:'Distributor').where("updatestatus",isEqualTo:"")
+         .snapshots().listen((event1) {
+           setState(() {
+             distrutorlostCount=event1.docs.length;
+           });
+
+     });
+
+     FirebaseFirestore.instance.collection("New_applied").where("usertype",isEqualTo:'Distributor').
+     where("updatestatus",isEqualTo:"").snapshots().listen((event3) {
+       setState(() {
+         distrutorappliedCount=event3.docs.length;
+       });
+     });
+
+
+
+    ///individual
+    FirebaseFirestore.instance.collection("Correction_cards").where("usertype",isEqualTo:'Individual').
+    where("updatestatus",isEqualTo:"").snapshots().listen((individual1) {
+      setState(() {
+        individualCorrectionCount=individual1.docs.length;
+      });
     });
+
+
+    FirebaseFirestore.instance.collection("Reprint_document").where("usertype",isEqualTo:'Individual').
+    where("updatestatus",isEqualTo:"").snapshots().listen((individual2) {
+
+       setState(() {
+         individuallostCount=individual2.docs.length;
+       });
+     });
+
+    FirebaseFirestore.instance.collection("New_applied").where("usertype",isEqualTo:'Individual').
+    where("updatestatus",isEqualTo:"").snapshots().listen((individual3) {
+
+      setState(() {
+        individualappliedCount=individual3.docs.length;
+      });
+    });
+
+    FirebaseFirestore.instance.collection("Minor_New_applied").where("updatestatus",isEqualTo:"").snapshots().listen((Minor) {
+      setState(() {
+        minorCount=Minor.docs.length;
+      });
+    });
+
+
+
     print(individualCorrectionCount);
     print(individualappliedCount);
     print(individuallostCount);
@@ -165,13 +204,27 @@ class _HomeViewState extends State<HomeView> {
                   width: width/5.464,
                   height: height/1.000,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        end: Alignment.bottomCenter,
-                        begin: Alignment.topCenter,
-                        colors: [
-                      Color(0xff245BCA),
-                      Color(0xff245BCA).withOpacity(0.6)
-                    ]),
+                    color:Color(0xFF2E2E48)
+                    // gradient: LinearGradient(
+                    //     end: Alignment.bottomCenter,
+                    //     begin: Alignment.topCenter,
+                    //     colors:[
+                    //
+                    //
+                    //       Color(0xff102C57),
+                    //       Color(0xffA530F2),
+                    //       Color(0xffA530F2),
+                    //       Color(0xffA530F2),
+                    //       Color(0xffA530F2),
+                    //       Color(0xff102C57),
+                    //     ]
+                    // //     colors: [
+                    // //   Color(0xff102C57),
+                    // //   Color(0xff102C57),
+                    // //   Color(0xff245BCA)
+                    // // ]
+                    //
+                    // ),
                   ),
                   child: SingleChildScrollView(
                     physics: const ScrollPhysics(),
@@ -378,7 +431,7 @@ class _HomeViewState extends State<HomeView> {
                                     SizedBox(width:width/91.066),
                                     Icon(Icons.circle,color:Selectpage==4?Colors.black:Colors.white,   size:width/75.888,),
                                     SizedBox(width:width/273.2),
-                                    Text("Distributor Lost Pan card",style: GoogleFonts.poppins(color:Selectpage==4?Colors.black:Colors.white,fontSize: width/85.88),),
+                                    Text("Lost Pan card",style: GoogleFonts.poppins(color:Selectpage==4?Colors.black:Colors.white,fontSize: width/85.88),),
                                     SizedBox(width:width/273.2),
                                     (distrutorlostCount)==0?SizedBox():
                                     Container(
@@ -396,7 +449,6 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                               ),
                             ):SizedBox(),
-
                                permissionList.any((element) =>element== "Distributor Reports")?
                             InkWell(
                               onTap:(){
@@ -581,7 +633,7 @@ class _HomeViewState extends State<HomeView> {
                                     SizedBox(width:width/91.066),
                                     Icon(Icons.circle,color:Selectpage==9?Colors.black:Colors.white,   size:width/75.888,),
                                     SizedBox(width:width/273.2),
-                                    Text("Individual Lost Pan card",style: GoogleFonts.poppins(color:Selectpage==9?Colors.black:Colors.white,fontSize: width/85.88),),
+                                    Text("Lost Pan card",style: GoogleFonts.poppins(color:Selectpage==9?Colors.black:Colors.white,fontSize: width/85.88),),
                                     SizedBox(width:width/273.2),
                                     (individuallostCount)==0?SizedBox():
                                     Container(
@@ -669,6 +721,34 @@ class _HomeViewState extends State<HomeView> {
                           ),
                         ):SizedBox(),
 
+                        permissionList.any((element) =>element== "Wallet Reports")?
+                        InkWell(
+                          onTap:(){
+                            setState((){
+                              Selectpage=18;
+                            });
+                          },
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 400),
+                            height: height/16.275,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Selectpage==18?Colors.white:Colors.transparent,
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(width:width/91.066),
+                                Icon(Icons.wallet,
+                                  size:width/75.888,
+                                  color:Selectpage==18?Colors.black:Colors.white,),
+                                SizedBox(width:width/273.2),
+                                Text("Wallet Reports",style: GoogleFonts.poppins(color:Selectpage==18?Colors.black:Colors.white,fontSize: width/85.88),),
+                              ],
+                            ),
+                          ),
+                        ):SizedBox(),
+
                            permissionList.any((element) =>element=="Forms")?
                         InkWell(
                           onTap:(){
@@ -722,7 +802,7 @@ class _HomeViewState extends State<HomeView> {
                           ),
                         ):SizedBox(),
 
-                        widget.Authusertype!=null?
+                        permissionList.any((element) =>element=="Permissions")?
                         InkWell(
                           onTap:(){
                             setState((){
@@ -832,8 +912,9 @@ class _HomeViewState extends State<HomeView> {
                           ),
                         ):SizedBox(),
 
+
                         SizedBox(
-                          height:isexpanded?height/9.1375:height/11.1375
+                          height:isexpanded?0:height/25.1375
                         ),
 
                         Padding(
@@ -893,7 +974,9 @@ class _HomeViewState extends State<HomeView> {
                 Selectpage==14?Permissions_Page():
                 Selectpage==15?Slide_Image():
                 Selectpage==16?Support_Page():
-                Selectpage==17?FAQ_Page(): SizedBox(),
+                Selectpage==17?FAQ_Page():
+                Selectpage==18?Wallet_reports():
+                SizedBox(),
                 )
               ],
             ),

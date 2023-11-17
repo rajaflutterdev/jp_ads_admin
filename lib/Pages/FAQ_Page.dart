@@ -13,7 +13,7 @@ class _FAQ_PageState extends State<FAQ_Page> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("FAQ Page")
+        Center(child: Text("FAQ Page"))
       ],
     );
   }

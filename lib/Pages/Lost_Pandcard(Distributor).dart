@@ -60,7 +60,7 @@ class _Lost_Pandcard_distributorState extends State<Lost_Pandcard_distributor> {
 
   countfunction()async{
     var data2 =await FirebaseFirestore.instance.collection("Reprint_document").
-    where('usertype',isEqualTo:"Distributor").where('count',isEqualTo:true).get();
+    where('usertype',isEqualTo:"Distributor").where("updatestatus",isEqualTo:"").get();
     setState((){
       totalApliedcount= data2.docs.length;
     });
@@ -482,7 +482,7 @@ class _Lost_Pandcard_distributorState extends State<Lost_Pandcard_distributor> {
 
                     StreamBuilder(
                       stream: FirebaseFirestore.instance.collection("Reprint_document")
-                          .orderBy("timestamp").snapshots(),
+                          .orderBy("timestamp",descending: true).snapshots(),
                       builder: (context, snapshot) {
                         if(snapshot.hasData==null){
                           return const Center(child: CircularProgressIndicator(),);

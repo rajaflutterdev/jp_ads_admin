@@ -356,97 +356,82 @@ class _DashBoard_PageState extends State<DashBoard_Page> {
             ),
           ),
           SizedBox(height: height/41.143,),
-          Material( color: const Color(0xffd8e6ff),
-            elevation: 20,
-            shadowColor: Colors.black12,
-            child: Container(
-              height: 40,
-              width:1100,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color:  const Color(0xffd8e6ff),
-              ),
-              child: Row(
 
-                crossAxisAlignment: CrossAxisAlignment.center,
+          Container(
+            height: 40,
+            width:1100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              color:  const Color(0xffd8e6ff),
+            ),
+            child: Row(
 
-                children: [
+              crossAxisAlignment: CrossAxisAlignment.center,
 
-                  Container(
-                    width: 100,
-                    height:40,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black)
-                    ),
+              children: [
 
-                    child: Center(
-                      child: Text(
-                        "Si.No",
-                        style:
-                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                      ),
+                SizedBox(
+                  width: 100,
+                  height:40,
+                  child: Center(
+                    child: Text(
+                      "Si.No",
+                      style:
+                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
                     ),
                   ),
+                ),
 
-                  Container(
-                    width: 300,
-                    height:40,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black)
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Name",
-                        style:
-                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                      ),
+                SizedBox(
+                  width: 300,
+                  height:40,
+
+                  child: Center(
+                    child: Text(
+                      "Name",
+                      style:
+                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
                     ),
                   ),
+                ),
 
-                  Container(
-                    width: 300,
-                    height:40,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black)
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Phone Number",
-                        style:
-                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                      ),
+                SizedBox(
+                  width: 300,
+                  height:40,
+
+                  child: Center(
+                    child: Text(
+                      "Phone Number",
+                      style:
+                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
                     ),
                   ),
+                ),
 
-                  Container(
-                    width: 300,
-                    height:40,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black)
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Wallet Amount",
-                        style:
-                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                      ),
+                SizedBox(
+                  width: 300,
+                  height:40,
+                  child: Center(
+                    child: Text(
+                      "Wallet Amount",
+                      style:
+                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
                     ),
                   ),
+                ),
 
-                  Container(
-                    width: 100,
-                    height:40,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black)
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Delete",
-                        style:
-                        GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
-                      ),
+                SizedBox(
+                  width: 100,
+                  height:40,
+
+                  child: Center(
+                    child: Text(
+                      "Delete",
+                      style:
+                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000),fontWeight: FontWeight.w700),
                     ),
                   ),
+                ),
 
 
 
@@ -454,12 +439,12 @@ class _DashBoard_PageState extends State<DashBoard_Page> {
 
 
 
-                ],
-              ),
+              ],
             ),
           ),
 
 
+          SizedBox(height: 8,),
           SizedBox(
             width:1100,
             child: StreamBuilder(
@@ -471,6 +456,13 @@ class _DashBoard_PageState extends State<DashBoard_Page> {
                 if(!snapshot.hasData){
                   return const Center(child: CircularProgressIndicator(),);
                 }
+
+                if(snapshot.data!.docs.length==0){
+                  return  SizedBox(
+                      height:250,
+                      child:Center(child: Text("No data",style: GoogleFonts.poppins(fontWeight: FontWeight.w700,fontSize: 18),),)
+                  );
+                }
                 return
                   ListView.builder(
                     shrinkWrap: true,
@@ -480,110 +472,94 @@ class _DashBoard_PageState extends State<DashBoard_Page> {
 
                       var _Userdata=snapshot.data!.docs[index];
 
-                      return Material(
-                        color: const Color(0xffd8e6ff),
-                        elevation: 20,
-                        shadowColor: Colors.black12,
-                        child: Container(
-                          height: 40,
-                          width:1100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            color:  const Color(0xffd8e6ff),
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                      return
+                        Padding(
+                        padding:  EdgeInsets.only(bottom:8),
+                        child: Material(
+                          color: const Color(0xffFFFFFF),
+                          elevation: 20,
+                          shadowColor: Colors.black12,
+                          child: SizedBox(
+                            height: 40,
+                            width:1100,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
 
-                            children: [
+                              children: [
 
-                              Container(
-                                width: 100,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    (index+1).toString(),
-                                    style:
-                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                  ),
-                                ),
-                              ),
-
-                              Container(
-                                width: 300,
-                                height:40,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)
-                                ),
-
-                                child: Center(
-                                  child: Text(
-                                    _Userdata["name"].toString(),
-                                    style:
-                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                  ),
-                                ),
-                              ),
-
-                              Container(
-                                width: 300,
-                                height:40,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)
-                                ),
-
-                                child: Center(
-                                  child: Text(
-                                    _Userdata["phone"].toString(),
-                                    style:
-                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                  ),
-                                ),
-                              ),
-
-                              Container(
-                                width: 300,
-                                height:40,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black)
-                                ),
-
-                                child: Center(
-                                  child: Text(
-                                    _Userdata["walletamount"].toString(),
-                                    style:
-                                    GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
-                                  ),
-                                ),
-                              ),
-
-
-
-                              Container(
+                                SizedBox(
                                   width: 100,
-                                  height:40,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black)
-                                  ),
+                                  height: 40,
                                   child: Center(
-                                    child: InkWell(
-                                        onTap: (){
-                                          ///delete popup
-                                          _deletepopup(_Userdata.id);
-                                        },
+                                    child: Text(
+                                      (index+1).toString(),
+                                      style:
+                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                    ),
+                                  ),
+                                ),
 
-                                        child: const Icon(Icons.delete)),
-                                  )
-                              ),
-
-
-
-
+                                SizedBox(
+                                  width: 300,
+                                  height:40,
 
 
-                            ],
+                                  child: Center(
+                                    child: Text(
+                                      _Userdata["name"].toString(),
+                                      style:
+                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(
+                                  width: 300,
+                                  height:40,
+                                  child: Center(
+                                    child: Text(
+                                      _Userdata["phone"].toString(),
+                                      style:
+                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(
+                                  width: 300,
+                                  height:40,
+                                  child: Center(
+                                    child: Text(
+                                      _Userdata["walletamount"].toString(),
+                                      style:
+                                      GoogleFonts.poppins(fontSize: 14, color: const Color(0xff000000)),
+                                    ),
+                                  ),
+                                ),
+
+
+
+                                SizedBox(
+                                    width: 100,
+                                    height:40,
+                                    child: Center(
+                                      child: InkWell(
+                                          onTap: (){
+                                            ///delete popup
+                                            _deletepopup(_Userdata.id);
+                                          },
+
+                                          child: const Icon(Icons.delete)),
+                                    )
+                                ),
+
+
+
+
+
+
+                              ],
+                            ),
                           ),
                         ),
                       );

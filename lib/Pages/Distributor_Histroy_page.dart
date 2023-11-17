@@ -206,7 +206,7 @@ class _Distrobutor_Histroe_PageState extends State<Distrobutor_Histroe_Page> wit
                             ),
                             SizedBox(height:8),
                             StreamBuilder(
-                              stream: FirebaseFirestore.instance.collection("Users").orderBy('timestamp').snapshots(),
+                              stream: FirebaseFirestore.instance.collection("Users").orderBy("timestamp",descending: true).snapshots(),
                               builder: (context, snapshot) {
                                 if(snapshot.hasData==null){
                                   return const Center(child: CircularProgressIndicator(),);
@@ -707,7 +707,7 @@ class _Distrobutor_Histroe_PageState extends State<Distrobutor_Histroe_Page> wit
 
                                   FutureBuilder(
                                     future: FirebaseFirestore.instance.collection("Users").
-                                    doc(Userdocuid).collection("Histroy").orderBy('timestamp').get(),
+                                    doc(Userdocuid).collection("Histroy").orderBy("timestamp",descending: true).get(),
                                     builder: (context, snapshot) {
 
                                       if(snapshot.hasData==null){
@@ -923,7 +923,7 @@ class _Distrobutor_Histroe_PageState extends State<Distrobutor_Histroe_Page> wit
                                   SizedBox(height:8),
                                   FutureBuilder(
                                     future: FirebaseFirestore.instance.collection("Users").
-                                    doc(Userdocuid).collection("Histroy").orderBy('timestamp').get(),
+                                    doc(Userdocuid).collection("Histroy").orderBy("timestamp",descending: true).get(),
                                     builder: (context, snapshot) {
 
                                       if(snapshot.hasData==null){
@@ -1131,7 +1131,7 @@ class _Distrobutor_Histroe_PageState extends State<Distrobutor_Histroe_Page> wit
 
                                   FutureBuilder(
                                     future: FirebaseFirestore.instance.collection("Users").
-                                    doc(Userdocuid).collection("Histroy").orderBy('timestamp').get(),
+                                    doc(Userdocuid).collection("Histroy").orderBy("timestamp",descending: true).get(),
                                     builder: (context, snapshot) {
 
                                       if(snapshot.hasData==null){
@@ -1337,7 +1337,7 @@ class _Distrobutor_Histroe_PageState extends State<Distrobutor_Histroe_Page> wit
                                   SizedBox(height:8),
                                   FutureBuilder(
                                     future: FirebaseFirestore.instance.collection("Users").
-                                    doc(Userdocuid).collection("Reprint_document").orderBy('timestamp').get(),
+                                    doc(Userdocuid).collection("Reprint_document").orderBy("timestamp",descending: true).get(),
                                     builder: (context, snapshot) {
 
                                       if(snapshot.hasData==null){
@@ -1542,7 +1542,7 @@ class _Distrobutor_Histroe_PageState extends State<Distrobutor_Histroe_Page> wit
                                   SizedBox(height:8),
                                   FutureBuilder(
                                     future: FirebaseFirestore.instance.collection("Users").
-                                    doc(Userdocuid).collection("Wallet_Histroy").orderBy('timestamp').get(),
+                                    doc(Userdocuid).collection("Wallet_Histroy").orderBy("timestamp",descending: true).get(),
                                     builder: (context, snapshot) {
 
                                       if(snapshot.hasData==null){

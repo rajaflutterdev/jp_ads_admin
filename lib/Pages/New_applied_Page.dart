@@ -77,7 +77,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
 
   countfunction()async{
     var data2 =await FirebaseFirestore.instance.collection("New_applied").
-    where('usertype',isEqualTo:"Distributor").where('count',isEqualTo:true).get();
+    where('usertype',isEqualTo:"Distributor").where("updatestatus",isEqualTo:"").get();
     setState((){
       totalApliedcount= data2.docs.length;
     });
@@ -487,7 +487,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                     SizedBox(height:8),
                     StreamBuilder(
                       stream: FirebaseFirestore.instance.collection("New_applied").
-                      orderBy("timestamp").snapshots(),
+                      orderBy("timestamp",descending: true).snapshots(),
                       builder: (context, snapshot) {
                         if(snapshot.hasData==null){
                           return const Center(child: CircularProgressIndicator(),);
@@ -495,7 +495,6 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                         if(!snapshot.hasData){
                           return const Center(child: CircularProgressIndicator(),);
                         }
-
 
                         return
                           ListView.builder(
@@ -856,7 +855,7 @@ class _New_Applied_Distributor_PageState extends State<New_Applied_Distributor_P
                                 }
 
                               }
-                              return const SizedBox();
+                              return  SizedBox();
                             },);
                       },
                     ),

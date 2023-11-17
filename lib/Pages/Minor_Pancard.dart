@@ -60,7 +60,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
 
   countfunction()async{
     var data2 =await FirebaseFirestore.instance.collection("Minor_New_applied").
-    where('count',isEqualTo:true).get();
+    where("updatestatus",isEqualTo:"").get();
     setState((){
       totalApliedcount= data2.docs.length;
     });
@@ -476,8 +476,7 @@ class _Minor_PancardState extends State<Minor_Pancard> {
                     ),
                     SizedBox(height:8),
                     StreamBuilder(
-                      stream: FirebaseFirestore.instance.collection("Minor_New_applied").
-                      orderBy("timestamp").snapshots(),
+                      stream: FirebaseFirestore.instance.collection("Minor_New_applied").orderBy("timestamp",descending: true).snapshots(),
                       builder: (context, snapshot) {
                         if(snapshot.hasData==null){
                           return const Center(child: CircularProgressIndicator(),);

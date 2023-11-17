@@ -61,7 +61,7 @@ class _Correction_Infivivual_PageState extends State<Correction_Infivivual_Page>
 
   countfunction()async{
     var data2 =await FirebaseFirestore.instance.collection("Correction_cards").
-    where('usertype',isEqualTo:"Individual").where('count',isEqualTo:true).get();
+    where('usertype',isEqualTo:"Individual").where("updatestatus",isEqualTo:"").get();
     setState((){
       totalApliedcount= data2.docs.length;
     });
@@ -481,8 +481,7 @@ class _Correction_Infivivual_PageState extends State<Correction_Infivivual_Page>
                     SizedBox(height:8),
 
                     StreamBuilder(
-                      stream: FirebaseFirestore.instance.collection("Correction_cards").
-                      orderBy("timestamp").snapshots(),
+                      stream: FirebaseFirestore.instance.collection("Correction_cards").orderBy("timestamp",descending: true).snapshots(),
                       builder: (context, snapshot) {
                         if(snapshot.hasData==null){
                           return const Center(child: CircularProgressIndicator(),);

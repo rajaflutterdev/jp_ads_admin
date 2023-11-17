@@ -34,6 +34,8 @@ class _Permissions_PageState extends State<Permissions_Page> {
   bool forms = false;
   bool supports = false;
   bool faq = false;
+  bool wallet_Reports = false;
+  bool permissions = false;
   String Uservalue="Select";
   String Userdocid="";
   String Authusertype="admin";
@@ -77,6 +79,10 @@ class _Permissions_PageState extends State<Permissions_Page> {
        print(list);
     var document = await FirebaseFirestore.instance.collection("AdminUser").where("username",isEqualTo:widget.Username).get();
   for(int j=0;j<document.docs.length;j++){
+    setState(() {
+      Uservalue=document.docs[j]['username'];
+      Userdocid=document.docs[j].id;
+    });
     for(int i=0;i<document.docs[j]['permission'].length;i++){
       if(document.docs[j]['permission'][i]=="Dashboard"){
         setState(() {
@@ -168,16 +174,20 @@ class _Permissions_PageState extends State<Permissions_Page> {
           PermissionLis.add("FAQ");
         });
       }
+      if(document.docs[j]['permission'][i]=="Wallet Reports"){
+        setState(() {
+          wallet_Reports=true;
+          PermissionLis.add("Wallet Reports");
+        });
+      }
+      if(document.docs[j]['permission'][i]=="Permissions"){
+        setState(() {
+          permissions=true;
+          PermissionLis.add("Permissions");
+        });
+      }
     }
-    setState(() {
-      Uservalue=document.docs[j]['username'];
-      Userdocid=document.docs[j].id;
-    });
   }
-
-
-
-
     print("End of the fuinctionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
     print("End of the fuinctionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
     print("End of the fuinctionnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
@@ -655,6 +665,59 @@ class _Permissions_PageState extends State<Permissions_Page> {
                               ],
                             ),
                           ),
+
+                        ],
+                      ),
+                      SizedBox(height: 20,),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: wallet_Reports,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        wallet_Reports =
+                                        !wallet_Reports;
+                                      });
+                                      if (wallet_Reports == true) {
+                                        PermissionLis.add("Wallet Reports");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Wallet Reports");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Wallet Reports"),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Checkbox(
+                                    value: permissions,
+                                    onChanged: (val) {
+                                      setState(() {
+                                        permissions =
+                                        !permissions;
+                                      });
+                                      if (permissions == true) {
+                                        PermissionLis.add("Permissions");
+                                      }
+                                      else{
+                                        PermissionLis.remove("Permissions");
+                                      }
+                                    }),
+                                SizedBox(width: 5,),
+                                Text("Permissions"),
+                              ],
+                            ),
+                          ),
+
 
                         ],
                       ),

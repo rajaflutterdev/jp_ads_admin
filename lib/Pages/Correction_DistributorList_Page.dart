@@ -59,7 +59,7 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
 
   countfunction()async{
     var data2 =await FirebaseFirestore.instance.collection("Correction_cards").
-    where('usertype',isEqualTo:"Distributor").where('count',isEqualTo:true).get();
+    where('usertype',isEqualTo:"Distributor").where("updatestatus",isEqualTo:"").get();
     setState((){
       totalApliedcount= data2.docs.length;
     });
@@ -480,7 +480,7 @@ class _Corretion_List_PageState extends State<Corretion_List_Page> {
 
                     StreamBuilder(
                       stream: FirebaseFirestore.instance.collection("Correction_cards").
-                      orderBy("timestamp").snapshots(),
+                      orderBy("timestamp",descending: true).snapshots(),
                       builder: (context, snapshot) {
                         if(snapshot.hasData==null){
                           return const Center(child: CircularProgressIndicator(),);
